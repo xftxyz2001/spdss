@@ -76,3 +76,11 @@ Synthesis Practice of Data and Software Systems
 ![1657202545817](image/README/1657202545817.png)
 
 ![1657202556719](image/README/1657202556719.png)
+
+
+## 参考资料
+- [JavaWeb超市管理系统【Javaweb毕业设计】](http://www.java1234.com/a/bysj/javaweb/2018/0711/11521.html)
+- [超适合练手的一套JavaWeb项目 （超市后台管理系统）](https://blog.csdn.net/m0_55400356/article/details/125665535)
+- [基于javaweb的超市管理系统设计与实现(含论文和源码)](https://download.csdn.net/download/weixin_40228600/16622877)
+- [基于java web的好邻居超市管理系统设计与实现（源码、数据库和word论文）](https://download.csdn.net/download/weixin_40228600/15932860)
+- [铭飞平台](https://gitee.com/mingSoft/MCMS)
