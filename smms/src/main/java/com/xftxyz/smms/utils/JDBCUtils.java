@@ -26,4 +26,18 @@ public class JDBCUtils {
         // 4.获取连接
         return DriverManager.getConnection(url, user, password);
     }
+
+    public static void close(Connection conn) {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

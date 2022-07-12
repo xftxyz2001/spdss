@@ -2,14 +2,14 @@ package com.xftxyz.smms.entity;
 
 import java.sql.Timestamp;
 
-public class Users {
+public class User {
     private int id;
     private String name;
     private String pwd;
     private String limits;
     private Timestamp createAt;
 
-    public Users() {
+    public User() {
     }
 
     public int getId() {
