@@ -84,6 +84,8 @@ Synthesis Practice of Data and Software Systems
 - [基于javaweb的超市管理系统设计与实现(含论文和源码)](https://download.csdn.net/download/weixin_40228600/16622877)
 - [基于java web的好邻居超市管理系统设计与实现（源码、数据库和word论文）](https://download.csdn.net/download/weixin_40228600/15932860)
 - [铭飞平台](https://gitee.com/mingSoft/MCMS)
+- [Java JDBC中，MySQL字段类型到JAVA类型的转换](https://www.cnblogs.com/waterystone/p/6226356.html)
+- [java11模块化开发,使用Java 11在Eclipse中进行混合模块化和非模块化开发](https://blog.csdn.net/weixin_33474462/article/details/118841874)
 
 
 ![1657588204917](image/README/1657588204917.png)
