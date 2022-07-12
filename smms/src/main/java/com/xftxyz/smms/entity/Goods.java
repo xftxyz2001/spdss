@@ -10,8 +10,17 @@ public class Goods {
     private String category;
     private BigDecimal number;
     private String unit;
+    private boolean onSell; // 在售状态，false为下架，true为在售
 
     public Goods() {
+    }
+
+    public boolean isOnSell() {
+        return onSell;
+    }
+
+    public void setOnSell(boolean onSell) {
+        this.onSell = onSell;
     }
 
     public int getId() {
@@ -73,7 +82,7 @@ public class Goods {
     @Override
     public String toString() {
         return "Goods [category=" + category + ", description=" + description + ", id=" + id + ", name=" + name
-                + ", number=" + number + ", price=" + price + ", unit=" + unit + "]";
+                + ", number=" + number + ", onSell=" + onSell + ", price=" + price + ", unit=" + unit + "]";
     }
 
 }

@@ -2,7 +2,7 @@ module com.xftxyz.smms {
     requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
+    requires transitive java.sql;
     requires commons.dbutils;
 
 
