@@ -1,10 +1,10 @@
 package com.xftxyz.smms.entity;
 
 public class Supplier {
-    private int id;
-    private String name;
-    private String address;
-    private String phone;
+    private int id; // 供应商编号
+    private String name; // 供应商名称
+    private String address; // 地址
+    private String phone; // 联系方式
 
     public Supplier() {
     }

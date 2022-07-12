@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Sale {
-    private int id;
-    private int goodsId;
-    private BigDecimal price;
-    private BigDecimal number;
-    private String unit;
+    private int id; // 销售单编号
+    private int goodsId; // 商品编号
+    private BigDecimal price; // 销售价
+    private BigDecimal number; // 销售数量
+    private String unit; // 单位
     // private String remark;
-    private Timestamp createdAt;
+    private Timestamp createdAt; // 销售时间
 
     public Sale() {
     }

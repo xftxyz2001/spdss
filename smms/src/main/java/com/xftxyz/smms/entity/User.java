@@ -3,11 +3,11 @@ package com.xftxyz.smms.entity;
 import java.sql.Timestamp;
 
 public class User {
-    private int id;
-    private String name;
-    private String pwd;
-    private String limits;
-    private Timestamp createAt;
+    private int id; // 用户编号
+    private String name; // 用户名
+    private String pwd; // 密码
+    private String limits; // 权限
+    private Timestamp createAt; // 创建时间
 
     public User() {
     }

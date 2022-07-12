@@ -3,13 +3,13 @@ package com.xftxyz.smms.entity;
 import java.math.BigDecimal;
 
 public class Goods {
-    private int id;
-    private String name;
-    private BigDecimal price;
-    private String description;
-    private String category;
-    private BigDecimal number;
-    private String unit;
+    private int id;// 商品编号
+    private String name;// 商品名称
+    private BigDecimal price;// 单价
+    private String description;// 描述
+    private String category;// 分类
+    private BigDecimal number;// 库存数量
+    private String unit; // 单位
     private boolean onSell; // 在售状态，false为下架，true为在售
 
     public Goods() {

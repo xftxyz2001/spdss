@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Purchase {
-    private int id;
-    private int supplierId;
-    private int goodsId;
-    private BigDecimal price;
-    private BigDecimal number;
-    private String unit;
+    private int id; // 采购单编号
+    private int supplierId; // 供应商编号
+    private int goodsId; // 商品编号
+    private BigDecimal price; // 采购价
+    private BigDecimal number; // 采购数量
+    private String unit; // 单位
     // private String remark;
-    private Timestamp createdAt;
+    private Timestamp createdAt; // 采购时间
 
     public Purchase() {
     }

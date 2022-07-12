@@ -42,7 +42,7 @@ public class App extends Application {
                 User user = new User();
                 user.setName("admin");
                 user.setPwd("admin888");
-                User user2 = userDao.getUser(connection, user);
+                User user2 = userDao.getUser(connection, user.getName(), user.getPwd());
                 System.out.println(user2);
                 JDBCUtils.close(connection);
             } catch (ClassNotFoundException | SQLException | IOException e1) {
