@@ -84,3 +84,6 @@ Synthesis Practice of Data and Software Systems
 - [基于javaweb的超市管理系统设计与实现(含论文和源码)](https://download.csdn.net/download/weixin_40228600/16622877)
 - [基于java web的好邻居超市管理系统设计与实现（源码、数据库和word论文）](https://download.csdn.net/download/weixin_40228600/15932860)
 - [铭飞平台](https://gitee.com/mingSoft/MCMS)
+
+
+![1657588204917](image/README/1657588204917.png)
