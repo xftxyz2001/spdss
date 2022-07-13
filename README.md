@@ -87,6 +87,7 @@ Synthesis Practice of Data and Software Systems
 - [Java JDBC中，MySQL字段类型到JAVA类型的转换](https://www.cnblogs.com/waterystone/p/6226356.html)
 - [java11模块化开发,使用Java 11在Eclipse中进行混合模块化和非模块化开发](https://blog.csdn.net/weixin_33474462/article/details/118841874)
 - [javafx 验证码生成和刷新工具类](https://blog.csdn.net/loveqingqiqiou/article/details/103131750)
+- [【微服务项目手动打成jar包&解决Maven 打包时丢失properties文件问题】](https://blog.csdn.net/zimojiang/article/details/125474742)
 
 
 ![1657588204917](image/README/1657588204917.png)
