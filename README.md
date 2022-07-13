@@ -5,7 +5,7 @@ Synthesis Practice of Data and Software Systems
 | 。  | 时间             | 安排                 |
 | --- | ---------------- | -------------------- |
 | 1√  | 7月11日早8：30   | 任务布置与课程须知   |
-| 2   | 7月12日早8：30   | 开发任务需求分析汇报 |
+| 2√   | 7月12日早8：30   | 开发任务需求分析汇报 |
 | 3   | 7月13日晚7：30   | 开发进度第一次汇报   |
 | 4   | 7月15日下午2：30 | 开发进度第二次汇报   |
 | 5   | 7月17日下午2：30 | 作业最终完成演示     |
@@ -84,6 +84,9 @@ Synthesis Practice of Data and Software Systems
 - [基于javaweb的超市管理系统设计与实现(含论文和源码)](https://download.csdn.net/download/weixin_40228600/16622877)
 - [基于java web的好邻居超市管理系统设计与实现（源码、数据库和word论文）](https://download.csdn.net/download/weixin_40228600/15932860)
 - [铭飞平台](https://gitee.com/mingSoft/MCMS)
+- [Java JDBC中，MySQL字段类型到JAVA类型的转换](https://www.cnblogs.com/waterystone/p/6226356.html)
+- [java11模块化开发,使用Java 11在Eclipse中进行混合模块化和非模块化开发](https://blog.csdn.net/weixin_33474462/article/details/118841874)
+- [javafx 验证码生成和刷新工具类](https://blog.csdn.net/loveqingqiqiou/article/details/103131750)
 
 
 ![1657588204917](image/README/1657588204917.png)

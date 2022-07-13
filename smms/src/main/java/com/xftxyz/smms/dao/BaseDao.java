@@ -18,6 +18,7 @@ public abstract class BaseDao<T> {
     private Class<T> clazz;
 
     // 构造方法
+    @SuppressWarnings("unchecked")
     public BaseDao() {
         // 获取子类类型
         Class<?> clazz = this.getClass();

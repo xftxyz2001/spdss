@@ -11,20 +11,20 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public List<User> getAllUsers(Connection conn) {
-        // TODO Auto-generated method stub
-        return null;
+        String sql = "select * from user";
+        return getBeanList(conn, sql);
     }
 
     @Override
     public boolean checkName(Connection conn, String name) {
-        // TODO Auto-generated method stub
-        return false;
+        String sql = "select * from user where name = ?";
+        return update(conn, sql, name) > 0;
     }
 
     @Override
     public List<User> getUsers(Connection conn, String limits) {
-        // TODO Auto-generated method stub
-        return null;
+        String sql = "select * from user where limits = ?";
+        return getBeanList(conn, sql, limits);
     }
 
     @Override
@@ -41,20 +41,20 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public boolean deleteUser(Connection conn, int id) {
-        // TODO Auto-generated method stub
-        return false;
+        String sql = "delete from users where id = ?";
+        return update(conn, sql, id) > 0;
     }
 
     @Override
     public boolean updatePassword(Connection conn, int id, String password) {
-        // TODO Auto-generated method stub
-        return false;
+        String sql = "update users set pwd = ? where id = ?";
+        return update(conn, sql, password, id) > 0;
     }
 
     @Override
     public boolean updateLimits(Connection conn, int id, String limits) {
-        // TODO Auto-generated method stub
-        return false;
+        String sql = "update users set limits = ? where id = ?";
+        return update(conn, sql, limits, id) > 0;
     }
 
 }
