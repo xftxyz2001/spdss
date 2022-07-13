@@ -4,7 +4,7 @@ module com.xftxyz.smms {
     requires javafx.fxml;
     requires transitive java.sql;
     requires commons.dbutils;
-
+    requires java.desktop;
 
     opens com.xftxyz.smms to javafx.fxml;
     // opens org.apache.commons.dbutils to com.xftxyz.smms.dao;

@@ -1,5 +1,11 @@
 package com.xftxyz.smms;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.xftxyz.smms.utils.JDBCUtil;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,6 +17,8 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
+
+    private static Connection conn;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -27,14 +35,25 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("XX超市管理系统");
         primaryStage.show();
+        // System.out.println(7890);
     }
 
     public static void main(String[] args) {
+        try {
+            conn = JDBCUtil.getConnection();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         launch(args);
+        JDBCUtil.close(conn);
     }
 
+    // System.out.println(123);
     // private static Scene scene;
-
     // @Override
     // public void start(Stage stage) throws IOException {
     // // try {
