@@ -12,6 +12,13 @@ public class User {
     public User() {
     }
 
+    public User(String name, String pws, String limits) {
+        this.name = name;
+        this.pwd = pws;
+        this.limits = limits;
+        this.createAt = new Timestamp(System.currentTimeMillis());
+    }
+
     public int getId() {
         return id;
     }

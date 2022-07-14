@@ -6,8 +6,7 @@ import java.util.Map;
 import com.xftxyz.smms.dao.UserDao;
 import com.xftxyz.smms.dao.impl.UserDaoImpl;
 import com.xftxyz.smms.entity.User;
-import com.xftxyz.smms.exception.ExIllegalParameter;
-import com.xftxyz.smms.exception.ExNotLogin;
+import com.xftxyz.smms.type.Limits;
 import com.xftxyz.smms.utils.CodeUtil;
 
 import javafx.scene.image.Image;
@@ -30,7 +29,7 @@ public class UserService {
     // 生成验证码
     public Image getCode() {
         Map<String, Object> map = CodeUtil.get();
-        code = (String) map.get("code");
+        this.code = (String) map.get("code");
         return (Image) map.get("image");
     }
 
@@ -40,17 +39,22 @@ public class UserService {
     }
 
     // 登录，初始化当前用户
-    public boolean login(String username, String password) throws ExIllegalParameter {
+    public boolean login(String username, String password) {
         if (username == null || username.trim().equals("")) {
-            throw new ExIllegalParameter("用户名为空");
+            return false;
         }
 
         if (password == null || password.trim().equals("")) {
-            throw new ExIllegalParameter("密码为空");
+            return false;
         }
 
         this.user = ud.getUser(conn, username, password);
         return this.user != null;
+    }
+
+    // 获取当前用户
+    public User getUser() {
+        return this.user;
     }
 
     // 退出登录
@@ -59,12 +63,12 @@ public class UserService {
     }
 
     // 添加用户
-    public boolean addUser(User user) throws ExNotLogin {
-        if (user == null) {
-            throw new ExNotLogin("用户未登录");
+    public boolean addUser(User user) {
+        if (this.user == null) {
+            return false; // 没登陆
         }
 
-        // TODO 判断权限
+        // if (Limits.hasLimit(user, o)){return false;} // 权限不足
 
         return ud.saveUser(conn, user);
     }
@@ -72,4 +76,38 @@ public class UserService {
     // 修改密码
     // 修改权限
     // 删除用户
+
+    // 获取当前在线用户
+    public User getCurrentUser() {
+        return this.user;
+    }
+
+    // 获取当前用户名
+    public String getCurrentUserName() {
+        if (this.user == null) {
+            return "未获取到用户信息";
+        }
+        return this.user.getName();
+    }
+
+    // 获取当前用户身份
+    public String getCurrentUserRole() {
+        if (this.user == null) {
+            return "未获取到用户信息";
+        }
+        switch (Limits.valueOf(this.user.getLimits())) {
+            case ADMIN:
+                return "管理员";
+            case MANAGER:
+                return "经理";
+            case PURCHASER:
+                return "采购员";
+            case SALER:
+                return "销售员";
+            default:
+                break;
+        }
+        return "未知身份";
+    }
+
 }

@@ -3,6 +3,8 @@ package com.xftxyz.smms.type;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.xftxyz.smms.entity.User;
+
 public enum Limits {
     // 管理员：
     // 经理：
@@ -24,7 +26,16 @@ public enum Limits {
     }
 
     // 判断是否具有某项权限
-    public boolean hasLimit(Operatings o) {
-        return limits.getOrDefault(o, false);
+    public static boolean hasLimit(User u, Operatings o) {
+        if (u == null) {
+            return false;
+        }
+        String limits = u.getLimits();
+        if (limits == null || limits.trim().equals("")) {
+            return false;
+        }
+        Limits l = Limits.valueOf(limits);
+        return l.limits.getOrDefault(o, false);
     }
+
 }
