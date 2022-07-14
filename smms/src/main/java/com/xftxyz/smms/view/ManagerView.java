@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class ManagerV extends Application {
+public class ManagerView extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}

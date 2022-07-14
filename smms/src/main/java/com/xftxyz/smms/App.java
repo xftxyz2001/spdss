@@ -131,6 +131,8 @@ public class App extends Application {
     private void initialize() {
         try {
             conn = JDBCUtil.getConnection();
+            userService = new UserService(conn);
+            goodsService = new GoodsService(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
