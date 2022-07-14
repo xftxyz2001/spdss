@@ -1,4 +1,3 @@
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\view\Register.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\PurchaseDao.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\service\UserService.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\service\GoodsService.java
@@ -17,7 +16,7 @@ C:\Users\25810\spdss\smms\src\main\java\module-info.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\entity\Supplier.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\impl\PurchaseDaoImpl.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\UserDao.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\view\Managerview.java
+C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\view\ManagerView.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\GoodsDao.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\impl\SupplierDaoImpl.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\entity\Goods.java
