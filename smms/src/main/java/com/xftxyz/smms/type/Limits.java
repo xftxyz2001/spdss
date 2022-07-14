@@ -1,7 +1,7 @@
 package com.xftxyz.smms.type;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.xftxyz.smms.entity.User;
 
@@ -15,13 +15,13 @@ public enum Limits {
     PURCHASER(),
     SALER();
 
-    private Map<Operatings, Boolean> limits;
+    private Set<Operatings> limits;
 
     // 初始化权限
     private Limits(Operatings... operatings) {
-        limits = new HashMap<>();
+        limits = new HashSet<>();
         for (Operatings o : operatings) {
-            limits.put(o, true);
+            limits.add(o);
         }
     }
 
@@ -35,7 +35,7 @@ public enum Limits {
             return false;
         }
         Limits l = Limits.valueOf(limits);
-        return l.limits.getOrDefault(o, false);
+        return l.limits.contains(o);
     }
 
 }

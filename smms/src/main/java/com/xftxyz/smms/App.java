@@ -24,7 +24,9 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     private static Connection conn;
+    @SuppressWarnings("unused")
     private GoodsService goodsService;
+    @SuppressWarnings("unused")
     private UserService userService;
 
     public void setImage(ImageView imageView) {

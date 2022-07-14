@@ -9,7 +9,7 @@ import java.util.Properties;
 public class JDBCUtil {
     public static Connection getConnection() throws SQLException, ClassNotFoundException, IOException {
         // 1.加载配置文件
-        Properties pros = PropertiesUtil.getProperties("jdbc.properties");
+        Properties pros = FileUtil.getProperties("jdbc.properties");
 
         // 2.读取配置信息
         String user = pros.getProperty("user");
