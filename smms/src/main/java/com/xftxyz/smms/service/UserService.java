@@ -9,13 +9,17 @@ import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.type.Limits;
 import com.xftxyz.smms.utils.CodeUtil;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 public class UserService {
     private Connection conn; // 数据库连接对象，通过构造方法初始化
 
     // DAO对象
-    private UserDao ud = new UserDaoImpl();
+    private UserDao ud;
+    // 观察列表
+    private ObservableList<User> olUsers;
 
     private String code = ""; // 此次生成的验证码
 
@@ -24,6 +28,17 @@ public class UserService {
 
     public UserService(Connection conn) {
         this.conn = conn;
+        ud = new UserDaoImpl();
+        initializeUserObservableList();
+    }
+
+    private void initializeUserObservableList() {
+        olUsers = FXCollections.observableArrayList();
+        olUsers.addAll(ud.getAllUsers(conn));
+    }
+
+    public ObservableList<User> getUserObservableList() {
+        return olUsers;
     }
 
     // 生成验证码
@@ -64,18 +79,42 @@ public class UserService {
 
     // 添加用户
     public boolean addUser(User user) {
-        if (this.user == null) {
-            return false; // 没登陆
-        }
+        // if (this.user == null) {
+        // return false; // 没登陆
+        // }
 
         // if (Limits.hasLimit(user, o)){return false;} // 权限不足
+        // if (user.getUsername() == null || user.getUsername().trim().equals("")) {
+        // return false;
+        // }
 
-        return ud.saveUser(conn, user);
+        // if (user.getPassword() == null || user.getPassword().trim().equals("")) {
+        // return false;
+        // }
+
+        boolean isSucc = ud.saveUser(conn, user);
+        if (!isSucc) {
+            // olUsers.remove(user);
+            return false;
+        }
+        olUsers.add(user);
+        return true;
+    }
+
+    // 删除用户
+    public boolean deleteUser(User user) {
+
+        boolean isSucc = ud.deleteUser(conn, user.getId());
+        if (!isSucc) {
+            // olUsers.remove(user);
+            return false;
+        }
+        olUsers.remove(user);
+        return true;
     }
 
     // 修改密码
     // 修改权限
-    // 删除用户
 
     // 获取当前在线用户
     public User getCurrentUser() {

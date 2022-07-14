@@ -8,6 +8,7 @@ import com.xftxyz.smms.service.GoodsService;
 import com.xftxyz.smms.service.UserService;
 import com.xftxyz.smms.utils.FileUtil;
 import com.xftxyz.smms.utils.JDBCUtil;
+import com.xftxyz.smms.view.ManagerView;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -72,24 +73,27 @@ public class App extends Application {
         PasswordField passwordfield = new PasswordField();
 
         btnLogin.setOnAction(e -> {
+            // Application.
+            launch(ManagerView.class);
+            // ManagerView.setService(userService);
             // 验证码
-            String identify = identifytextfield.getText();
-            if (!userService.checkCode(identify)) {
-                setCode(ivCode);
-                return;
-            }
-            // 用户名
-            String account = Accounttextfield.getText();
-            // 密码
-            String pwd = passwordfield.getText();
-            // ...
-            boolean isSucc = userService.login(account, pwd);
-            if (!isSucc) {
-                setCode(ivCode);
-                return;
-            }
-            // 登录成功
-            System.out.println("登录成功");
+            // String identify = identifytextfield.getText();
+            // if (!userService.checkCode(identify)) {
+            //     setCode(ivCode);
+            //     return;
+            // }
+            // // 用户名
+            // String account = Accounttextfield.getText();
+            // // 密码
+            // String pwd = passwordfield.getText();
+            // // ...
+            // boolean isSucc = userService.login(account, pwd);
+            // if (!isSucc) {
+            //     setCode(ivCode);
+            //     return;
+            // }
+            // // 登录成功
+            // System.out.println("登录成功");
             // primaryStage.close();
             // 打开主界面
         });
@@ -145,7 +149,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        // launch(args);
+        launch();
         JDBCUtil.close(conn);
     }
 

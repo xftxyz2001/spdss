@@ -1,24 +1,42 @@
 package com.xftxyz.smms.view;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import com.xftxyz.smms.entity.Goods;
 import com.xftxyz.smms.entity.User;
+import com.xftxyz.smms.service.UserService;
+import com.xftxyz.smms.type.Limits;
 import com.xftxyz.smms.utils.FileUtil;
+import com.xftxyz.smms.utils.JDBCUtil;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ManagerView extends Application {
+
+	// private UserService userService;
+
+	// public void setUserService(UserService userService) {
+	// this.userService = userService;
+	// }
+
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -26,9 +44,26 @@ public class ManagerView extends Application {
 	// public void insert1(Text text, AnchorPane ap) {
 	// ap.getChildren().add(text);
 	// }
+	Connection conn;
+	UserService userService;
+
+	public void initialize() {
+
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		userService = new UserService(conn);
+	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		initialize();
 
 		Button usermanage = new Button("用户管理");
 		usermanage.setLayoutX(0);
@@ -104,11 +139,13 @@ public class ManagerView extends Application {
 		primaryStage.setWidth(800);
 		primaryStage.setTitle("欢迎使用");
 		primaryStage.setResizable(false);
-		ObservableList<User> list = FXCollections.observableArrayList();
+		// ObservableList<User> olUsers = FXCollections.observableArrayList();
 		Label usermagelabel = new Label("用户管理");
 		usermagelabel.setFont(Font.font("FangSong", FontWeight.BOLD, 20));
 		usermagelabel.setTextFill(Color.BLACK);
-		TableView<User> tableview = new TableView<User>(list);
+		// TableView<User> tableview = new TableView<User>(olUsers);
+		TableView<User> tableview = new TableView<User>(userService.getUserObservableList());
+
 		TableColumn<User, String> user_name = new TableColumn<User, String>("姓名");
 		TableColumn<User, String> user_id = new TableColumn<User, String>("id");
 		TableColumn<User, String> user_pwd = new TableColumn<User, String>("密码");
@@ -138,6 +175,60 @@ public class ManagerView extends Application {
 		changebt.setLayoutY(300);
 		aprightuser.getChildren().addAll(createbt, deletebt, changebt);
 		ObservableList<Goods> list1 = FXCollections.observableArrayList();
+		user_name.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(param.getValue().getName());
+					}
+				});
+		user_id.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(String.valueOf(param.getValue().getId()));
+					}
+				});
+		user_pwd.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(param.getValue().getPwd());
+					}
+				});
+		user_time.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(param.getValue().getCreateAt().toString());
+					}
+				});
+
+		// tableview.getColumns().add(user_name);
+		// tableview.getColumns().add(user_id);
+		// tableview.getColumns().add(user_pwd); // 这里密码是不是不要显示比较好？
+		// tableview.getColumns().add(user_time);
+
+		createbt.setOnAction(e -> {
+			// UserService us;
+			// try {
+			// us = new UserService(JDBCUtil.getConnection());
+			userService.addUser(new User("1", "1", Limits.MANAGER.name()));
+			// olUsers.add(new User("1", "1", Limits.MANAGER.name()));
+			// } catch (ClassNotFoundException | SQLException | IOException e1) {
+			// e1.printStackTrace();
+			// }
+			// 刷新
+		});
+
+		deletebt.setOnAction(e -> {
+			User selectedUser = tableview.getSelectionModel().getSelectedItem();
+			if (selectedUser == null) {
+				System.out.println("请选择一个用户");
+			}
+			userService.deleteUser(selectedUser);
+		});
+
 		Label goodsmageLabel = new Label("商品管理");
 		// goodsmageLabel.setFont(Font.font("FangSong", FontWeight.BOLD, 20));
 		goodsmageLabel.setFont(Font.font("仿宋", FontWeight.BOLD, 20));
@@ -150,9 +241,10 @@ public class ManagerView extends Application {
 		TableColumn<Goods, String> goods_number = new TableColumn<Goods, String>("数量");
 		TableColumn<Goods, String> goods_unit = new TableColumn<Goods, String>("单位");
 		TableColumn<Goods, String> goods_onsell = new TableColumn<Goods, String>("在售");
-		// tableview1.getColumns().addAll(goods_category, goods_id, goods_name, goods_number, goods_onsell,
-		// 		goods_price,
-		// 		goods_unit);
+		// tableview1.getColumns().addAll(goods_category, goods_id, goods_name,
+		// goods_number, goods_onsell,
+		// goods_price,
+		// goods_unit);
 		tableview1.getColumns().add(goods_id);
 		tableview1.getColumns().add(goods_name);
 		tableview1.getColumns().add(goods_price);
@@ -183,7 +275,8 @@ public class ManagerView extends Application {
 		aprightgoods.getChildren().addAll(importbt, remainbt, sellbt, derivebt);
 		apgoods.setVisible(false);
 		primaryStage.show();
-		// primaryStage.getIcons().add(new Image("file:/D:/sp111/spds/smms/src/main/java/com/xftxyz/smms/view/th(1).png"));
+		// primaryStage.getIcons().add(new
+		// Image("file:/D:/sp111/spds/smms/src/main/java/com/xftxyz/smms/view/th(1).png"));
 		primaryStage.getIcons().add(FileUtil.getImage("user.png"));
 
 	}
