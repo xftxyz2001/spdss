@@ -131,8 +131,6 @@ public class App extends Application {
     private void initialize() {
         try {
             conn = JDBCUtil.getConnection();
-            userService = new UserService(conn);
-            goodsService = new GoodsService(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -140,6 +138,8 @@ public class App extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        userService = new UserService(conn);
+        goodsService = new GoodsService(conn);
     }
 
     public static void main(String[] args) {
