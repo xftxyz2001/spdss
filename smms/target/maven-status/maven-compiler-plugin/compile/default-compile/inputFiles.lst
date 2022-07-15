@@ -1,8 +1,3 @@
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\PurchaseDao.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\service\UserService.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\service\GoodsService.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\entity\Sale.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\impl\GoodsDaoImpl.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\utils\FileUtil.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\entity\User.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\utils\RandomUtil.java
@@ -20,9 +15,3 @@ C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\view\ManagerView.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\GoodsDao.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\impl\SupplierDaoImpl.java
 C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\entity\Goods.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\dao\impl\UserDaoImpl.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\utils\CodeUtil.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\type\Limits.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\entity\Purchase.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\utils\JDBCUtil.java
-C:\Users\25810\spdss\smms\src\main\java\com\xftxyz\smms\utils\ImageConverter.java

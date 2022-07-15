@@ -12,8 +12,8 @@ public interface UserDao {
     // 获取所有用户
     List<User> getAllUsers(Connection conn);
 
-    // 新增一个用户
-    boolean saveUser(Connection connection, User user);
+    // 新增一个用户，返回id
+    int saveUser(Connection conn, User user);
 
     // 检查用户名是否存在
     boolean checkName(Connection conn, String name);

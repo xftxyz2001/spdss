@@ -18,7 +18,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     @Override
     public boolean checkName(Connection conn, String name) {
         String sql = "select * from users where name = ?";
-        return update(conn, sql, name) > 0;
+        return getBean(conn, sql, name) != null;
     }
 
     @Override
@@ -34,9 +34,9 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     }
 
     @Override
-    public boolean saveUser(Connection connection, User user) {
+    public int saveUser(Connection conn, User user) {
         String sql = "insert into users(name, pwd, limits, createAt) values(?, ?, ?, ?)";
-        return update(connection, sql, user.getName(), user.getPwd(), user.getLimits(), user.getCreateAt()) > 0;
+        return insert(conn, sql, user.getName(), user.getPwd(), user.getLimits(), user.getCreateAt());
     }
 
     @Override

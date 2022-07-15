@@ -12,7 +12,7 @@ import com.xftxyz.smms.entity.Sale;
 public class SaleDaoImpl extends BaseDao<Sale> implements SaleDao {
 
     @Override
-    public boolean addSale(Connection conn, Sale sale) {
+    public int addSale(Connection conn, Sale sale) {
         /*
          * private int goodsId; // 商品编号
          * private BigDecimal price; // 销售价
@@ -21,8 +21,8 @@ public class SaleDaoImpl extends BaseDao<Sale> implements SaleDao {
          * private Timestamp createdAt; // 销售时间
          */
         String sql = "insert into sale(goodsId, price, number, unit, createdAt) values(?, ?, ?, ?, ?)";
-        return update(conn, sql, sale.getGoodsId(), sale.getPrice(), sale.getNumber(), sale.getUnit(),
-                sale.getCreatedAt()) > 0;
+        return insert(conn, sql, sale.getGoodsId(), sale.getPrice(), sale.getNumber(), sale.getUnit(),
+                sale.getCreatedAt());
     }
 
     @Override

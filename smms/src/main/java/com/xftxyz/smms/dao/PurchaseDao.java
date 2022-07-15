@@ -9,24 +9,24 @@ import com.xftxyz.smms.entity.Purchase;
 
 public interface PurchaseDao {
     // 新增进货记录
-    public boolean addPurchase(Connection conn, Purchase purchase);
+    int addPurchase(Connection conn, Purchase purchase);
 
     // 根据商品编号查询进货记录
-    public List<Purchase> getPurchaseByGoodsId(Connection conn, int goodsId);
+    List<Purchase> getPurchaseByGoodsId(Connection conn, int goodsId);
 
     // 根据供货商编号查询进货记录
-    public List<Purchase> getPurchaseBySupplierId(Connection conn, int supplierId);
+    List<Purchase> getPurchaseBySupplierId(Connection conn, int supplierId);
 
     // 根据价格范围查询进货记录
-    public List<Purchase> getPurchaseByPriceRange(Connection conn, BigDecimal minPrice, BigDecimal maxPrice);
+    List<Purchase> getPurchaseByPriceRange(Connection conn, BigDecimal minPrice, BigDecimal maxPrice);
 
     // 根据进货时间范围查询进货记录
-    public List<Purchase> getPurchaseByTimeRange(Connection conn, Timestamp minTime, Timestamp maxTime);
+    List<Purchase> getPurchaseByTimeRange(Connection conn, Timestamp minTime, Timestamp maxTime);
 
     // 根据编号修改其他信息
-    public boolean updatePurchase(Connection conn, Purchase purchase);
+    boolean updatePurchase(Connection conn, Purchase purchase);
 
     // 根据编号删除进货记录
-    public boolean deletePurchase(Connection conn, int id);
+    boolean deletePurchase(Connection conn, int id);
 
 }

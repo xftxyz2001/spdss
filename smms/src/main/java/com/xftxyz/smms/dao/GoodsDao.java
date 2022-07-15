@@ -35,7 +35,7 @@ public interface GoodsDao {
     boolean isGoodsExist(Connection conn, String goodsName);
 
     // 新增商品
-    boolean addGoods(Connection conn, Goods goods);
+    int addGoods(Connection conn, Goods goods);
 
     // 根据商品编号修改商品库存
     boolean updateGoodsStockByGoodsId(Connection conn, int goodsId, BigDecimal stock);

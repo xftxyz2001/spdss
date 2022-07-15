@@ -5,6 +5,11 @@ import com.xftxyz.smms.Buyer;
 import com.xftxyz.smms.entity.Goods;
 import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.utils.FileUtil;
+<<<<<<< HEAD
+=======
+import com.xftxyz.smms.utils.JDBCUtil;
+import com.xftxyz.smms.utils.RandomUtil;
+>>>>>>> 77e63e751703f394ed44c9b9ad409325f6880261
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -299,6 +304,71 @@ public class ManagerView  {
 		changebt.setLayoutY(300);
 		aprightuser.getChildren().addAll(createbt, deletebt, changebt);
 		ObservableList<Goods> list1 = FXCollections.observableArrayList();
+<<<<<<< HEAD
+=======
+		user_name.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(param.getValue().getName());
+					}
+				});
+		user_id.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(String.valueOf(param.getValue().getId()));
+					}
+				});
+		user_pwd.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(param.getValue().getPwd());
+					}
+				});
+		user_time.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+						return new SimpleStringProperty(param.getValue().getCreateAt().toString());
+					}
+				});
+
+		// tableview.getColumns().add(user_name);
+		// tableview.getColumns().add(user_id);
+		// tableview.getColumns().add(user_pwd); // 这里密码是不是不要显示比较好？
+		// tableview.getColumns().add(user_time);
+
+		createbt.setOnAction(e -> {
+			// UserService us;
+			// try {
+			// us = new UserService(JDBCUtil.getConnection());
+			// userService.addUser(new User("1", "1", Limits.MANAGER.name()));
+
+			String name = RandomUtil.choice("123456789", 2);
+			String pwd = RandomUtil.choice("123456789", 2);
+			Limits[] ll = Limits.values();
+			Limits l = ll[RandomUtil.getInt(0, ll.length - 1)];
+			String limits = l.name();
+			User user = new User(name, pwd, limits);
+			userService.addUser(user);
+			// olUsers.add(new User("1", "1", Limits.MANAGER.name()));
+			// } catch (ClassNotFoundException | SQLException | IOException e1) {
+			// e1.printStackTrace();
+			// }
+			// 刷新
+		});
+
+		deletebt.setOnAction(e -> {
+			User selectedUser = tableview.getSelectionModel().getSelectedItem();
+			if (selectedUser == null) {
+				System.out.println("请选择一个用户");
+			}
+			userService.deleteUser(selectedUser);
+		});
+
+>>>>>>> 77e63e751703f394ed44c9b9ad409325f6880261
 		Label goodsmageLabel = new Label("商品管理");
 		// goodsmageLabel.setFont(Font.font("FangSong", FontWeight.BOLD, 20));
 		goodsmageLabel.setFont(Font.font("仿宋", FontWeight.BOLD, 20));

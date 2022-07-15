@@ -65,7 +65,7 @@ public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
     }
 
     @Override
-    public boolean addGoods(Connection conn, Goods goods) {
+    public int addGoods(Connection conn, Goods goods) {
         /*
          * private String name;// 商品名称
          * private BigDecimal price;// 单价
@@ -76,8 +76,8 @@ public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
          * private boolean onSell; // 在售状态，false为下架，true为在售
          */
         String sql = "insert into goods(name, price, description, category, number, unit, onSell) values(?, ?, ?, ?, ?, ?, ?)";
-        return update(conn, sql, goods.getName(), goods.getPrice(), goods.getDescription(), goods.getCategory(),
-                goods.getNumber(), goods.getUnit(), goods.isOnSell()) > 0;
+        return insert(conn, sql, goods.getName(), goods.getPrice(), goods.getDescription(), goods.getCategory(),
+                goods.getNumber(), goods.getUnit(), goods.isOnSell());
     }
 
     @Override
