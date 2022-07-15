@@ -25,6 +25,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+
 /**
  * JavaFX App
  */
@@ -35,14 +36,15 @@ public class App extends Application {
     @SuppressWarnings("unused")
     private GoodsService goodsService;
     private UserService userService;
-
+    
     // UI控件
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        initialize();
+        //initialize();
+  
         ImageView ivCode = new ImageView();
-        setCode(ivCode);
+       // setCode(ivCode);
         ivCode.setOnMouseClicked(e -> setCode(ivCode));
         ivCode.setLayoutX(220);
         ivCode.setLayoutY(160);
@@ -73,29 +75,30 @@ public class App extends Application {
         PasswordField passwordfield = new PasswordField();
 
         btnLogin.setOnAction(e -> {
-            // Application.
-            launch(ManagerView.class);
-            // ManagerView.setService(userService);
-            // 验证码
-            // String identify = identifytextfield.getText();
-            // if (!userService.checkCode(identify)) {
-            //     setCode(ivCode);
-            //     return;
-            // }
-            // // 用户名
-            // String account = Accounttextfield.getText();
-            // // 密码
-            // String pwd = passwordfield.getText();
-            // // ...
-            // boolean isSucc = userService.login(account, pwd);
-            // if (!isSucc) {
-            //     setCode(ivCode);
-            //     return;
-            // }
-            // // 登录成功
-            // System.out.println("登录成功");
-            // primaryStage.close();
-            // 打开主界面
+        	
+//           // manages
+//        //     ManagerView.setService(userService);
+//             
+//            // String identify = identifytextfield.getText();
+////             if (!userService.checkCode(identify)) {
+////                 setCode(ivCode);
+////                 return;
+////             }
+//             // 用户名
+//             String account = Accounttextfield.getText();
+//             // 密码
+//             String pwd = passwordfield.getText();
+//             // ...
+//             boolean isSucc = userService.login(account, pwd);
+//             if (!isSucc) {
+//                 setCode(ivCode);
+//                 return;
+//             }
+//             // 登录成功
+//             System.out.println("登录成功");
+             primaryStage.close();
+             ManagerView.getStage().show();
+             //打开主界面
         });
 
         ap.getChildren().addAll(title, Account, Pwd, Idf, Accounttextfield, identifytextfield, passwordfield, btnLogin,
@@ -127,7 +130,7 @@ public class App extends Application {
 
     // 重置验证码
     private void setCode(ImageView imageView) {
-        Image codeImage = userService.getCode();
+       // Image codeImage = userService.getCode();
         imageView.setImage(codeImage);
     }
 
@@ -144,14 +147,14 @@ public class App extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        userService = new UserService(conn);
+       // userService = new UserService(conn);
         goodsService = new GoodsService(conn);
     }
 
     public static void main(String[] args) {
         // launch(args);
-        launch();
-        JDBCUtil.close(conn);
+        launch(args);
+      //  JDBCUtil.close(conn);
     }
 
 }
