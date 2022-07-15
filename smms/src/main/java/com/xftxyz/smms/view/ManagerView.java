@@ -1,15 +1,12 @@
 package com.xftxyz.smms.view;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import com.xftxyz.smms.entity.Goods;
 import com.xftxyz.smms.entity.User;
+import com.xftxyz.smms.service.GoodsService;
+import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
 import com.xftxyz.smms.type.Limits;
 import com.xftxyz.smms.utils.FileUtil;
-import com.xftxyz.smms.utils.JDBCUtil;
 import com.xftxyz.smms.utils.RandomUtil;
 
 import javafx.application.Application;
@@ -32,34 +29,17 @@ import javafx.util.Callback;
 
 public class ManagerView extends Application {
 
-	// private UserService userService;
+	@SuppressWarnings("unused")
+    private GoodsService goodsService;
+    private UserService userService;
 
-	// public void setUserService(UserService userService) {
-	// this.userService = userService;
-	// }
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
-	// public void insert1(Text text, AnchorPane ap) {
-	// ap.getChildren().add(text);
-	// }
-	Connection conn;
-	UserService userService;
-
 	public void initialize() {
-
-		try {
-			conn = JDBCUtil.getConnection();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		userService = new UserService(conn);
+		userService = ServiceFactory.getUserService();
 	}
 
 	@Override

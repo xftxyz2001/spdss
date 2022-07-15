@@ -1,14 +1,9 @@
 package com.xftxyz.smms;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import com.xftxyz.smms.service.GoodsService;
+import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
 import com.xftxyz.smms.utils.FileUtil;
-import com.xftxyz.smms.utils.JDBCUtil;
-import com.xftxyz.smms.view.ManagerView;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,9 +26,6 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     // Service
-    private static Connection conn;
-    @SuppressWarnings("unused")
-    private GoodsService goodsService;
     private UserService userService;
 
     // UI控件
@@ -73,8 +65,7 @@ public class App extends Application {
         PasswordField passwordfield = new PasswordField();
 
         btnLogin.setOnAction(e -> {
-            // Application.
-            launch(ManagerView.class);
+            // launch(ManagerView.class);
             // ManagerView.setService(userService);
             // 验证码
             // String identify = identifytextfield.getText();
@@ -133,25 +124,12 @@ public class App extends Application {
 
     // 初始化：获取数据库链接及service实例
     private void initialize() {
-        try {
-            conn = JDBCUtil.getConnection();
-            userService = new UserService(conn);
-            goodsService = new GoodsService(conn);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        userService = new UserService(conn);
-        goodsService = new GoodsService(conn);
+        userService = ServiceFactory.getUserService();
     }
 
     public static void main(String[] args) {
-        // launch(args);
-        launch();
-        JDBCUtil.close(conn);
+        launch(args);
+        ServiceFactory.close();
     }
 
 }
