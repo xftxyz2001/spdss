@@ -1,9 +1,9 @@
 package com.xftxyz.smms;
 
-import com.xftxyz.smms.service.GoodsService;
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
 import com.xftxyz.smms.utils.FileUtil;
+import com.xftxyz.smms.view.ManagerView;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -33,8 +32,9 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         initialize();
+
         ImageView ivCode = new ImageView();
-        setCode(ivCode);
+        // setCode(ivCode);
         ivCode.setOnMouseClicked(e -> setCode(ivCode));
         ivCode.setLayoutX(220);
         ivCode.setLayoutY(160);
@@ -65,27 +65,9 @@ public class App extends Application {
         PasswordField passwordfield = new PasswordField();
 
         btnLogin.setOnAction(e -> {
-            // launch(ManagerView.class);
-            // ManagerView.setService(userService);
-            // 验证码
-            // String identify = identifytextfield.getText();
-            // if (!userService.checkCode(identify)) {
-            //     setCode(ivCode);
-            //     return;
-            // }
-            // // 用户名
-            // String account = Accounttextfield.getText();
-            // // 密码
-            // String pwd = passwordfield.getText();
-            // // ...
-            // boolean isSucc = userService.login(account, pwd);
-            // if (!isSucc) {
-            //     setCode(ivCode);
-            //     return;
-            // }
-            // // 登录成功
-            // System.out.println("登录成功");
-            // primaryStage.close();
+
+            primaryStage.close();
+            ManagerView.getStage().show();
             // 打开主界面
         });
 
@@ -118,8 +100,8 @@ public class App extends Application {
 
     // 重置验证码
     private void setCode(ImageView imageView) {
-        Image codeImage = userService.getCode();
-        imageView.setImage(codeImage);
+        // Image codeImage = userService.getCode();
+        imageView.setImage(userService.getCode());
     }
 
     // 初始化：获取数据库链接及service实例
@@ -128,8 +110,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        // launch(args);
         launch(args);
-        ServiceFactory.close();
+      //  JDBCUtil.close(conn);
     }
 
 }
