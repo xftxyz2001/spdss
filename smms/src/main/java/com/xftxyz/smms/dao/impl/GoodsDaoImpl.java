@@ -140,4 +140,16 @@ public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
         return update(conn, sql, category);
     }
 
+    @Override
+    public int onSellAllGoods(Connection conn) {
+        String sql = "update goods set onSell = 1";
+        return update(conn, sql);
+    }
+
+    @Override
+    public int offShelvesAllGoods(Connection conn) {
+        String sql = "update goods set onSell = 0";
+        return update(conn, sql);
+    }
+
 }

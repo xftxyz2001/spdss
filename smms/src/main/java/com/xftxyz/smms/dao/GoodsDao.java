@@ -39,7 +39,7 @@ public interface GoodsDao {
 
     // 根据商品编号修改商品库存
     boolean updateGoodsStockByGoodsId(Connection conn, int goodsId, BigDecimal stock);
-    
+
     // 修改商品价格
     boolean updateGoodsPriceByGoodsId(Connection conn, int goodsId, BigDecimal price);
 
@@ -63,7 +63,14 @@ public interface GoodsDao {
 
     // 根据商品种类上架商品
     int onShelvesGoodsByCategory(Connection conn, String category);
-    
+
     // 删除商品
     boolean deleteGoodsByGoodsId(Connection conn, int goodsId);
+
+    // 上架所有商品
+    int onSellAllGoods(Connection conn);
+
+    // 下架所有商品
+    int offShelvesAllGoods(Connection conn);
+
 }
