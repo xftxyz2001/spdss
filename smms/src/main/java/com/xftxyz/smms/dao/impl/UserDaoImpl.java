@@ -11,19 +11,19 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public List<User> getAllUsers(Connection conn) {
-        String sql = "select * from user";
+        String sql = "select * from users";
         return getBeanList(conn, sql);
     }
 
     @Override
     public boolean checkName(Connection conn, String name) {
-        String sql = "select * from user where name = ?";
+        String sql = "select * from users where name = ?";
         return update(conn, sql, name) > 0;
     }
 
     @Override
     public List<User> getUsers(Connection conn, String limits) {
-        String sql = "select * from user where limits = ?";
+        String sql = "select * from users where limits = ?";
         return getBeanList(conn, sql, limits);
     }
 
