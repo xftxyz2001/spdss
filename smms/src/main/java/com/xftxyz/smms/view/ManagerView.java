@@ -10,6 +10,7 @@ import com.xftxyz.smms.service.UserService;
 import com.xftxyz.smms.type.Limits;
 import com.xftxyz.smms.utils.FileUtil;
 import com.xftxyz.smms.utils.JDBCUtil;
+import com.xftxyz.smms.utils.RandomUtil;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -213,7 +214,15 @@ public class ManagerView extends Application {
 			// UserService us;
 			// try {
 			// us = new UserService(JDBCUtil.getConnection());
-			userService.addUser(new User("1", "1", Limits.MANAGER.name()));
+			// userService.addUser(new User("1", "1", Limits.MANAGER.name()));
+
+			String name = RandomUtil.choice("123456789", 2);
+			String pwd = RandomUtil.choice("123456789", 2);
+			Limits[] ll = Limits.values();
+			Limits l = ll[RandomUtil.getInt(0, ll.length - 1)];
+			String limits = l.name();
+			User user = new User(name, pwd, limits);
+			userService.addUser(user);
 			// olUsers.add(new User("1", "1", Limits.MANAGER.name()));
 			// } catch (ClassNotFoundException | SQLException | IOException e1) {
 			// e1.printStackTrace();

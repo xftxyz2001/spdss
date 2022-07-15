@@ -12,9 +12,9 @@ public class User {
     public User() {
     }
 
-    public User(String name, String pws, String limits) {
+    public User(String name, String pwd, String limits) {
         this.name = name;
-        this.pwd = pws;
+        this.pwd = pwd;
         this.limits = limits;
         this.createAt = new Timestamp(System.currentTimeMillis());
     }

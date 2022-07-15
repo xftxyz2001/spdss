@@ -1,6 +1,8 @@
 package com.xftxyz.smms.service;
 
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 
 import com.xftxyz.smms.dao.UserDao;
@@ -8,6 +10,7 @@ import com.xftxyz.smms.dao.impl.UserDaoImpl;
 import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.type.Limits;
 import com.xftxyz.smms.utils.CodeUtil;
+import com.xftxyz.smms.utils.JDBCUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +28,12 @@ public class UserService {
 
     // 当前用户，通过login()方法设置
     private User user;
+
+    public UserService() throws ClassNotFoundException, SQLException, IOException {
+        this.conn = JDBCUtil.getConnection();
+        ud = new UserDaoImpl();
+        initializeUserObservableList();
+    }
 
     public UserService(Connection conn) {
         this.conn = conn;
@@ -94,6 +103,7 @@ public class UserService {
 
         // boolean checked = ud.checkName(conn, user.getName());
         if (ud.checkName(conn, user.getName())) {
+            System.out.println("用户名已存在");
             return false; // 用户名已存在
         }
 

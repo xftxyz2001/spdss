@@ -18,7 +18,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     @Override
     public boolean checkName(Connection conn, String name) {
         String sql = "select * from users where name = ?";
-        return update(conn, sql, name) > 0;
+        return getBean(conn, sql, name) != null;
     }
 
     @Override
