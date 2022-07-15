@@ -92,11 +92,16 @@ public class UserService {
         // return false;
         // }
 
-        boolean isSucc = ud.saveUser(conn, user);
-        if (!isSucc) {
-            // olUsers.remove(user);
-            return false;
+        // boolean checked = ud.checkName(conn, user.getName());
+        if (ud.checkName(conn, user.getName())) {
+            return false; // 用户名已存在
         }
+
+        int id = ud.saveUser(conn, user);
+        if (id < 0) {
+            return false; // 添加失败
+        }
+        user.setId(id);
         olUsers.add(user);
         return true;
     }
@@ -104,9 +109,12 @@ public class UserService {
     // 删除用户
     public boolean deleteUser(User user) {
 
+        if (user == null) {
+            return false;
+        }
+
         boolean isSucc = ud.deleteUser(conn, user.getId());
         if (!isSucc) {
-            // olUsers.remove(user);
             return false;
         }
         olUsers.remove(user);
@@ -131,7 +139,12 @@ public class UserService {
 
     // 获取当前用户身份
     public String getCurrentUserRole() {
-        if (this.user == null) {
+        return getUserRoleName(this.user);
+    }
+
+    // 获取用户身份名
+    public String getUserRoleName(User user) {
+        if (user == null) {
             return "未获取到用户信息";
         }
         switch (Limits.valueOf(this.user.getLimits())) {

@@ -9,7 +9,7 @@ import com.xftxyz.smms.entity.Sale;
 
 public interface SaleDao {
     // 新增销售记录
-    boolean addSale(Connection conn, Sale sale);
+    int addSale(Connection conn, Sale sale);
 
     // 根据商品编号查询销售记录
     List<Sale> getSaleByGoodsId(Connection conn, int goodsId);

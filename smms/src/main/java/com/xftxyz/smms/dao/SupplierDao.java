@@ -25,7 +25,7 @@ public interface SupplierDao {
     boolean isSupplierExist(Connection conn, String supplierName);
 
     // 新增供货商
-    boolean addSupplier(Connection conn, Supplier supplier);
+    int addSupplier(Connection conn, Supplier supplier);
 
     // 根据供货商编号删除供货商
     boolean deleteSupplierBySupplierId(Connection conn, int supplierId);

@@ -12,7 +12,7 @@ import com.xftxyz.smms.entity.Purchase;
 public class PurchaseDaoImpl extends BaseDao<Purchase> implements PurchaseDao {
 
     @Override
-    public boolean addPurchase(Connection conn, Purchase purchase) {
+    public int addPurchase(Connection conn, Purchase purchase) {
         /*
          * private int supplierId; // 供应商编号
          * private int goodsId; // 商品编号
@@ -23,7 +23,7 @@ public class PurchaseDaoImpl extends BaseDao<Purchase> implements PurchaseDao {
          */
         String sql = "insert into purchase(supplierId, goodsId, price, number, unit, createdAt) values(?, ?, ?, ?, ?, ?)";
         return update(conn, sql, purchase.getSupplierId(), purchase.getGoodsId(), purchase.getPrice(),
-                purchase.getNumber(), purchase.getUnit(), purchase.getCreatedAt()) > 0;
+                purchase.getNumber(), purchase.getUnit(), purchase.getCreatedAt());
     }
 
     @Override

@@ -46,9 +46,9 @@ public class SupplierDaoImpl extends BaseDao<Supplier> implements SupplierDao {
     }
 
     @Override
-    public boolean addSupplier(Connection conn, Supplier supplier) {
+    public int addSupplier(Connection conn, Supplier supplier) {
         String sql = "insert into supplier(name, address, phone) values(?, ?, ?)";
-        return update(conn, sql, supplier.getName(), supplier.getAddress(), supplier.getPhone()) > 0;
+        return insert(conn, sql, supplier.getName(), supplier.getAddress(), supplier.getPhone());
     }
 
     @Override
