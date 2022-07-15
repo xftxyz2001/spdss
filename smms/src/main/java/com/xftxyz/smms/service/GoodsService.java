@@ -36,5 +36,9 @@ public class GoodsService {
         olGoods = FXCollections.observableArrayList();
         olGoods.addAll(gd.getAllGoods(conn));
     }
-    
+
+    public ObservableList<Goods> getGoodsObservableList() {
+        return olGoods;
+    }
+
 }

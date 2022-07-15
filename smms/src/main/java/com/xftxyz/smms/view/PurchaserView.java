@@ -1,10 +1,10 @@
-package com.xftxyz.smms;
+package com.xftxyz.smms.view;
 
 import com.xftxyz.smms.entity.Goods;
 import com.xftxyz.smms.entity.User;
+import com.xftxyz.smms.type.MyValues;
 import com.xftxyz.smms.utils.FileUtil;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -18,14 +18,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class Buyer extends Application {
+@SuppressWarnings("all")
+public class PurchaserView {
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start() throws Exception {
+		Stage primaryStage = new Stage();
 		Button supperliermanage = new Button("供货商");
 		supperliermanage.setLayoutX(0);
 		supperliermanage.setLayoutY(150);
@@ -74,8 +71,9 @@ public class Buyer extends Application {
 		ap.setRightAnchor(apgoods, 0.0);
 		ap.setLeftAnchor(apgoods, 200.0);
 		ap.setBottomAnchor(apgoods, 0.0);
-		aprightsupperlier.setStyle("-fx-background-color:#696969");
-		aprightgoods.setStyle("-fx-background-color:#696969");
+		aprightsupperlier.setStyle(MyValues.BACKGROUND_STYLE);
+		aprightgoods.setStyle(MyValues.BACKGROUND_STYLE);
+		// aprightgoods.setBackground(value);
 		apleft.getChildren().addAll(goodsmanage, supperliermanage);
 		Scene scene = new Scene(ap);
 

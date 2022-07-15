@@ -135,9 +135,9 @@ public class UserService {
     // 修改权限
 
     // 获取当前在线用户
-    public User getCurrentUser() {
-        return this.user;
-    }
+    // public User getCurrentUser() {
+    //     return this.user;
+    // }
 
     // 获取当前用户名
     public String getCurrentUserName() {
@@ -147,9 +147,14 @@ public class UserService {
         return this.user.getName();
     }
 
-    // 获取当前用户身份
-    public String getCurrentUserRole() {
+    // 获取当前用户身份名
+    public String getCurrentUserRoleName() {
         return getUserRoleName(this.user);
+    }
+
+    // 获取当前用户身份
+    public Limits getCurrentUserRole() {
+        return getUserRole(this.user);
     }
 
     // 获取用户身份名
@@ -157,7 +162,7 @@ public class UserService {
         if (user == null) {
             return "未获取到用户信息";
         }
-        switch (Limits.valueOf(this.user.getLimits())) {
+        switch (getUserRole(user)) {
             case ADMIN:
                 return "管理员";
             case MANAGER:
@@ -170,6 +175,14 @@ public class UserService {
                 break;
         }
         return "未知身份";
+    }
+
+    // 获取用户身份
+    public Limits getUserRole(User user) {
+        if (user == null) {
+            return null;
+        }
+        return Limits.valueOf(user.getLimits());
     }
 
 }

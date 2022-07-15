@@ -12,4 +12,5 @@
     exports com.xftxyz.smms.entity;
     exports com.xftxyz.smms.view;
     exports com.xftxyz.smms.service;
+    exports com.xftxyz.smms.type;
 }

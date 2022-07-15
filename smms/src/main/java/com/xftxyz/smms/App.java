@@ -3,7 +3,10 @@ package com.xftxyz.smms;
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
 import com.xftxyz.smms.utils.FileUtil;
+import com.xftxyz.smms.view.AdminView;
 import com.xftxyz.smms.view.ManagerView;
+import com.xftxyz.smms.view.PurchaserView;
+import com.xftxyz.smms.view.SalerView;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -28,13 +31,21 @@ public class App extends Application {
     private UserService userService;
 
     // UI控件
+    private TextField tfUserName;
+    private PasswordField pfPassWord;
+    private TextField tfCode;
+    private Button btnLogin;
+
+    // public void enterMainView() {
+
+    // }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         initialize();
 
         ImageView ivCode = new ImageView();
-        // setCode(ivCode);
+        setCode(ivCode);
         ivCode.setOnMouseClicked(e -> setCode(ivCode));
         ivCode.setLayoutX(220);
         ivCode.setLayoutY(160);
@@ -52,26 +63,65 @@ public class App extends Application {
         Pwd.setFont(Font.font("FangSong", FontWeight.NORMAL, 15));
         Label Idf = new Label("验证码");
         Idf.setFont(Font.font("FangSong", FontWeight.NORMAL, 15));
-        TextField Accounttextfield = new TextField();
-        TextField identifytextfield = new TextField();
-        Button btnLogin = new Button("登录");
 
         btnLogin.setFont(Font.font("FangSong", FontWeight.NORMAL, 15));
         btnLogin.setStyle("-fx-background-color:#6495ED");
         btnLogin.setPrefWidth(220);
         btnLogin.setLayoutX(100);
         btnLogin.setLayoutY(200);
-        identifytextfield.setPrefWidth(60);
-        PasswordField passwordfield = new PasswordField();
+        tfCode.setPrefWidth(60);
 
         btnLogin.setOnAction(e -> {
+            // try {
+            //     primaryStage.close();
+            //     new AdminView().start();
+            // } catch (Exception e1) {
+            //     e1.printStackTrace();
+            // }
+            String code = tfCode.getText();
+            if (code == null || code.trim().equals("")) {
+                tfCode.setStyle("-fx-border-color:red");
+                System.out.println("验证码不能为空");
+                return;
+            }
 
+            String username = tfUserName.getText();
+            String password = pfPassWord.getText();
+
+            boolean isSucc = userService.login(username, password);
+            if (!isSucc) {
+                System.out.println("登录失败（用户名或密码错误）");
+                return;
+            }
+
+            // 关闭登录界面
             primaryStage.close();
-            ManagerView.getStage().show();
-            // 打开主界面
+
+            try {
+                switch (userService.getCurrentUserRole()) {
+                    case ADMIN:
+                        new AdminView().start();
+                        break;
+                    case MANAGER:
+                        new ManagerView().start();
+                        break;
+                    case PURCHASER:
+                        new PurchaserView().start();
+                        break;
+                    case SALER:
+                        new SalerView().start();
+                        break;
+                    default:
+                        System.out.println("请先登录");
+                        break;
+
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         });
 
-        ap.getChildren().addAll(title, Account, Pwd, Idf, Accounttextfield, identifytextfield, passwordfield, btnLogin,
+        ap.getChildren().addAll(title, Account, Pwd, Idf, tfUserName, pfPassWord, tfCode, btnLogin,
                 ivCode);
 
         title.setLayoutX(100);
@@ -82,12 +132,12 @@ public class App extends Application {
         Pwd.setLayoutY(130);
         Idf.setLayoutX(95);
         Idf.setLayoutY(165);
-        Accounttextfield.setLayoutX(150);
-        Accounttextfield.setLayoutY(100);
-        identifytextfield.setLayoutX(150);
-        identifytextfield.setLayoutY(160);
-        passwordfield.setLayoutX(150);
-        passwordfield.setLayoutY(130);
+        tfUserName.setLayoutX(150);
+        tfUserName.setLayoutY(100);
+        tfCode.setLayoutX(150);
+        tfCode.setLayoutY(160);
+        pfPassWord.setLayoutX(150);
+        pfPassWord.setLayoutY(130);
         primaryStage.setScene(scene);
         primaryStage.setHeight(350);
         primaryStage.setWidth(400);
@@ -107,12 +157,16 @@ public class App extends Application {
     // 初始化：获取数据库链接及service实例
     private void initialize() {
         userService = ServiceFactory.getUserService();
+        tfUserName = new TextField();
+        pfPassWord = new PasswordField();
+        tfCode = new TextField();
+        btnLogin = new Button("登录");
+
     }
 
     public static void main(String[] args) {
-        // launch(args);
         launch(args);
-      //  JDBCUtil.close(conn);
+        ServiceFactory.close();
     }
 
 }
