@@ -40,6 +40,7 @@ public abstract class BaseDao<T> {
             count = queryRunner.update(conn, sql, params);
         } catch (SQLException e) {
             e.printStackTrace();
+            Debug.log("update error: " + sql + " params:" + params);
         }
         return count;
     }
@@ -75,7 +76,7 @@ public abstract class BaseDao<T> {
             list = queryRunner.query(conn, sql, rsh, params);
         } catch (SQLException e) {
             e.printStackTrace();
-            Debug.log("getQueryList:"+conn+" "+sql+" "+params);
+            Debug.log("getQueryList:" + conn + " " + sql + " " + params);
         }
         return list;
     }

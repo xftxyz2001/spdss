@@ -29,7 +29,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public boolean updateUser(Connection conn, User user) {
-        String sql = "update user sets name = ?, pwd = ?, role = ? where id = ?";
+        String sql = "update users set name = ?, pwd = ?, role = ? where id = ?";
         return update(conn, sql, user.getName(), user.getPwd(), user.getRole().name(), user.getId()) > 0;
     }
 
@@ -79,6 +79,6 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     @Override
     public boolean checkName(Connection conn, String name) {
         String sql = "select count(*) from users where name = ?";
-        return (int) getValue(conn, sql, name) > 0;
+        return (Long) getValue(conn, sql, name) > 0;
     }
 }

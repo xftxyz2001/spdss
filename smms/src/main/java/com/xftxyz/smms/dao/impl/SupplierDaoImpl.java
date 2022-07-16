@@ -36,7 +36,7 @@ public class SupplierDaoImpl extends BaseDao<Supplier> implements SupplierDao {
     @Override
     public boolean checkSupplier(Connection conn, String supplierName) {
         String sql = "select count(*) from suppliers where name = ?";
-        return (int) getValue(conn, sql, supplierName) > 0;
+        return (Long) getValue(conn, sql, supplierName) > 0;
     }
 
 }

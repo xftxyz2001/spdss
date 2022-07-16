@@ -69,12 +69,12 @@ public class App extends Application {
         tfCode.setPrefWidth(60);
 
         btnLogin.setOnAction(e -> {
-            String code = tfCode.getText();
-            if (code == null || code.trim().equals("")) {
-                tfCode.setStyle("-fx-border-color:red");
-                Debug.log("验证码不能为空");
-                return;
-            }
+            // String code = tfCode.getText();
+            // if (code == null || code.trim().equals("")) {
+            //     tfCode.setStyle("-fx-border-color:red");
+            //     Debug.log("验证码不能为空");
+            //     return;
+            // }
 
             String username = tfUserName.getText();
             String password = pfPassWord.getText();

@@ -38,7 +38,7 @@ public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
     @Override
     public boolean checkGoods(Connection conn, String goodsName) {
         String sql = "select count(*) from goods where name = ?";
-        return (int) getValue(conn, sql, goodsName) > 0;
+        return (Long) getValue(conn, sql, goodsName) > 0;
     }
 
 }

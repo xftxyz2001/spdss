@@ -61,6 +61,15 @@ public class GoodsService {
         return true;
     }
 
+    // 获取所有商品名
+    public String[] getAllGoodsName() {
+        String[] names = new String[observableList.size()];
+        for (int i = 0; i < observableList.size(); i++) {
+            names[i] = observableList.get(i).getName();
+        }
+        return names;
+    }
+
     // 删除商品
     public boolean deleteGoods(Goods goods) {
         if (goods == null) {

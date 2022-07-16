@@ -9,6 +9,7 @@ import com.xftxyz.smms.dao.impl.UserDaoImpl;
 import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.type.Role;
 import com.xftxyz.smms.utils.CodeUtil;
+import com.xftxyz.smms.utils.Debug;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -136,7 +137,8 @@ public class UserService {
         if (newUser == null) {
             return false;
         }
-
+        Debug.log("old: " + this.old.toString());
+        Debug.log("new: " + newUser.toString());
         boolean isSucc = dao.updateUser(conn, newUser);
         if (!isSucc) {
             return false;
