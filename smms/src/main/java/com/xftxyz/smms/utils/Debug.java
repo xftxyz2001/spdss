@@ -6,6 +6,8 @@ public class Debug {
     private static PrintStream pw = System.out;
 
     public static void log(String message) {
-        pw.println(message);
+        if (pw != null){
+            pw.println(message);
+        }
     }
 }
