@@ -55,6 +55,8 @@ public class PurchaseService {
         }
         purchase.setId(index);
         observableList.add(purchase);
+
+        ServiceFactory.getGoodsService().updateBy(purchase);
         return true;
     }
 

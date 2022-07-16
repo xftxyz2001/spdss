@@ -6,6 +6,8 @@ import java.util.List;
 import com.xftxyz.smms.dao.GoodsDao;
 import com.xftxyz.smms.dao.impl.GoodsDaoImpl;
 import com.xftxyz.smms.entity.Goods;
+import com.xftxyz.smms.entity.Purchase;
+import com.xftxyz.smms.entity.Sale;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -109,6 +111,21 @@ public class GoodsService {
         }
         observableList.set(observableList.indexOf(this.old), newGoods);
         return true;
+    }
+
+    // 更新库存
+    public void updateBy(Purchase purchase) {
+        // for (int i = 0; i < observableList.size(); i++) {
+        // Goods goods = observableList.get(i);
+        // if (goods.getName().equals(purchase.getGoodsName()) &&
+        // goods.getUnit().equals(purchase.getUnit())) {
+        // goods.setNum(goods.getNum().add(purchase.getNum()));
+        // observableList.set(i, goods);
+        // }
+        // }
+    }
+
+    public void updateBy(Sale sale) {
     }
 
 }

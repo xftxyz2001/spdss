@@ -55,6 +55,8 @@ public class SaleService {
         }
         sale.setId(index);
         observableList.add(sale);
+
+        ServiceFactory.getGoodsService().updateBy(sale);
         return true;
     }
 
