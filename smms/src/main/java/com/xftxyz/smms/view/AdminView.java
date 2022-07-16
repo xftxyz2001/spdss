@@ -11,16 +11,23 @@ import com.xftxyz.smms.service.SaleService;
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.SupplierService;
 import com.xftxyz.smms.service.UserService;
+import com.xftxyz.smms.type.MyValues;
 import com.xftxyz.smms.utils.FileUtil;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class AdminView {
     // Service
@@ -93,7 +100,7 @@ public class AdminView {
         // UI控件初始化
         primaryStage = new Stage();
         bpRoot = new BorderPane();
-        scene = new Scene(bpRoot);
+        scene = new Scene(bpRoot, MyValues.SCENE_WIDTH, MyValues.SCENE_HEIGHT);
 
         // top
         btnUserManage = new Button("用户管理");
@@ -117,9 +124,10 @@ public class AdminView {
             bpRoot.setCenter(bpSaleManage);
         });
         hbManageMenu = new HBox(btnUserManage, btnGoodsManage, btnSupplierManage, btnPurchaseManage, btnSaleManage);
-        hbManageMenu.spacingProperty().bind(scene.widthProperty().subtract(btnUserManage.widthProperty())
-                .subtract(btnGoodsManage.widthProperty()).subtract(btnSupplierManage.widthProperty())
-                .subtract(btnPurchaseManage.widthProperty()).subtract(btnSaleManage.widthProperty()).divide(4));
+        // HBox.setHgrow(hbManageMenu, Priority.ALWAYS);
+        // hbManageMenu.spacingProperty().bind(scene.widthProperty().subtract(btnUserManage.widthProperty())
+        //         .subtract(btnGoodsManage.widthProperty()).subtract(btnSupplierManage.widthProperty())
+        //         .subtract(btnPurchaseManage.widthProperty()).subtract(btnSaleManage.widthProperty()).divide(4));
         bpRoot.setTop(hbManageMenu);
 
         // center
@@ -163,6 +171,37 @@ public class AdminView {
         });
         vbUserManage = new VBox(btnUserManageAddUser, btnUserManageDeleteUser, btnUserManageUpdateUser);
         tvUserManage = new TableView<User>(userService.getObservableList());
+        TableColumn<User, String> tvUserManage_tcUserName = new TableColumn<>("用户名");
+        tvUserManage_tcUserName.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+                        return new SimpleStringProperty(param.getValue().getName());
+                    }
+
+                });
+        TableColumn<User, String> tvUserManage_tcUserPwd = new TableColumn<>("密码");
+        tvUserManage_tcUserPwd.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+                        return new SimpleStringProperty(param.getValue().getPwd());
+                    }
+
+                });
+        TableColumn<User, String> tvUserManage_tcUserRole = new TableColumn<>("角色");
+        tvUserManage_tcUserRole.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+                        return new SimpleStringProperty(userService.getUserRoleName(param.getValue()));
+                    }
+                });
+        tvUserManage.getColumns().add(tvUserManage_tcUserName);
+        tvUserManage.getColumns().add(tvUserManage_tcUserPwd);
+        tvUserManage.getColumns().add(tvUserManage_tcUserRole);
         bpUserManage = new BorderPane();
         bpUserManage.setLeft(vbUserManage);
         bpUserManage.setCenter(tvUserManage);
@@ -198,6 +237,61 @@ public class AdminView {
         });
         vbGoodsManage = new VBox(btnGoodsManageAddGoods, btnGoodsManageDeleteGoods, btnGoodsManageUpdateGoods);
         tvGoodsManage = new TableView<Goods>(goodsService.getObservableList());
+        TableColumn<Goods, String> tvGoodsManage_tcGoodsName = new TableColumn<>("商品名");
+        tvGoodsManage_tcGoodsName.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Goods, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Goods, String> param) {
+                        return new SimpleStringProperty(param.getValue().getName());
+                    }
+
+                });
+        TableColumn<Goods, String> tvGoodsManage_tcGoodsPrice = new TableColumn<>("单价");
+        tvGoodsManage_tcGoodsPrice.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Goods, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Goods, String> param) {
+                        return new SimpleStringProperty(param.getValue().getPrice().toString());
+                    }
+
+                });
+        TableColumn<Goods, String> tvGoodsManage_tcGoodsNum = new TableColumn<>("库存数量");
+        tvGoodsManage_tcGoodsNum.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Goods, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Goods, String> param) {
+                        return new SimpleStringProperty(param.getValue().getNum().toString());
+                    }
+
+                });
+        TableColumn<Goods, String> tvGoodsManage_tcGoodsUnit = new TableColumn<>("单位");
+        tvGoodsManage_tcGoodsUnit.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Goods, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Goods, String> param) {
+                        return new SimpleStringProperty(param.getValue().getUnit());
+                    }
+
+                });
+        TableColumn<Goods, String> tvGoodsManage_tcGoodsDescribe = new TableColumn<>("描述");
+        tvGoodsManage_tcGoodsDescribe.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Goods, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Goods, String> param) {
+                        return new SimpleStringProperty(param.getValue().getDescribe());
+                    }
+
+                });
+        tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsName);
+        tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsPrice);
+        tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsNum);
+        tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsUnit);
+        tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsDescribe);
         bpGoodsManage = new BorderPane();
         bpGoodsManage.setLeft(vbGoodsManage);
         bpGoodsManage.setCenter(tvGoodsManage);
@@ -234,6 +328,39 @@ public class AdminView {
         vbSupplierManage = new VBox(btnSupplierManageAddSupplier, btnSupplierManageDeleteSupplier,
                 btnSupplierManageUpdateSupplier);
         tvSupplierManage = new TableView<Supplier>(supplierService.getObservableList());
+        TableColumn<Supplier, String> tvSupplierManage_tcSupplierName = new TableColumn<>("供应商名");
+        tvSupplierManage_tcSupplierName.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Supplier, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Supplier, String> param) {
+                        return new SimpleStringProperty(param.getValue().getName());
+                    }
+
+                });
+        TableColumn<Supplier, String> tvSupplierManage_tcSupplierPhone = new TableColumn<>("联系方式");
+        tvSupplierManage_tcSupplierPhone.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Supplier, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Supplier, String> param) {
+                        return new SimpleStringProperty(param.getValue().getTel());
+                    }
+
+                });
+        TableColumn<Supplier, String> tvSupplierManage_tcSupplierAddress = new TableColumn<>("地址");
+        tvSupplierManage_tcSupplierAddress.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Supplier, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Supplier, String> param) {
+                        return new SimpleStringProperty(param.getValue().getAddress());
+                    }
+
+                });
+        tvSupplierManage.getColumns().add(tvSupplierManage_tcSupplierName);
+        tvSupplierManage.getColumns().add(tvSupplierManage_tcSupplierPhone);
+        tvSupplierManage.getColumns().add(tvSupplierManage_tcSupplierAddress);
         bpSupplierManage = new BorderPane();
         bpSupplierManage.setLeft(vbSupplierManage);
         bpSupplierManage.setCenter(tvSupplierManage);
@@ -276,6 +403,69 @@ public class AdminView {
         vbPurchaseManage = new VBox(btnPurchaseManageAddPurchase, btnPurchaseManageDeletePurchase,
                 btnPurchaseManageUpdatePurchase);
         tvPurchaseManage = new TableView<Purchase>(purchaseService.getObservableList());
+        TableColumn<Purchase, String> tvPurchaseManage_tcPurchaseSupplierName = new TableColumn<>("供应商名");
+        tvPurchaseManage_tcPurchaseSupplierName.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Purchase, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Purchase, String> param) {
+                        return new SimpleStringProperty(param.getValue().getSupplierName());
+                    }
+
+                });
+        TableColumn<Purchase, String> tvPurchaseManage_tcPurchaseGoodsName = new TableColumn<>("商品名");
+        tvPurchaseManage_tcPurchaseGoodsName.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Purchase, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Purchase, String> param) {
+                        return new SimpleStringProperty(param.getValue().getGoodsName());
+                    }
+
+                });
+        TableColumn<Purchase, String> tvPurchaseManage_tcPurchasePrice = new TableColumn<>("单价");
+        tvPurchaseManage_tcPurchasePrice.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Purchase, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Purchase, String> param) {
+                        return new SimpleStringProperty(param.getValue().getPrice().toString());
+                    }
+
+                });
+        TableColumn<Purchase, String> tvPurchaseManage_tcPurchaseNum = new TableColumn<>("数量");
+        tvPurchaseManage_tcPurchaseNum.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Purchase, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Purchase, String> param) {
+                        return new SimpleStringProperty(param.getValue().getNum().toString());
+                    }
+
+                });
+        TableColumn<Purchase, String> tvPurchaseManage_tcPurchaseUnit = new TableColumn<>("单位");
+        tvPurchaseManage_tcPurchaseUnit.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Purchase, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Purchase, String> param) {
+                        return new SimpleStringProperty(param.getValue().getUnit());
+                    }
+
+                });
+        TableColumn<Purchase, String> tvPurchaseManage_tcPurchaseTime = new TableColumn<>("采购时间");
+        tvPurchaseManage_tcPurchaseTime.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Purchase, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Purchase, String> param) {
+                        return new SimpleStringProperty(param.getValue().getTime().toString());
+                    }
+
+                });
+        tvPurchaseManage.getColumns().add(tvPurchaseManage_tcPurchaseSupplierName);
+        tvPurchaseManage.getColumns().add(tvPurchaseManage_tcPurchaseGoodsName);
+        tvPurchaseManage.getColumns().add(tvPurchaseManage_tcPurchasePrice);
+        tvPurchaseManage.getColumns().add(tvPurchaseManage_tcPurchaseNum);
+        tvPurchaseManage.getColumns().add(tvPurchaseManage_tcPurchaseUnit);
+        tvPurchaseManage.getColumns().add(tvPurchaseManage_tcPurchaseTime);
         bpPurchaseManage = new BorderPane();
         bpPurchaseManage.setLeft(vbPurchaseManage);
         bpPurchaseManage.setCenter(tvPurchaseManage);
@@ -317,6 +507,58 @@ public class AdminView {
         });
         vbSaleManage = new VBox(btnSaleManageAddSale, btnSaleManageDeleteSale, btnSaleManageUpdateSale);
         tvSaleManage = new TableView<Sale>(saleService.getObservableList());
+        TableColumn<Sale, String> tvSaleManage_tcSaleGoodName = new TableColumn<>("商品名");
+        tvSaleManage_tcSaleGoodName.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Sale, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Sale, String> param) {
+                        return new SimpleStringProperty(param.getValue().getGoodName());
+                    }
+
+                });
+        TableColumn<Sale, String> tvSaleManage_tcSalePrice = new TableColumn<>("单价");
+        tvSaleManage_tcSalePrice.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Sale, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Sale, String> param) {
+                        return new SimpleStringProperty(param.getValue().getPrice().toString());
+                    }
+
+                });
+        TableColumn<Sale, String> tvSaleManage_tcSaleNum = new TableColumn<>("数量");
+        tvSaleManage_tcSaleNum.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Sale, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Sale, String> param) {
+                        return new SimpleStringProperty(param.getValue().getNum().toString());
+                    }
+
+                });
+        TableColumn<Sale, String> tvSaleManage_tcSaleUnit = new TableColumn<>("单位");
+        tvSaleManage_tcSaleUnit.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Sale, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Sale, String> param) {
+                        return new SimpleStringProperty(param.getValue().getUnit());
+                    }
+
+                });
+        TableColumn<Sale, String> tvSaleManage_tcSaleTime = new TableColumn<>("销售时间");
+        tvSaleManage_tcSaleTime.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Sale, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<Sale, String> param) {
+                        return new SimpleStringProperty(param.getValue().getTime().toString());
+                    }
+
+                });
+        tvSaleManage.getColumns().add(tvSaleManage_tcSaleGoodName);
+        tvSaleManage.getColumns().add(tvSaleManage_tcSalePrice);
+        tvSaleManage.getColumns().add(tvSaleManage_tcSaleNum);
+        tvSaleManage.getColumns().add(tvSaleManage_tcSaleUnit);
+        tvSaleManage.getColumns().add(tvSaleManage_tcSaleTime);
         bpSaleManage = new BorderPane();
         bpSaleManage.setLeft(vbSaleManage);
         bpSaleManage.setCenter(tvSaleManage);

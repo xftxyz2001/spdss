@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 public class Goods {
     private int id;// 商品编号
     private String name;// 商品名称
-    private String describe;// 描述
     private BigDecimal price;// 单价
     private BigDecimal num;// 库存数量
     private String unit; // 单位
+    private String describe;// 描述
 
     public Goods() {
     }
