@@ -1,53 +1,54 @@
 package com.xftxyz.smms.service;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import com.xftxyz.smms.dao.UserDao;
 import com.xftxyz.smms.dao.impl.UserDaoImpl;
 import com.xftxyz.smms.entity.User;
-import com.xftxyz.smms.type.Limits;
+import com.xftxyz.smms.type.Role;
 import com.xftxyz.smms.utils.CodeUtil;
-import com.xftxyz.smms.utils.JDBCUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 public class UserService {
-    private Connection conn; // 数据库连接对象，通过构造方法初始化
-
-    // DAO对象
-    private UserDao ud;
-    // 观察列表
-    private ObservableList<User> olUsers;
+    // 当前用户，通过login()方法设置
+    private User currentUser;
 
     private String code = ""; // 此次生成的验证码
-
-    // 当前用户，通过login()方法设置
-    private User user;
-
-    public UserService() throws ClassNotFoundException, SQLException, IOException {
-        this.conn = JDBCUtil.getConnection();
-        ud = new UserDaoImpl();
-        initializeUserObservableList();
-    }
+    private Connection conn; // 数据库连接对象，通过构造方法初始化
+    // DAO对象
+    private UserDao dao;
+    // 观察列表
+    private ObservableList<User> observableList;
+    private User old;
 
     public UserService(Connection conn) {
         this.conn = conn;
-        ud = new UserDaoImpl();
-        initializeUserObservableList();
+        dao = new UserDaoImpl();
+        initialize();
     }
 
-    private void initializeUserObservableList() {
-        olUsers = FXCollections.observableArrayList();
-        olUsers.addAll(ud.getAllUsers(conn));
+    /**
+     * 优化方向：保存过滤条件
+     */
+    private void initialize() {
+        if (observableList == null) {
+            observableList = FXCollections.observableArrayList();
+        } else {
+            observableList.clear();
+        }
+        List<User> users = dao.getAllUsers(conn);
+        if (users != null) {
+            observableList.addAll(users);
+        }
     }
 
-    public ObservableList<User> getUserObservableList() {
-        return olUsers;
+    public ObservableList<User> getObservableList() {
+        return observableList;
     }
 
     // 生成验证码
@@ -72,47 +73,32 @@ public class UserService {
             return false;
         }
 
-        this.user = ud.getUser(conn, username, password);
-        return this.user != null;
-    }
-
-    // 获取当前用户
-    public User getUser() {
-        return this.user;
+        this.currentUser = dao.getUser(conn, username, password);
+        return this.currentUser != null;
     }
 
     // 退出登录
     public void logout() {
-        this.user = null;
+        this.currentUser = null;
     }
 
     // 添加用户
     public boolean addUser(User user) {
-        // if (this.user == null) {
-        // return false; // 没登陆
-        // }
 
-        // if (Limits.hasLimit(user, o)){return false;} // 权限不足
-        // if (user.getUsername() == null || user.getUsername().trim().equals("")) {
-        // return false;
-        // }
+        if (user == null) {
+            return false; // 参数为空
+        }
 
-        // if (user.getPassword() == null || user.getPassword().trim().equals("")) {
-        // return false;
-        // }
-
-        // boolean checked = ud.checkName(conn, user.getName());
-        if (ud.checkName(conn, user.getName())) {
-            System.out.println("用户名已存在");
+        if (dao.checkName(conn, user.getName())) {
             return false; // 用户名已存在
         }
 
-        int id = ud.saveUser(conn, user);
+        int id = dao.addUser(conn, user);
         if (id < 0) {
             return false; // 添加失败
         }
         user.setId(id);
-        olUsers.add(user);
+        observableList.add(user);
         return true;
     }
 
@@ -123,38 +109,60 @@ public class UserService {
             return false;
         }
 
-        boolean isSucc = ud.deleteUser(conn, user.getId());
+        boolean isSucc = dao.deleteUser(conn, user.getId());
         if (!isSucc) {
             return false;
         }
-        olUsers.remove(user);
+        observableList.remove(user);
         return true;
     }
 
-    // 修改密码
-    // 修改权限
+    // 获取修改副本
+    public User getUpdateCopy(User user) {
+        if (user == null) {
+            return null;
+        }
+        this.old = user;
 
-    // 获取当前在线用户
-    // public User getCurrentUser() {
-    //     return this.user;
-    // }
+        return user.copy();
+    }
+
+    // 修改用户
+    public boolean updateUser(User newUser) {
+
+        if (this.old == null) {
+            return false;
+        }
+        if (newUser == null) {
+            return false;
+        }
+
+        boolean isSucc = dao.updateUser(conn, newUser);
+        if (!isSucc) {
+            return false;
+        }
+        // observableList.remove(oldUser);
+        // observableList.add(newUser);
+        observableList.set(observableList.indexOf(this.old), newUser);
+        return true;
+    }
 
     // 获取当前用户名
     public String getCurrentUserName() {
-        if (this.user == null) {
+        if (this.currentUser == null) {
             return "未获取到用户信息";
         }
-        return this.user.getName();
+        return this.currentUser.getName();
     }
 
     // 获取当前用户身份名
     public String getCurrentUserRoleName() {
-        return getUserRoleName(this.user);
+        return getUserRoleName(this.currentUser);
     }
 
     // 获取当前用户身份
-    public Limits getCurrentUserRole() {
-        return getUserRole(this.user);
+    public Role getCurrentUserRole() {
+        return getUserRole(this.currentUser);
     }
 
     // 获取用户身份名
@@ -178,11 +186,11 @@ public class UserService {
     }
 
     // 获取用户身份
-    public Limits getUserRole(User user) {
+    public Role getUserRole(User user) {
         if (user == null) {
             return null;
         }
-        return Limits.valueOf(user.getLimits());
+        return user.getRole();
     }
 
 }

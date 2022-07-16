@@ -10,69 +10,33 @@ import com.xftxyz.smms.entity.Supplier;
 public class SupplierDaoImpl extends BaseDao<Supplier> implements SupplierDao {
 
     @Override
-    public List<Supplier> getAllSuppliers(Connection conn) {
-        String sql = "select * from supplier";
-        return getBeanList(conn, sql);
-    }
-
-    @Override
-    public Supplier getSupplierBySupplierId(Connection conn, int supplierId) {
-        String sql = "select * from supplier where id = ?";
-        return getBean(conn, sql, supplierId);
-    }
-
-    @Override
-    public Supplier getSupplierBySupplierName(Connection conn, String supplierName) {
-        String sql = "select * from supplier where name = ?";
-        return getBean(conn, sql, supplierName);
-    }
-
-    @Override
-    public List<Supplier> getSupplierByAddress(Connection conn, String address) {
-        String sql = "select * from supplier where address = ?";
-        return getBeanList(conn, sql, address);
-    }
-
-    @Override
-    public Supplier getSupplierByPhone(Connection conn, String phone) {
-        String sql = "select * from supplier where phone = ?";
-        return getBean(conn, sql, phone);
-    }
-
-    @Override
-    public boolean isSupplierExist(Connection conn, String supplierName) {
-        String sql = "select count(*) from supplier where name = ?";
-        return (int) getValue(conn, sql, supplierName) > 0;
-    }
-
-    @Override
     public int addSupplier(Connection conn, Supplier supplier) {
-        String sql = "insert into supplier(name, address, phone) values(?, ?, ?)";
-        return insert(conn, sql, supplier.getName(), supplier.getAddress(), supplier.getPhone());
+        String sql = "insert into suppliers(name, tel, address) values(?, ?, ?)";
+        return insert(conn, sql, supplier.getName(), supplier.getTel(), supplier.getAddress());
     }
 
     @Override
-    public boolean deleteSupplierBySupplierId(Connection conn, int supplierId) {
-        String sql = "delete from supplier where id = ?";
+    public boolean deleteSupplier(Connection conn, int supplierId) {
+        String sql = "delete from suppliers where id = ?";
         return update(conn, sql, supplierId) > 0;
     }
 
     @Override
-    public int deleteSupplierByAddress(Connection conn, String address) {
-        String sql = "delete from supplier where address = ?";
-        return update(conn, sql, address);
+    public boolean updateSupplier(Connection conn, Supplier supplier) {
+        String sql = "update suppliers set name = ?, tel = ?, address = ? where id = ?";
+        return update(conn, sql, supplier.getName(), supplier.getTel(), supplier.getAddress(), supplier.getId()) > 0;
     }
 
     @Override
-    public boolean updateSupplierPhoneBySupplierId(Connection conn, int supplierId, String phone) {
-        String sql = "update supplier set phone = ? where id = ?";
-        return update(conn, sql, phone, supplierId) > 0;
+    public List<Supplier> getAllSuppliers(Connection conn) {
+        String sql = "select * from suppliers";
+        return getBeanList(conn, sql);
     }
 
     @Override
-    public boolean updateSupplierAddressBySupplierId(Connection conn, int supplierId, String address) {
-        String sql = "update supplier set address = ? where id = ?";
-        return update(conn, sql, address, supplierId) > 0;
+    public boolean checkSupplier(Connection conn, String supplierName) {
+        String sql = "select count(*) from suppliers where name = ?";
+        return (int) getValue(conn, sql, supplierName) > 0;
     }
 
 }

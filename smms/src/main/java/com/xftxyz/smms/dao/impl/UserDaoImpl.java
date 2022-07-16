@@ -1,42 +1,24 @@
 package com.xftxyz.smms.dao.impl;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.dbutils.ResultSetHandler;
 
 import com.xftxyz.smms.dao.BaseDao;
 import com.xftxyz.smms.dao.UserDao;
 import com.xftxyz.smms.entity.User;
+import com.xftxyz.smms.type.Role;
 
 public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
-    public List<User> getAllUsers(Connection conn) {
-        String sql = "select * from users";
-        return getBeanList(conn, sql);
-    }
-
-    @Override
-    public boolean checkName(Connection conn, String name) {
-        String sql = "select * from users where name = ?";
-        return getBean(conn, sql, name) != null;
-    }
-
-    @Override
-    public List<User> getUsers(Connection conn, String limits) {
-        String sql = "select * from users where limits = ?";
-        return getBeanList(conn, sql, limits);
-    }
-
-    @Override
-    public User getUser(Connection conn, String username, String password) {
-        String sql = "select * from users where name = ? and pwd = ?";
-        return getBean(conn, sql, username, password);
-    }
-
-    @Override
-    public int saveUser(Connection conn, User user) {
-        String sql = "insert into users(name, pwd, limits, createAt) values(?, ?, ?, ?)";
-        return insert(conn, sql, user.getName(), user.getPwd(), user.getLimits(), user.getCreateAt());
+    public int addUser(Connection conn, User user) {
+        String sql = "insert into users(name, pwd, role) values(?, ?, ?)";
+        return insert(conn, sql, user.getName(), user.getPwd(), user.getRole().name());
     }
 
     @Override
@@ -46,15 +28,57 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     }
 
     @Override
-    public boolean updatePassword(Connection conn, int id, String password) {
-        String sql = "update users set pwd = ? where id = ?";
-        return update(conn, sql, password, id) > 0;
+    public boolean updateUser(Connection conn, User user) {
+        String sql = "update user sets name = ?, pwd = ?, role = ? where id = ?";
+        return update(conn, sql, user.getName(), user.getPwd(), user.getRole().name(), user.getId()) > 0;
     }
 
     @Override
-    public boolean updateLimits(Connection conn, int id, String limits) {
-        String sql = "update users set limits = ? where id = ?";
-        return update(conn, sql, limits, id) > 0;
+    public User getUser(Connection conn, String username, String password) {
+        String sql = "select * from users where name = ? and pwd = ?";
+        return getQuery(conn, sql, new ResultSetHandler<User>() {
+
+            @Override
+            public User handle(ResultSet rs) throws SQLException {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setName(rs.getString("name"));
+                    user.setPwd(rs.getString("pwd"));
+                    user.setRole(Role.valueOf(rs.getString("role")));
+                    return user;
+                }
+                return null;
+            }
+
+        }, username, password);
     }
 
+    @Override
+    public List<User> getAllUsers(Connection conn) {
+        String sql = "select * from users";
+        return getQueryList(conn, sql, new ResultSetHandler<List<User>>() {
+
+            @Override
+            public List<User> handle(ResultSet rs) throws SQLException {
+                List<User> users = new ArrayList<User>();
+                while (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setName(rs.getString("name"));
+                    user.setPwd(rs.getString("pwd"));
+                    user.setRole(Role.valueOf(rs.getString("role")));
+                    users.add(user);
+                }
+                return users;
+            }
+
+        });
+    }
+
+    @Override
+    public boolean checkName(Connection conn, String name) {
+        String sql = "select count(*) from users where name = ?";
+        return (int) getValue(conn, sql, name) > 0;
+    }
 }

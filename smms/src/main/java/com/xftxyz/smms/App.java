@@ -2,6 +2,7 @@ package com.xftxyz.smms;
 
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
+import com.xftxyz.smms.utils.Debug;
 import com.xftxyz.smms.utils.FileUtil;
 import com.xftxyz.smms.view.AdminView;
 import com.xftxyz.smms.view.ManagerView;
@@ -36,10 +37,6 @@ public class App extends Application {
     private TextField tfCode;
     private Button btnLogin;
 
-    // public void enterMainView() {
-
-    // }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         initialize();
@@ -72,31 +69,55 @@ public class App extends Application {
         tfCode.setPrefWidth(60);
 
         btnLogin.setOnAction(e -> {
-            // try {
-            //     primaryStage.close();
-            //     new AdminView().start();
-            // } catch (Exception e1) {
-            //     e1.printStackTrace();
-            // }
             String code = tfCode.getText();
             if (code == null || code.trim().equals("")) {
                 tfCode.setStyle("-fx-border-color:red");
-                System.out.println("验证码不能为空");
+                Debug.log("验证码不能为空");
                 return;
             }
 
             String username = tfUserName.getText();
             String password = pfPassWord.getText();
 
+            // 未连接到数据库，进入测试模式
+            if (!ServiceFactory.checkConnection()) {
+                if (username.equals("admin") && password.equals("admin")) {
+                    try {
+                        new AdminView().start();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                } else if (username.equals("manager") && password.equals("manager")) {
+                    try {
+                        new ManagerView().start();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                } else if (username.equals("saler") && password.equals("saler")) {
+                    try {
+                        new SalerView().start();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                } else if (username.equals("purchaser") && password.equals("purchaser")) {
+                    try {
+                        new PurchaserView().start();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                return;
+            }
+
+            // 链接到数据库，进行登录操作
             boolean isSucc = userService.login(username, password);
             if (!isSucc) {
-                System.out.println("登录失败（用户名或密码错误）");
+                // System.out.println("登录失败（用户名或密码错误）");
                 return;
             }
 
             // 关闭登录界面
             primaryStage.close();
-
             try {
                 switch (userService.getCurrentUserRole()) {
                     case ADMIN:
@@ -112,7 +133,7 @@ public class App extends Application {
                         new SalerView().start();
                         break;
                     default:
-                        System.out.println("请先登录");
+                        // System.out.println("请先登录");
                         break;
 
                 }

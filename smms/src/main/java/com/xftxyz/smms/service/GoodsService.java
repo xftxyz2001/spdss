@@ -1,83 +1,64 @@
 package com.xftxyz.smms.service;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.List;
 
 import com.xftxyz.smms.dao.GoodsDao;
 import com.xftxyz.smms.dao.impl.GoodsDaoImpl;
 import com.xftxyz.smms.entity.Goods;
-import com.xftxyz.smms.utils.JDBCUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class GoodsService {
-
     private Connection conn; // 数据库连接对象，通过构造方法初始化
     // DAO对象
-    private GoodsDao gd;
+    private GoodsDao dao;
     // 观察列表
-    private ObservableList<Goods> olGoods;
-
-    public GoodsService() throws ClassNotFoundException, SQLException, IOException {
-        this.conn = JDBCUtil.getConnection();
-        gd = new GoodsDaoImpl();
-        olGoods = FXCollections.observableArrayList();
-    }
+    private ObservableList<Goods> observableList;
+    private Goods old;
 
     public GoodsService(Connection conn) {
         this.conn = conn;
-        gd = new GoodsDaoImpl();
-        initializeGoodsObservableList();
+        dao = new GoodsDaoImpl();
+        initialize();
     }
 
     /**
      * 优化方向：保存过滤条件
      */
-    private void initializeGoodsObservableList() {
-        if (olGoods == null) {
-            olGoods = FXCollections.observableArrayList();
+    private void initialize() {
+        if (observableList == null) {
+            observableList = FXCollections.observableArrayList();
         } else {
-            olGoods.clear();
+            observableList.clear();
         }
-        olGoods.addAll(gd.getAllGoods(conn));
+        List<Goods> goodsList = dao.getAllGoods(conn);
+        if (goodsList != null) {
+            observableList.addAll(goodsList);
+        }
     }
 
-    public ObservableList<Goods> getGoodsObservableList() {
-        return olGoods;
+    public ObservableList<Goods> getObservableList() {
+        return observableList;
     }
 
-    // 显示所有上架商品
-    public void showOnSellGoods() {
-        olGoods.clear();
-        olGoods.addAll(gd.getOnSellGoods(conn));
-    }
+    // 添加商品
+    public boolean addGoods(Goods goods) {
+        if (goods == null) {
+            return false;
+        }
 
-    // 显示所有下架商品
-    public void showOffSellGoods() {
-        olGoods.clear();
-        olGoods.addAll(gd.getOffShelvesGoods(conn));
-    }
-
-    // 显示某种类别的商品
-    public void showGoodsByCategory(String category) {
-        olGoods.clear();
-        olGoods.addAll(gd.getGoodsByCategory(conn, category));
-    }
-
-    // 上架所有商品，返回上架商品数
-    public int onSellAllGoods() {
-        int count = gd.onSellAllGoods(conn);
-        initializeGoodsObservableList();
-        return count;
-    }
-
-    // 下架所有商品，返回下架商品数
-    public int offSellAllGoods() {
-        int count = gd.offShelvesAllGoods(conn);
-        initializeGoodsObservableList();
-        return count;
+        if (dao.checkGoods(conn, goods.getName())) {
+            return false; // 商品名已存在
+        }
+        int index = dao.addGoods(conn, goods);
+        if (index < -1) {
+            return false;
+        }
+        goods.setId(index);
+        observableList.add(goods);
+        return true;
     }
 
     // 删除商品
@@ -85,49 +66,36 @@ public class GoodsService {
         if (goods == null) {
             return false;
         }
-        boolean isSucc = gd.deleteGoodsByGoodsId(conn, goods.getId());
+        boolean isSucc = dao.deleteGoodsByGoodsId(conn, goods.getId());
         if (!isSucc) {
             return false;
         }
-        initializeGoodsObservableList();
+        observableList.remove(goods);
         return true;
     }
 
-    // 添加商品，商品存在则增加库存
-    public boolean addGoods(Goods goods) {
+    // 获取修改副本
+    public Goods getUpdateCopy(Goods goods) {
         if (goods == null) {
-            return false;
+            return null;
         }
-        Goods g = gd.getGoodsByGoodsName(conn, goods.getName());
-        // 商品存在
-        if (g != null) {
-            boolean isSucc = gd.updateGoodsStockByGoodsId(conn, g.getId(), g.getPrice().add(goods.getPrice()));
-            if (!isSucc) {
-                return false;
-            }
-            return true;
-        }
-        int index = gd.addGoods(conn, goods);
-        if (index < -1) {
-            return false;
-        }
-        initializeGoodsObservableList();
-        return true;
+        this.old = goods;
+        return goods.copy();
     }
 
-    // 修改商品描述
-    public boolean updateGoodsDescription(Goods goods, String description) {
-        if (goods == null) {
+    // 更新商品
+    public boolean updateGoods(Goods newGoods) {
+        if (this.old == null) {
             return false;
         }
-        if (description == null) {
+        if (newGoods == null) {
             return false;
         }
-        boolean isSucc = gd.updateGoodsDescribeByGoodsId(conn, goods.getId(), goods.getDescription());
+        boolean isSucc = dao.updateGoods(conn, newGoods);
         if (!isSucc) {
             return false;
         }
-        initializeGoodsObservableList();
+        observableList.set(observableList.indexOf(this.old), newGoods);
         return true;
     }
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.xftxyz.smms.utils.Debug;
 import com.xftxyz.smms.utils.JDBCUtil;
 
 public class ServiceFactory {
@@ -12,43 +13,83 @@ public class ServiceFactory {
     }
 
     private static Connection conn;
-    private static UserService us;
-    private static GoodsService gs;
+
+    private static UserService userService;
+    private static GoodsService goodsService;
+    private static SupplierService supplierService;
+    private static PurchaseService purchaseService;
+    private static SaleService saleService;
 
     public static UserService getUserService() {
-        if (us == null) {
+        if (userService == null) {
             synchronized (ServiceFactory.class) {
-                if (us == null) {
-                    us = new UserService(getConnection());
+                if (userService == null) {
+                    userService = new UserService(getConnection());
                 }
             }
         }
-        return us;
+        return userService;
     }
 
     public static GoodsService getGoodsService() {
-        if (gs == null) {
+        if (goodsService == null) {
             synchronized (ServiceFactory.class) {
-                if (gs == null) {
-                    gs = new GoodsService(getConnection());
+                if (goodsService == null) {
+                    goodsService = new GoodsService(getConnection());
                 }
             }
         }
-        return gs;
+        return goodsService;
+    }
+
+    public static SupplierService getSupplierService() {
+        if (supplierService == null) {
+            synchronized (ServiceFactory.class) {
+                if (supplierService == null) {
+                    supplierService = new SupplierService(getConnection());
+                }
+            }
+        }
+        return supplierService;
+    }
+
+    public static PurchaseService getPurchaseService() {
+        if (purchaseService == null) {
+            synchronized (ServiceFactory.class) {
+                if (purchaseService == null) {
+                    purchaseService = new PurchaseService(getConnection());
+                }
+            }
+        }
+        return purchaseService;
+    }
+
+    public static SaleService getSaleService() {
+        if (saleService == null) {
+            synchronized (ServiceFactory.class) {
+                if (saleService == null) {
+                    saleService = new SaleService(getConnection());
+                }
+            }
+        }
+        return saleService;
     }
 
     private static Connection getConnection() {
-        if (conn == null) {
+        if (!checkConnection()) {
             synchronized (ServiceFactory.class) {
-                if (conn == null) {
+                if (!checkConnection()) {
                     try {
                         conn = JDBCUtil.getConnection();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        Debug.log("数据库配置文件错误");
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                        Debug.log("数据库驱动加载失败");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        Debug.log("数据库连接失败");
                     }
                 }
             }
@@ -58,5 +99,9 @@ public class ServiceFactory {
 
     public static void close() {
         JDBCUtil.close(conn);
+    }
+
+    public static boolean checkConnection() {
+        return conn != null;
     }
 }

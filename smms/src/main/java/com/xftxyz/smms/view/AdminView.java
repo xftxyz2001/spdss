@@ -3,11 +3,12 @@ package com.xftxyz.smms.view;
 import com.xftxyz.smms.entity.Goods;
 import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.service.GoodsService;
+import com.xftxyz.smms.service.PurchaseService;
+import com.xftxyz.smms.service.SaleService;
 import com.xftxyz.smms.service.ServiceFactory;
+import com.xftxyz.smms.service.SupplierService;
 import com.xftxyz.smms.service.UserService;
-import com.xftxyz.smms.type.Limits;
 import com.xftxyz.smms.utils.FileUtil;
-import com.xftxyz.smms.utils.RandomUtil;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,8 +21,11 @@ import javafx.stage.Stage;
 
 public class AdminView {
     // Service
-    private GoodsService goodsService;
     private UserService userService;
+    private GoodsService goodsService;
+    private SupplierService supplierService;
+    private PurchaseService purchaseService;
+    private SaleService saleService;
 
     // UI控件
     Stage primaryStage;
@@ -61,11 +65,16 @@ public class AdminView {
 
     Label statusBar;
 
-    public void initialize() {
+    private void initService() {
         // Service初始化
         userService = ServiceFactory.getUserService();
         goodsService = ServiceFactory.getGoodsService();
+        supplierService = ServiceFactory.getSupplierService();
+        purchaseService = ServiceFactory.getPurchaseService();
+        saleService = ServiceFactory.getSaleService();
+    }
 
+    public void initUI() {
         // UI控件初始化
         primaryStage = new Stage();
         bpRoot = new BorderPane();
@@ -102,13 +111,15 @@ public class AdminView {
         // 用户管理面板
         btnUserManageAddUser = new Button("添加用户");
         btnUserManageAddUser.setOnAction(e -> {
-            String name = RandomUtil.choice("123456789", 2);
-            String pwd = RandomUtil.choice("123456789", 2);
-            Limits[] ll = Limits.values();
-            Limits l = ll[RandomUtil.getInt(0, ll.length - 1)];
-            String limits = l.name();
-            User user = new User(name, pwd, limits);
-            userService.addUser(user);
+            // String name = RandomUtil.choice("123456789", 2);
+            // String pwd = RandomUtil.choice("123456789", 2);
+            // Role[] ll = Role.values();
+            // Role l = RandomUtil.choice(ll);
+            // User user = new User();
+            // user.setName(name);
+            // user.setPwd(pwd);
+            // user.setRole(l);
+            // userService.addUser(user);
         });
         btnUserManageDeleteUser = new Button("删除用户");
         btnUserManageDeleteUser.setOnAction(e -> {
@@ -119,15 +130,31 @@ public class AdminView {
             userService.deleteUser(selectedUser);
         });
         btnUserManageUpdateUser = new Button("修改用户");
+        btnUserManageUpdateUser.setOnAction(e -> {
+            User selectedUser = tvUserManage.getSelectionModel().getSelectedItem();
+            if (selectedUser == null) {
+                System.out.println("请选择一个用户");
+            }
+            selectedUser = userService.getUpdateCopy(selectedUser);
+            // String name = RandomUtil.choice("123456789", 2);
+            // String pwd = RandomUtil.choice("123456789", 2);
+            // Role[] ll = Role.values();
+            // Role l = RandomUtil.choice(ll);
+            // selectedUser.setName(name);
+            // selectedUser.setPwd(pwd);
+            // selectedUser.setRole(l);
+            
+            userService.updateUser(selectedUser);
+        });
         vbUserManage = new VBox(btnUserManageAddUser, btnUserManageDeleteUser, btnUserManageUpdateUser);
-        tvUserManage = new TableView<User>(userService.getUserObservableList());
+        tvUserManage = new TableView<User>(userService.getObservableList());
         bpUserManage = new BorderPane();
         bpUserManage.setLeft(vbUserManage);
         bpUserManage.setCenter(tvUserManage);
 
         // 商品管理面板
         vbGoodsManage = new VBox();
-        tvGoodsManage = new TableView<Goods>(goodsService.getGoodsObservableList());
+        tvGoodsManage = new TableView<Goods>(goodsService.getObservableList());
         bpGoodsManage = new BorderPane();
         bpGoodsManage.setLeft(vbGoodsManage);
         bpGoodsManage.setCenter(tvGoodsManage);
@@ -162,7 +189,9 @@ public class AdminView {
     }
 
     public void start() throws Exception {
-        initialize();
+        initService();
+
+        initUI();
 
         primaryStage.setScene(scene);
         primaryStage.show();

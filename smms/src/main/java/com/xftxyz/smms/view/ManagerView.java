@@ -5,7 +5,7 @@ import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.service.GoodsService;
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
-import com.xftxyz.smms.type.Limits;
+import com.xftxyz.smms.type.Role;
 import com.xftxyz.smms.utils.FileUtil;
 import com.xftxyz.smms.utils.RandomUtil;
 
@@ -101,7 +101,7 @@ public class ManagerView {
 		Label usermagelabel = new Label("用户管理");
 		usermagelabel.setFont(Font.font("FangSong", FontWeight.BOLD, 20));
 		usermagelabel.setTextFill(Color.BLACK);
-		TableView<User> tableview = new TableView<User>(userService.getUserObservableList());
+		TableView<User> tableview = new TableView<User>(userService.getObservableList());
 		TableColumn<User, String> user_name = new TableColumn<User, String>("姓名");
 		// TableColumn<User, String> user_id = new TableColumn<User, String>("id");
 		TableColumn<User, String> user_pwd = new TableColumn<User, String>("密码");
@@ -119,7 +119,6 @@ public class ManagerView {
 		usermagelabel.setLayoutY(30);
 		tableview.setLayoutX(100);
 		tableview.setLayoutY(100);
-		
 
 		aprightuser.getChildren().add(usermagelabel);
 		aprightuser.getChildren().add(tableview);
@@ -145,12 +144,13 @@ public class ManagerView {
 					}
 				});
 		// user_id.setCellValueFactory(
-		// 		new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
-		// 			@Override
-		// 			public ObservableValue<String> call(CellDataFeatures<User, String> param) {
-		// 				return new SimpleStringProperty(String.valueOf(param.getValue().getId()));
-		// 			}
-		// 		});
+		// new Callback<TableColumn.CellDataFeatures<User, String>,
+		// ObservableValue<String>>() {
+		// @Override
+		// public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+		// return new SimpleStringProperty(String.valueOf(param.getValue().getId()));
+		// }
+		// });
 		user_pwd.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
 					@Override
@@ -158,13 +158,13 @@ public class ManagerView {
 						return new SimpleStringProperty(param.getValue().getPwd());
 					}
 				});
-		user_time.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<User, String> param) {
-						return new SimpleStringProperty(param.getValue().getCreateAt().toString());
-					}
-				});
+		// user_time.setCellValueFactory(
+		// 		new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+		// 			@Override
+		// 			public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+		// 				return new SimpleStringProperty(param.getValue().getCreateAt().toString());
+		// 			}
+		// 		});
 		user_limit.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
 					@Override
@@ -177,10 +177,12 @@ public class ManagerView {
 
 			String name = RandomUtil.choice("123456789", 2);
 			String pwd = RandomUtil.choice("123456789", 2);
-			Limits[] ll = Limits.values();
-			Limits l = ll[RandomUtil.getInt(0, ll.length - 1)];
-			String limits = l.name();
-			User user = new User(name, pwd, limits);
+			Role[] ll = Role.values();
+			Role l = RandomUtil.choice(ll);
+			User user = new User();
+			user.setName(name);
+			user.setPwd(pwd);
+			user.setRole(l);
 			userService.addUser(user);
 		});
 
@@ -216,7 +218,6 @@ public class ManagerView {
 		goodsmageLabel.setLayoutY(30);
 		tableview1.setLayoutX(10);
 		tableview1.setLayoutY(100);
-	
 
 		aprightgoods.getChildren().add(goodsmageLabel);
 		aprightgoods.getChildren().add(tableview1);
