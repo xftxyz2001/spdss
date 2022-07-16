@@ -61,6 +61,15 @@ public class SupplierService {
         return true;
     }
 
+    // 获取所有供应商名
+    public String[] getAllSupplierName() {
+        String[] supplierNames = new String[observableList.size()];
+        for (int i = 0; i < observableList.size(); i++) {
+            supplierNames[i] = observableList.get(i).getName();
+        }
+        return supplierNames;
+    }
+
     // 删除供应商
     public boolean deleteSupplier(Supplier supplier) {
         if (supplier == null) {

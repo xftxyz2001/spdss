@@ -2,7 +2,6 @@ package com.xftxyz.smms;
 
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
-import com.xftxyz.smms.utils.Debug;
 import com.xftxyz.smms.utils.FileUtil;
 import com.xftxyz.smms.view.AdminView;
 import com.xftxyz.smms.view.ManagerView;

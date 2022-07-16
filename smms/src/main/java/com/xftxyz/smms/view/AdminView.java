@@ -22,6 +22,7 @@ import com.xftxyz.smms.utils.FileUtil;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -126,7 +127,8 @@ public class AdminView {
     TableView<Purchase> tvPurchaseManage;
     GridPane gpPurchaseManage_AddOrUpdatePurchase;
     Label lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName;
-    TextField tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName;
+    // TextField tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName;
+    ChoiceBox<String> cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName;
     Label lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice;
     TextField tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice;
     Label lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName;
@@ -395,7 +397,8 @@ public class AdminView {
         if (this.gpPurchaseManage_AddOrUpdatePurchase == null) {
             this.gpPurchaseManage_AddOrUpdatePurchase = new GridPane();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new Label("供应商名：");
-            this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new TextField();
+            // this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new TextField();
+            this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new ChoiceBox<>();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName = new Label("商品名：");
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName = new TextField();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice = new Label("单价：");
@@ -414,7 +417,7 @@ public class AdminView {
             });
             this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName, 0,
                     0);
-            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName, 1,
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName, 1,
                     0);
             this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName, 0, 1);
             this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName, 1, 1);
@@ -431,10 +434,13 @@ public class AdminView {
             this.gpPurchaseManage_AddOrUpdatePurchase.add(this.btngpPurchaseManage_AddOrUpdatePurchase_OK, 0, 6);
             this.gpPurchaseManage_AddOrUpdatePurchase.add(this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel, 1, 6);
         }
+        ObservableList<String> items = this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getItems();
+        items.clear();
+        items.addAll(supplierService.getAllSupplierName());
         if (purchase != null) {
             this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase = purchaseService.getUpdateCopy(purchase);
 
-            this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setText(purchase.getSupplierName());
+            this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setValue(purchase.getSupplierName());
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.setText(purchase.getGoodsName());
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.setText(purchase.getPrice().toString());
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.setText(purchase.getNum().toString());
@@ -442,7 +448,7 @@ public class AdminView {
             this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime.setText(purchase.getTime().toString());
             this.btngpPurchaseManage_AddOrUpdatePurchase_OK.setOnAction(e -> {
                 this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
-                        .setSupplierName(this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getText());
+                        .setSupplierName(this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getValue());
                 this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
                         .setGoodsName(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.getText());
                 this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
@@ -462,7 +468,7 @@ public class AdminView {
             });
 
         } else {
-            this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setText("");
+            this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setValue(null);
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.setText("");
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.setText("");
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.setText("");
@@ -472,7 +478,7 @@ public class AdminView {
 
             this.btngpPurchaseManage_AddOrUpdatePurchase_OK.setOnAction(e -> {
                 Purchase newPurchase = new Purchase();
-                newPurchase.setSupplierName(this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getText());
+                newPurchase.setSupplierName(this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getValue());
                 newPurchase.setGoodsName(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.getText());
                 newPurchase.setPrice(new BigDecimal(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.getText()));
                 newPurchase.setNum(new BigDecimal(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.getText()));
