@@ -50,7 +50,7 @@ public class PurchaseService {
         }
 
         int index = dao.addPurchase(conn, purchase);
-        if (index < -1) {
+        if (index < 0) {
             return false;
         }
         purchase.setId(index);

@@ -53,7 +53,7 @@ public class GoodsService {
             return false; // 商品名已存在
         }
         int index = dao.addGoods(conn, goods);
-        if (index < -1) {
+        if (index < 0) {
             return false;
         }
         goods.setId(index);
@@ -100,7 +100,10 @@ public class GoodsService {
         if (newGoods == null) {
             return false;
         }
+        // Debug.log("old: " + this.old.toString());
+        // Debug.log("updateGoods: " + newGoods.toString());
         boolean isSucc = dao.updateGoods(conn, newGoods);
+        // Debug.log("updateGoods: " + isSucc);
         if (!isSucc) {
             return false;
         }

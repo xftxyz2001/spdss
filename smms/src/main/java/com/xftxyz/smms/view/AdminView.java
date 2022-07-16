@@ -1,5 +1,9 @@
 package com.xftxyz.smms.view;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import com.xftxyz.smms.entity.Goods;
 import com.xftxyz.smms.entity.Purchase;
 import com.xftxyz.smms.entity.Sale;
@@ -54,6 +58,8 @@ public class AdminView {
     Button btnSaleManage;
 
     // 中间部分的5个面板
+
+    // 用户管理面板
     BorderPane bpUserManage;
     VBox vbUserManage;
     Button btnUserManageAddUser;
@@ -71,33 +77,91 @@ public class AdminView {
     Button btngpUserManage_AddOrUpdateUser_Cancel;
     User ugpUserManage_AddOrUpdateUser_selectedUser;
 
+    // 商品管理面板
     BorderPane bpGoodsManage;
     VBox vbGoodsManage;
     Button btnGoodsManageAddGoods;
     Button btnGoodsManageDeleteGoods;
     Button btnGoodsManageUpdateGoods;
     TableView<Goods> tvGoodsManage;
+    GridPane gpGoodsManage_AddOrUpdateGoods;
+    Label lbgpGoodsManage_AddOrUpdateGoods_GoodsName;
+    TextField tfgpGoodsManage_AddOrUpdateGoods_GoodsName;
+    Label lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice;
+    TextField tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice;
+    Label lbgpGoodsManage_AddOrUpdateGoods_GoodsNum;
+    TextField tfgpGoodsManage_AddOrUpdateGoods_GoodsNum;
+    Label lbgpGoodsManage_AddOrUpdateGoods_GoodsUnit;
+    TextField tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit;
+    Label lbgpGoodsManage_AddOrUpdateGoods_GoodsDescribe;
+    TextField tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe;
+    Button btngpGoodsManage_AddOrUpdateGoods_OK;
+    Button btngpGoodsManage_AddOrUpdateGoods_Cancel;
+    Goods ggpGoodsManage_AddOrUpdateGoods_selectedGoods;
 
+    // 供应商管理面板
     BorderPane bpSupplierManage;
     VBox vbSupplierManage;
     Button btnSupplierManageAddSupplier;
     Button btnSupplierManageDeleteSupplier;
     Button btnSupplierManageUpdateSupplier;
     TableView<Supplier> tvSupplierManage;
+    GridPane gpSupplierManage_AddOrUpdateSupplier;
+    Label lbgpSupplierManage_AddOrUpdateSupplier_SupplierName;
+    TextField tfgpSupplierManage_AddOrUpdateSupplier_SupplierName;
+    Label lbgpSupplierManage_AddOrUpdateSupplier_SupplierTel;
+    TextField tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel;
+    Label lbgpSupplierManage_AddOrUpdateSupplier_SupplierAddress;
+    TextField tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress;
+    Button btngpSupplierManage_AddOrUpdateSupplier_OK;
+    Button btngpSupplierManage_AddOrUpdateSupplier_Cancel;
+    Supplier sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier;
 
+    // 采购管理面板
     BorderPane bpPurchaseManage;
     Button btnPurchaseManageAddPurchase;
     Button btnPurchaseManageDeletePurchase;
     Button btnPurchaseManageUpdatePurchase;
     VBox vbPurchaseManage;
     TableView<Purchase> tvPurchaseManage;
+    GridPane gpPurchaseManage_AddOrUpdatePurchase;
+    Label lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName;
+    TextField tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName;
+    Label lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice;
+    TextField tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice;
+    Label lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName;
+    TextField tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName;
+    Label lbgpPurchaseManage_AddOrUpdatePurchase_GoodsNum;
+    TextField tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum;
+    Label lbgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit;
+    TextField tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit;
+    Label lbgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime;
+    TextField tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime;
+    Button btngpPurchaseManage_AddOrUpdatePurchase_OK;
+    Button btngpPurchaseManage_AddOrUpdatePurchase_Cancel;
+    Purchase pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase;
 
+    // 销售管理面板
     BorderPane bpSaleManage;
     Button btnSaleManageAddSale;
     Button btnSaleManageDeleteSale;
     Button btnSaleManageUpdateSale;
     VBox vbSaleManage;
     TableView<Sale> tvSaleManage;
+    GridPane gpSaleManage_AddOrUpdateSale;
+    Label lbgpSaleManage_AddOrUpdateSale_GoodsName;
+    TextField tfgpSaleManage_AddOrUpdateSale_GoodsName;
+    Label lbgpSaleManage_AddOrUpdateSale_GoodsPrice;
+    TextField tfgpSaleManage_AddOrUpdateSale_GoodsPrice;
+    Label lbgpSaleManage_AddOrUpdateSale_GoodsNum;
+    TextField tfgpSaleManage_AddOrUpdateSale_GoodsNum;
+    Label lbgpSaleManage_AddOrUpdateSale_GoodsUnit;
+    TextField tfgpSaleManage_AddOrUpdateSale_GoodsUnit;
+    Label lbgpSaleManage_AddOrUpdateSale_SaleTime;
+    TextField tfgpSaleManage_AddOrUpdateSale_SaleTime;
+    Button btngpSaleManage_AddOrUpdateSale_OK;
+    Button btngpSaleManage_AddOrUpdateSale_Cancel;
+    Sale sgpSaleManage_AddOrUpdateSale_selectedSale;
 
     Label statusBar;
 
@@ -121,7 +185,7 @@ public class AdminView {
             this.cbgpUserManage_AddOrUpdateUser_Role = new ChoiceBox<Role>();
             this.cbgpUserManage_AddOrUpdateUser_Role.getItems().addAll(Role.values());
             this.btngpUserManage_AddOrUpdateUser_OK = new Button("确定");
-            
+
             this.btngpUserManage_AddOrUpdateUser_Cancel = new Button("取消");
             this.btngpUserManage_AddOrUpdateUser_Cancel.setOnAction(e -> {
                 this.bpUserManage.setCenter(this.tvUserManage);
@@ -156,7 +220,7 @@ public class AdminView {
                 this.bpUserManage.setCenter(this.tvUserManage);
             });
         } else {
-            
+
             this.tfgpUserManage_AddOrUpdateUser_UserName.setText("");
             this.tfgpUserManage_AddOrUpdateUser_Password.setText("");
             this.cbgpUserManage_AddOrUpdateUser_Role.setValue(Role.MANAGER);
@@ -169,11 +233,344 @@ public class AdminView {
                 boolean isSucc = userService.addUser(newUser);
                 if (!isSucc) {
                     Debug.log("添加用户失败");
-                } 
+                }
                 this.bpUserManage.setCenter(this.tvUserManage);
             });
         }
         return this.gpUserManage_AddOrUpdateUser;
+    }
+
+    public GridPane init_gpGoodsManage_AddOrUpdateGoods(Goods goods) {
+        if (this.gpGoodsManage_AddOrUpdateGoods == null) {
+            this.gpGoodsManage_AddOrUpdateGoods = new GridPane();
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName = new Label("商品名：");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName = new TextField();
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice = new Label("单价：");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice = new TextField();
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsNum = new Label("库存数量：");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum = new TextField();
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsUnit = new Label("单位：");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit = new TextField();
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsDescribe = new Label("描述：");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe = new TextField();
+            this.btngpGoodsManage_AddOrUpdateGoods_OK = new Button("确定");
+            this.btngpGoodsManage_AddOrUpdateGoods_Cancel = new Button("取消");
+            this.btngpGoodsManage_AddOrUpdateGoods_Cancel.setOnAction(e -> {
+                this.bpGoodsManage.setCenter(this.tvGoodsManage);
+            });
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName, 0, 0);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName, 1, 0);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice, 0, 1);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice, 1, 1);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.lbgpGoodsManage_AddOrUpdateGoods_GoodsNum, 0, 2);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum, 1, 2);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.lbgpGoodsManage_AddOrUpdateGoods_GoodsUnit, 0, 3);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit, 1, 3);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.lbgpGoodsManage_AddOrUpdateGoods_GoodsDescribe, 0, 4);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe, 1, 4);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.btngpGoodsManage_AddOrUpdateGoods_OK, 0, 5);
+            this.gpGoodsManage_AddOrUpdateGoods.add(this.btngpGoodsManage_AddOrUpdateGoods_Cancel, 1, 5);
+
+        }
+        if (goods != null) {
+            this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods = goodsService.getUpdateCopy(goods);
+
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.setText(goods.getName());
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.setText(goods.getPrice().toString());
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum.setText(goods.getNum().toString());
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit.setText(goods.getUnit());
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.setText(goods.getDescribe());
+            this.btngpGoodsManage_AddOrUpdateGoods_OK.setOnAction(e -> {
+                this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
+                        .setName(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.getText());
+                this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
+                        .setPrice(new BigDecimal(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.getText()));
+                this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
+                        .setNum(new BigDecimal(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum.getText()));
+                this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
+                        .setUnit(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit.getText());
+                this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
+                        .setDescribe(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.getText());
+                boolean isSucc = goodsService.updateGoods(this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods);
+                if (!isSucc) {
+                    Debug.log("更新商品失败");
+                }
+                this.bpGoodsManage.setCenter(this.tvGoodsManage);
+            });
+        } else {
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.setText("");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.setText("");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum.setText("");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit.setText("");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.setText("");
+            this.btngpGoodsManage_AddOrUpdateGoods_OK.setOnAction(e -> {
+                Goods newGoods = new Goods();
+                newGoods.setName(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.getText());
+                newGoods.setPrice(new BigDecimal(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.getText()));
+                newGoods.setNum(new BigDecimal(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum.getText()));
+                newGoods.setUnit(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit.getText());
+                newGoods.setDescribe(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.getText());
+                boolean isSucc = goodsService.addGoods(newGoods);
+                if (!isSucc) {
+                    Debug.log("添加商品失败");
+                }
+                this.bpGoodsManage.setCenter(this.tvGoodsManage);
+            });
+
+        }
+        return this.gpGoodsManage_AddOrUpdateGoods;
+    }
+
+    public GridPane init_gpSupplierManage_AddOrUpdateSupplier(Supplier supplier) {
+        if (this.gpSupplierManage_AddOrUpdateSupplier == null) {
+            this.gpSupplierManage_AddOrUpdateSupplier = new GridPane();
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierName = new Label("供应商名：");
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierName = new TextField();
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierTel = new Label("联系方式：");
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel = new TextField();
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierAddress = new Label("地址：");
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress = new TextField();
+            this.btngpSupplierManage_AddOrUpdateSupplier_OK = new Button("确定");
+            this.btngpSupplierManage_AddOrUpdateSupplier_Cancel = new Button("取消");
+            this.btngpSupplierManage_AddOrUpdateSupplier_Cancel.setOnAction(e -> {
+                this.bpSupplierManage.setCenter(this.tvSupplierManage);
+            });
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierName, 0,
+                    0);
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierName, 1,
+                    0);
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierTel, 0,
+                    1);
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel, 1,
+                    1);
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierAddress,
+                    0, 2);
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress,
+                    1, 2);
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.btngpSupplierManage_AddOrUpdateSupplier_OK, 0, 3);
+            this.gpSupplierManage_AddOrUpdateSupplier.add(this.btngpSupplierManage_AddOrUpdateSupplier_Cancel, 1, 3);
+
+        }
+        if (supplier != null) {
+            this.sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier = supplierService.getUpdateCopy(supplier);
+
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierName.setText(supplier.getName());
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel.setText(supplier.getTel());
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress.setText(supplier.getAddress());
+            this.btngpSupplierManage_AddOrUpdateSupplier_OK.setOnAction(e -> {
+                this.sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier
+                        .setName(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierName.getText());
+                this.sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier
+                        .setTel(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel.getText());
+                this.sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier
+                        .setAddress(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress.getText());
+                boolean isSucc = supplierService
+                        .updateSupplier(this.sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier);
+                if (!isSucc) {
+                    Debug.log("更新供应商失败");
+                }
+                this.bpSupplierManage.setCenter(this.tvSupplierManage);
+            });
+        } else {
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierName.setText("");
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel.setText("");
+            this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress.setText("");
+            this.btngpSupplierManage_AddOrUpdateSupplier_OK.setOnAction(e -> {
+                Supplier newSupplier = new Supplier();
+                newSupplier.setName(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierName.getText());
+                newSupplier.setTel(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel.getText());
+                newSupplier.setAddress(this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress.getText());
+                boolean isSucc = supplierService.addSupplier(newSupplier);
+                if (!isSucc) {
+                    Debug.log("添加供应商失败");
+                }
+                this.bpSupplierManage.setCenter(this.tvSupplierManage);
+            });
+
+        }
+        return this.gpSupplierManage_AddOrUpdateSupplier;
+    }
+
+    public GridPane init_gpPurchaseManage_AddOrUpdatePurchase(Purchase purchase) {
+        if (this.gpPurchaseManage_AddOrUpdatePurchase == null) {
+            this.gpPurchaseManage_AddOrUpdatePurchase = new GridPane();
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new Label("供应商名：");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new TextField();
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName = new Label("商品名：");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName = new TextField();
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice = new Label("单价：");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice = new TextField();
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsNum = new Label("数量：");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum = new TextField();
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit = new Label("单位：");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit = new TextField();
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime = new Label("采购时间：");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime = new TextField(
+                    Timestamp.valueOf(LocalDateTime.now()).toString());
+            this.btngpPurchaseManage_AddOrUpdatePurchase_OK = new Button("确定");
+            this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel = new Button("取消");
+            this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel.setOnAction(e -> {
+                this.bpPurchaseManage.setCenter(this.tvPurchaseManage);
+            });
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName, 0,
+                    0);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName, 1,
+                    0);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName, 0, 1);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName, 1, 1);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice, 0, 2);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice, 1, 2);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsNum, 0, 3);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum, 1, 3);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit, 0, 4);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit, 1, 4);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.lbgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime, 0,
+                    5);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime, 1,
+                    5);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.btngpPurchaseManage_AddOrUpdatePurchase_OK, 0, 6);
+            this.gpPurchaseManage_AddOrUpdatePurchase.add(this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel, 1, 6);
+        }
+        if (purchase != null) {
+            this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase = purchaseService.getUpdateCopy(purchase);
+
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setText(purchase.getSupplierName());
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.setText(purchase.getGoodsName());
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.setText(purchase.getPrice().toString());
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.setText(purchase.getNum().toString());
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit.setText(purchase.getUnit());
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime.setText(purchase.getTime().toString());
+            this.btngpPurchaseManage_AddOrUpdatePurchase_OK.setOnAction(e -> {
+                this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
+                        .setSupplierName(this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getText());
+                this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
+                        .setGoodsName(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.getText());
+                this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
+                        .setPrice(new BigDecimal(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.getText()));
+                this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
+                        .setNum(new BigDecimal(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.getText()));
+                this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
+                        .setUnit(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit.getText());
+                this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase
+                        .setTime(Timestamp.valueOf(this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime.getText()));
+                boolean isSucc = purchaseService
+                        .updatePurchase(this.pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase);
+                if (!isSucc) {
+                    Debug.log("更新采购记录失败");
+                }
+                this.bpPurchaseManage.setCenter(this.tvPurchaseManage);
+            });
+
+        } else {
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setText("");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.setText("");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.setText("");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.setText("");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit.setText("");
+            this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime.setText(
+                    Timestamp.valueOf(LocalDateTime.now()).toString());
+
+            this.btngpPurchaseManage_AddOrUpdatePurchase_OK.setOnAction(e -> {
+                Purchase newPurchase = new Purchase();
+                newPurchase.setSupplierName(this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getText());
+                newPurchase.setGoodsName(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName.getText());
+                newPurchase.setPrice(new BigDecimal(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.getText()));
+                newPurchase.setNum(new BigDecimal(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.getText()));
+                newPurchase.setUnit(this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit.getText());
+                newPurchase
+                        .setTime(Timestamp.valueOf(this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime.getText()));
+                boolean isSucc = purchaseService.addPurchase(newPurchase);
+                if (!isSucc) {
+                    Debug.log("添加采购记录失败");
+                }
+                this.bpPurchaseManage.setCenter(this.tvPurchaseManage);
+
+            });
+        }
+
+        return this.gpPurchaseManage_AddOrUpdatePurchase;
+    }
+
+    public GridPane init_gpSaleManage_AddOrUpdateSale(Sale sale) {
+        if (this.gpSaleManage_AddOrUpdateSale == null) {
+            this.gpSaleManage_AddOrUpdateSale = new GridPane();
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsName = new Label("商品名：");
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsName = new TextField();
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsPrice = new Label("单价：");
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice = new TextField();
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsNum = new Label("数量：");
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsNum = new TextField();
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsUnit = new Label("单位：");
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit = new TextField();
+            this.lbgpSaleManage_AddOrUpdateSale_SaleTime = new Label("销售时间：");
+            this.tfgpSaleManage_AddOrUpdateSale_SaleTime = new TextField();
+            this.btngpSaleManage_AddOrUpdateSale_OK = new Button("确定");
+            this.btngpSaleManage_AddOrUpdateSale_Cancel = new Button("取消");
+            this.btngpSaleManage_AddOrUpdateSale_Cancel.setOnAction(e -> {
+                this.bpSaleManage.setCenter(this.tvSaleManage);
+            });
+
+            this.gpSaleManage_AddOrUpdateSale.add(this.lbgpSaleManage_AddOrUpdateSale_GoodsName, 0, 0);
+            this.gpSaleManage_AddOrUpdateSale.add(this.tfgpSaleManage_AddOrUpdateSale_GoodsName, 1, 0);
+            this.gpSaleManage_AddOrUpdateSale.add(this.lbgpSaleManage_AddOrUpdateSale_GoodsPrice, 0, 1);
+            this.gpSaleManage_AddOrUpdateSale.add(this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice, 1, 1);
+            this.gpSaleManage_AddOrUpdateSale.add(this.lbgpSaleManage_AddOrUpdateSale_GoodsNum, 0, 2);
+            this.gpSaleManage_AddOrUpdateSale.add(this.tfgpSaleManage_AddOrUpdateSale_GoodsNum, 1, 2);
+            this.gpSaleManage_AddOrUpdateSale.add(this.lbgpSaleManage_AddOrUpdateSale_GoodsUnit, 0, 3);
+            this.gpSaleManage_AddOrUpdateSale.add(this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit, 1, 3);
+            this.gpSaleManage_AddOrUpdateSale.add(this.lbgpSaleManage_AddOrUpdateSale_SaleTime, 0, 4);
+            this.gpSaleManage_AddOrUpdateSale.add(this.tfgpSaleManage_AddOrUpdateSale_SaleTime, 1, 4);
+            this.gpSaleManage_AddOrUpdateSale.add(this.btngpSaleManage_AddOrUpdateSale_OK, 0, 5);
+            this.gpSaleManage_AddOrUpdateSale.add(this.btngpSaleManage_AddOrUpdateSale_Cancel, 1, 5);
+
+        }
+        if (sale != null) {
+            this.sgpSaleManage_AddOrUpdateSale_selectedSale = saleService.getUpdateCopy(sale);
+
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsName.setText(sale.getGoodsName());
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice.setText(sale.getPrice().toString());
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsNum.setText(sale.getNum().toString());
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit.setText(sale.getUnit());
+            this.tfgpSaleManage_AddOrUpdateSale_SaleTime.setText(sale.getTime().toString());
+            this.btngpSaleManage_AddOrUpdateSale_OK.setOnAction(e -> {
+                this.sgpSaleManage_AddOrUpdateSale_selectedSale
+                        .setGoodName(this.tfgpSaleManage_AddOrUpdateSale_GoodsName.getText());
+                this.sgpSaleManage_AddOrUpdateSale_selectedSale
+                        .setPrice(new BigDecimal(this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice.getText()));
+                this.sgpSaleManage_AddOrUpdateSale_selectedSale
+                        .setNum(new BigDecimal(this.tfgpSaleManage_AddOrUpdateSale_GoodsNum.getText()));
+                this.sgpSaleManage_AddOrUpdateSale_selectedSale
+                        .setUnit(this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit.getText());
+                this.sgpSaleManage_AddOrUpdateSale_selectedSale
+                        .setTime(Timestamp.valueOf(this.tfgpSaleManage_AddOrUpdateSale_SaleTime.getText()));
+                boolean isSucc = saleService.updateSale(this.sgpSaleManage_AddOrUpdateSale_selectedSale);
+                if (!isSucc) {
+                    Debug.log("更新销售记录失败");
+                }
+                this.bpSaleManage.setCenter(this.tvSaleManage);
+            });
+        } else {
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsName.setText("");
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice.setText("");
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsNum.setText("");
+            this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit.setText("");
+            this.tfgpSaleManage_AddOrUpdateSale_SaleTime.setText(Timestamp.valueOf(LocalDateTime.now()).toString());
+
+            this.btngpSaleManage_AddOrUpdateSale_OK.setOnAction(e -> {
+                Sale newSale = new Sale();
+                newSale.setGoodName(this.tfgpSaleManage_AddOrUpdateSale_GoodsName.getText());
+                newSale.setPrice(new BigDecimal(this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice.getText()));
+                newSale.setNum(new BigDecimal(this.tfgpSaleManage_AddOrUpdateSale_GoodsNum.getText()));
+                newSale.setUnit(this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit.getText());
+                newSale.setTime(Timestamp.valueOf(this.tfgpSaleManage_AddOrUpdateSale_SaleTime.getText()));
+                boolean isSucc = saleService.addSale(newSale);
+                if (!isSucc) {
+                    Debug.log("添加销售记录失败");
+                }
+                this.bpSaleManage.setCenter(this.tvSaleManage);
+            });
+        }
+        return this.gpSaleManage_AddOrUpdateSale;
     }
 
     public void initUI() {
@@ -221,6 +618,7 @@ public class AdminView {
             User selectedUser = tvUserManage.getSelectionModel().getSelectedItem();
             if (selectedUser == null) {
                 System.out.println("请选择一个用户");
+                return;
             }
             userService.deleteUser(selectedUser);
         });
@@ -229,6 +627,7 @@ public class AdminView {
             User selectedUser = tvUserManage.getSelectionModel().getSelectedItem();
             if (selectedUser == null) {
                 System.out.println("请选择一个用户");
+                return;
             }
             selectedUser = userService.getUpdateCopy(selectedUser);
             bpUserManage.setCenter(init_gpUserManage_AddOrUpdateUser(selectedUser));
@@ -273,6 +672,7 @@ public class AdminView {
         // 商品管理面板
         btnGoodsManageAddGoods = new Button("添加商品");
         btnGoodsManageAddGoods.setOnAction(e -> {
+            bpGoodsManage.setCenter(init_gpGoodsManage_AddOrUpdateGoods(null));
             // Goods goods = new Goods();
             // goods.setName(RandomUtil.choice("123456789", 2));
             // goods.setPrice(RandomUtil.randomInt(1, 100));
@@ -284,6 +684,7 @@ public class AdminView {
             Goods selectedGoods = tvGoodsManage.getSelectionModel().getSelectedItem();
             if (selectedGoods == null) {
                 System.out.println("请选择一个商品");
+                return;
             }
             goodsService.deleteGoods(selectedGoods);
         });
@@ -292,7 +693,9 @@ public class AdminView {
             Goods selectedGoods = tvGoodsManage.getSelectionModel().getSelectedItem();
             if (selectedGoods == null) {
                 System.out.println("请选择一个商品");
+                return;
             }
+            bpGoodsManage.setCenter(init_gpGoodsManage_AddOrUpdateGoods(selectedGoods));
             // selectedGoods = goodsService.getUpdateCopy(selectedGoods);
             // selectedGoods.setName(RandomUtil.choice("123456789", 2));
             // selectedGoods.setPrice(RandomUtil.randomInt(1, 100));
@@ -363,6 +766,7 @@ public class AdminView {
         // 供应商管理面板
         btnSupplierManageAddSupplier = new Button("添加供应商");
         btnSupplierManageAddSupplier.setOnAction(e -> {
+            bpSupplierManage.setCenter(init_gpSupplierManage_AddOrUpdateSupplier(null));
             // Supplier supplier = new Supplier();
             // supplier.setName(RandomUtil.choice("123456789", 2));
             // supplier.setAddress(RandomUtil.choice("123456789", 2));
@@ -374,6 +778,7 @@ public class AdminView {
             Supplier selectedSupplier = tvSupplierManage.getSelectionModel().getSelectedItem();
             if (selectedSupplier == null) {
                 System.out.println("请选择一个供应商");
+                return;
             }
             supplierService.deleteSupplier(selectedSupplier);
         });
@@ -382,7 +787,9 @@ public class AdminView {
             Supplier selectedSupplier = tvSupplierManage.getSelectionModel().getSelectedItem();
             if (selectedSupplier == null) {
                 System.out.println("请选择一个供应商");
+                return;
             }
+            bpSupplierManage.setCenter(init_gpSupplierManage_AddOrUpdateSupplier(selectedSupplier));
             // selectedSupplier = supplierService.getUpdateCopy(selectedSupplier);
             // selectedSupplier.setName(RandomUtil.choice("123456789", 2));
             // selectedSupplier.setAddress(RandomUtil.choice("123456789", 2));
@@ -432,6 +839,7 @@ public class AdminView {
         // 采购管理面板
         btnPurchaseManageAddPurchase = new Button("添加采购");
         btnPurchaseManageAddPurchase.setOnAction(e -> {
+            bpPurchaseManage.setCenter(init_gpPurchaseManage_AddOrUpdatePurchase(null));
             // Purchase purchase = new Purchase();
             // purchase.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // purchase.setSupplier(RandomUtil.choice(supplierService.getObservableList()));
@@ -446,6 +854,7 @@ public class AdminView {
             Purchase selectedPurchase = tvPurchaseManage.getSelectionModel().getSelectedItem();
             if (selectedPurchase == null) {
                 System.out.println("请选择一个采购");
+                return;
             }
             purchaseService.deletePurchase(selectedPurchase);
         });
@@ -454,7 +863,9 @@ public class AdminView {
             Purchase selectedPurchase = tvPurchaseManage.getSelectionModel().getSelectedItem();
             if (selectedPurchase == null) {
                 System.out.println("请选择一个采购");
+                return;
             }
+            bpPurchaseManage.setCenter(init_gpPurchaseManage_AddOrUpdatePurchase(selectedPurchase));
             // selectedPurchase = purchaseService.getUpdateCopy(selectedPurchase);
             // selectedPurchase.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // selectedPurchase.setSupplier(RandomUtil.choice(supplierService.getObservableList()));
@@ -537,6 +948,7 @@ public class AdminView {
         // 销售管理面板
         btnSaleManageAddSale = new Button("添加销售");
         btnSaleManageAddSale.setOnAction(e -> {
+            bpSaleManage.setCenter(init_gpSaleManage_AddOrUpdateSale(null));
             // Sale sale = new Sale();
             // sale.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // sale.setCustomer(RandomUtil.choice(customerService.getObservableList()));
@@ -551,6 +963,7 @@ public class AdminView {
             Sale selectedSale = tvSaleManage.getSelectionModel().getSelectedItem();
             if (selectedSale == null) {
                 System.out.println("请选择一个销售");
+                return;
             }
             saleService.deleteSale(selectedSale);
         });
@@ -559,7 +972,9 @@ public class AdminView {
             Sale selectedSale = tvSaleManage.getSelectionModel().getSelectedItem();
             if (selectedSale == null) {
                 System.out.println("请选择一个销售");
+                return;
             }
+            bpSaleManage.setCenter(init_gpSaleManage_AddOrUpdateSale(selectedSale));
             // selectedSale = saleService.getUpdateCopy(selectedSale);
             // selectedSale.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // selectedSale.setCustomer(RandomUtil.choice(customerService.getObservableList()));
@@ -577,7 +992,7 @@ public class AdminView {
 
                     @Override
                     public ObservableValue<String> call(CellDataFeatures<Sale, String> param) {
-                        return new SimpleStringProperty(param.getValue().getGoodName());
+                        return new SimpleStringProperty(param.getValue().getGoodsName());
                     }
 
                 });

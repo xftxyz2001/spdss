@@ -11,8 +11,8 @@ public class SaleDaoImpl extends BaseDao<Sale> implements SaleDao {
 
     @Override
     public int addSale(Connection conn, Sale sale) {
-        String sql = "insert into sales(goodName, price, num, unit, time) values(?, ?, ?, ?, ?)";
-        return insert(conn, sql, sale.getGoodName(), sale.getPrice(), sale.getNum(), sale.getUnit(), sale.getTime());
+        String sql = "insert into sales(goodsName, price, num, unit, time) values(?, ?, ?, ?, ?)";
+        return insert(conn, sql, sale.getGoodsName(), sale.getPrice(), sale.getNum(), sale.getUnit(), sale.getTime());
     }
 
     @Override
@@ -23,8 +23,8 @@ public class SaleDaoImpl extends BaseDao<Sale> implements SaleDao {
 
     @Override
     public boolean updateSale(Connection conn, Sale sale) {
-        String sql = "update sales set goodName = ?, price = ?, num = ?, unit = ?, time = ? where id = ?";
-        return update(conn, sql, sale.getGoodName(), sale.getPrice(), sale.getNum(), sale.getUnit(), sale.getTime(),
+        String sql = "update sales set goodsName = ?, price = ?, num = ?, unit = ?, time = ? where id = ?";
+        return update(conn, sql, sale.getGoodsName(), sale.getPrice(), sale.getNum(), sale.getUnit(), sale.getTime(),
                 sale.getId()) > 0;
     }
 

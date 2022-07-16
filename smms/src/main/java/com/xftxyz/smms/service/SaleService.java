@@ -50,7 +50,7 @@ public class SaleService {
         }
 
         int index = dao.addSale(conn, sale);
-        if (index < -1) {
+        if (index < 0) {
             return false;
         }
         sale.setId(index);

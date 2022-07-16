@@ -53,7 +53,7 @@ public class SupplierService {
             return false; // 供应商名已存在
         }
         int index = dao.addSupplier(conn, supplier);
-        if (index < -1) {
+        if (index < 0) {
             return false;
         }
         supplier.setId(index);
@@ -83,7 +83,7 @@ public class SupplierService {
     }
 
     // 更新供应商
-    public boolean updateGoods(Supplier newSupplier) {
+    public boolean updateSupplier(Supplier newSupplier) {
         if (this.old == null) {
             return false;
         }

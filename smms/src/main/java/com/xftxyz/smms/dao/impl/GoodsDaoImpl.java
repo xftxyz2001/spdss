@@ -11,7 +11,7 @@ public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
 
     @Override
     public int addGoods(Connection conn, Goods goods) {
-        String sql = "insert into goods(name, describe, price, num, unit) values(?, ?, ?, ?, ?)";
+        String sql = "insert into goods(`name`, `describe`, price, num, unit) values(?, ?, ?, ?, ?)";
         return insert(conn, sql, goods.getName(), goods.getDescribe(), goods.getPrice(), goods.getNum(),
                 goods.getUnit());
     }
@@ -24,7 +24,7 @@ public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
 
     @Override
     public boolean updateGoods(Connection conn, Goods goods) {
-        String sql = "update goods set name = ?, describe = ?, price = ?, num = ?, unit = ? where id = ?";
+        String sql = "update goods set `name` = ?, `describe` = ?, price = ?, num = ?, unit = ? where id = ?";
         return update(conn, sql, goods.getName(), goods.getDescribe(), goods.getPrice(), goods.getNum(),
                 goods.getUnit(), goods.getId()) > 0;
     }

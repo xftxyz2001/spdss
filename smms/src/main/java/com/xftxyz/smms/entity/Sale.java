@@ -22,7 +22,7 @@ public class Sale {
         this.id = id;
     }
 
-    public String getGoodName() {
+    public String getGoodsName() {
         return goodName;
     }
 
