@@ -38,6 +38,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+    	new SalerView().start();
         initialize();
 
         ImageView ivCode = new ImageView();
@@ -185,6 +186,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+
         launch(args);
         ServiceFactory.close();
     }
