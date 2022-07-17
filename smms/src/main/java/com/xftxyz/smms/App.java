@@ -2,6 +2,8 @@ package com.xftxyz.smms;
 
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.UserService;
+import com.xftxyz.smms.utils.Debug;
+import com.xftxyz.smms.utils.DialogUtil;
 import com.xftxyz.smms.utils.FileUtil;
 import com.xftxyz.smms.view.AdminView;
 import com.xftxyz.smms.view.ManagerView;
@@ -69,12 +71,19 @@ public class App extends Application {
         tfCode.setPrefWidth(60);
 
         btnLogin.setOnAction(e -> {
-            // String code = tfCode.getText();
-            // if (code == null || code.trim().equals("")) {
-            //     tfCode.setStyle("-fx-border-color:red");
-            //     Debug.log("验证码不能为空");
-            //     return;
-            // }
+            String code = tfCode.getText();
+            if (code == null || code.trim().equals("")) {
+                tfCode.setStyle("-fx-border-color:red");
+                DialogUtil.showWarningDialog("警告", "请输入验证码", null);
+                Debug.log("验证码不能为空");
+                return;
+            }
+            if (!userService.checkCode(code)){
+                tfCode.setStyle("-fx-border-color:red");
+                Debug.log("验证码不正确");
+                return;
+                
+            }
 
             String username = tfUserName.getText();
             String password = pfPassWord.getText();
