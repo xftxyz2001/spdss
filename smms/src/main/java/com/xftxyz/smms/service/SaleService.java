@@ -99,6 +99,7 @@ public class SaleService {
             return false;
         }
         observableList.set(observableList.indexOf(this.old), newSale);
+        this.old = null;
         return true;
     }
 

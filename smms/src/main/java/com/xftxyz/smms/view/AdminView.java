@@ -595,45 +595,20 @@ public class AdminView {
         return this.gpSaleManage_AddOrUpdateSale;
     }
 
-    public void initUI() {
-        // UI控件初始化
-        primaryStage = new Stage();
-        bpRoot = new BorderPane();
-        scene = new Scene(bpRoot, MyValues.SCENE_WIDTH, MyValues.SCENE_HEIGHT);
-
-        // top
+    // 加载管理页面
+    public void initUserManage() {
         btnUserManage = new Button("用户管理");
         btnUserManage.setOnAction(e -> {
             bpRoot.setCenter(bpUserManage);
         });
-        btnGoodsManage = new Button("商品管理");
-        btnGoodsManage.setOnAction(e -> {
-            bpRoot.setCenter(bpGoodsManage);
-        });
-        btnSupplierManage = new Button("供应商管理");
-        btnSupplierManage.setOnAction(e -> {
-            bpRoot.setCenter(bpSupplierManage);
-        });
-        btnPurchaseManage = new Button("采购管理");
-        btnPurchaseManage.setOnAction(e -> {
-            bpRoot.setCenter(bpPurchaseManage);
-        });
-        btnSaleManage = new Button("销售管理");
-        btnSaleManage.setOnAction(e -> {
-            bpRoot.setCenter(bpSaleManage);
-        });
-        hbManageMenu = new HBox(btnUserManage, btnGoodsManage, btnSupplierManage, btnPurchaseManage, btnSaleManage);
-        // HBox.setHgrow(hbManageMenu, Priority.ALWAYS);
-        // hbManageMenu.spacingProperty().bind(scene.widthProperty().subtract(btnUserManage.widthProperty())
-        // .subtract(btnGoodsManage.widthProperty()).subtract(btnSupplierManage.widthProperty())
-        // .subtract(btnPurchaseManage.widthProperty()).subtract(btnSaleManage.widthProperty()).divide(4));
-        bpRoot.setTop(hbManageMenu);
 
-        // center
         // 用户管理面板
         btnUserManageAddUser = new Button("添加用户");
         btnUserManageAddUser.setOnAction(e -> {
-            bpUserManage.setCenter(init_gpUserManage_AddOrUpdateUser(null));
+            GridPane gp = init_gpUserManage_AddOrUpdateUser(null);
+            if (gp != null) {
+                bpUserManage.setCenter(gp);
+            }
         });
         btnUserManageDeleteUser = new Button("删除用户");
         btnUserManageDeleteUser.setOnAction(e -> {
@@ -654,7 +629,10 @@ public class AdminView {
                 return;
             }
             selectedUser = userService.getUpdateCopy(selectedUser);
-            bpUserManage.setCenter(init_gpUserManage_AddOrUpdateUser(selectedUser));
+            GridPane gp = init_gpUserManage_AddOrUpdateUser(selectedUser);
+            if (gp != null) {
+                bpUserManage.setCenter(gp);
+            }
         });
         btnExportUser = new Button("导出用户");
         btnExportUser.setOnAction(e -> {
@@ -703,10 +681,21 @@ public class AdminView {
         bpUserManage.setLeft(vbUserManage);
         bpUserManage.setCenter(tvUserManage);
 
+    }
+
+    public void initGoodsManage() {
+        btnGoodsManage = new Button("商品管理");
+        btnGoodsManage.setOnAction(e -> {
+            bpRoot.setCenter(bpGoodsManage);
+        });
+
         // 商品管理面板
         btnGoodsManageAddGoods = new Button("添加商品");
         btnGoodsManageAddGoods.setOnAction(e -> {
-            bpGoodsManage.setCenter(init_gpGoodsManage_AddOrUpdateGoods(null));
+            GridPane gp = init_gpGoodsManage_AddOrUpdateGoods(null);
+            if (gp != null) {
+                bpGoodsManage.setCenter(gp);
+            }
             // Goods goods = new Goods();
             // goods.setName(RandomUtil.choice("123456789", 2));
             // goods.setPrice(RandomUtil.randomInt(1, 100));
@@ -731,7 +720,10 @@ public class AdminView {
                 DialogUtil.showWarningDialog("警告", null, "请选择一个商品");
                 return;
             }
-            bpGoodsManage.setCenter(init_gpGoodsManage_AddOrUpdateGoods(selectedGoods));
+            GridPane gp = init_gpGoodsManage_AddOrUpdateGoods(selectedGoods);
+            if (gp != null) {
+                bpGoodsManage.setCenter(gp);
+            }
             // selectedGoods = goodsService.getUpdateCopy(selectedGoods);
             // selectedGoods.setName(RandomUtil.choice("123456789", 2));
             // selectedGoods.setPrice(RandomUtil.randomInt(1, 100));
@@ -810,10 +802,21 @@ public class AdminView {
         bpGoodsManage.setLeft(vbGoodsManage);
         bpGoodsManage.setCenter(tvGoodsManage);
 
+    }
+
+    public void initSupplierManage() {
+        btnSupplierManage = new Button("供应商管理");
+        btnSupplierManage.setOnAction(e -> {
+            bpRoot.setCenter(bpSupplierManage);
+        });
+
         // 供应商管理面板
         btnSupplierManageAddSupplier = new Button("添加供应商");
         btnSupplierManageAddSupplier.setOnAction(e -> {
-            bpSupplierManage.setCenter(init_gpSupplierManage_AddOrUpdateSupplier(null));
+            GridPane gp = init_gpSupplierManage_AddOrUpdateSupplier(null);
+            if (gp != null) {
+                bpSupplierManage.setCenter(gp);
+            }
             // Supplier supplier = new Supplier();
             // supplier.setName(RandomUtil.choice("123456789", 2));
             // supplier.setAddress(RandomUtil.choice("123456789", 2));
@@ -838,7 +841,10 @@ public class AdminView {
                 DialogUtil.showWarningDialog("警告", null, "请选择一个供应商");
                 return;
             }
-            bpSupplierManage.setCenter(init_gpSupplierManage_AddOrUpdateSupplier(selectedSupplier));
+            GridPane gp = init_gpSupplierManage_AddOrUpdateSupplier(selectedSupplier);
+            if (gp != null) {
+                bpSupplierManage.setCenter(gp);
+            }
             // selectedSupplier = supplierService.getUpdateCopy(selectedSupplier);
             // selectedSupplier.setName(RandomUtil.choice("123456789", 2));
             // selectedSupplier.setAddress(RandomUtil.choice("123456789", 2));
@@ -895,10 +901,20 @@ public class AdminView {
         bpSupplierManage.setLeft(vbSupplierManage);
         bpSupplierManage.setCenter(tvSupplierManage);
 
+    }
+
+    public void initPurchaseManage() {
+        btnPurchaseManage = new Button("采购管理");
+        btnPurchaseManage.setOnAction(e -> {
+            bpRoot.setCenter(bpPurchaseManage);
+        });
         // 采购管理面板
         btnPurchaseManageAddPurchase = new Button("添加采购");
         btnPurchaseManageAddPurchase.setOnAction(e -> {
-            bpPurchaseManage.setCenter(init_gpPurchaseManage_AddOrUpdatePurchase(null));
+            GridPane gp = init_gpPurchaseManage_AddOrUpdatePurchase(null);
+            if (gp != null) {
+                bpPurchaseManage.setCenter(gp);
+            }
             // Purchase purchase = new Purchase();
             // purchase.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // purchase.setSupplier(RandomUtil.choice(supplierService.getObservableList()));
@@ -926,7 +942,10 @@ public class AdminView {
                 DialogUtil.showWarningDialog("警告", null, "请选择一个采购");
                 return;
             }
-            bpPurchaseManage.setCenter(init_gpPurchaseManage_AddOrUpdatePurchase(selectedPurchase));
+            GridPane gp = init_gpPurchaseManage_AddOrUpdatePurchase(selectedPurchase);
+            if (gp != null) {
+                bpPurchaseManage.setCenter(gp);
+            }
             // selectedPurchase = purchaseService.getUpdateCopy(selectedPurchase);
             // selectedPurchase.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // selectedPurchase.setSupplier(RandomUtil.choice(supplierService.getObservableList()));
@@ -1016,10 +1035,21 @@ public class AdminView {
         bpPurchaseManage.setLeft(vbPurchaseManage);
         bpPurchaseManage.setCenter(tvPurchaseManage);
 
+    }
+
+    public void initSaleManage() {
+        btnSaleManage = new Button("销售管理");
+        btnSaleManage.setOnAction(e -> {
+            bpRoot.setCenter(bpSaleManage);
+        });
+
         // 销售管理面板
         btnSaleManageAddSale = new Button("添加销售");
         btnSaleManageAddSale.setOnAction(e -> {
-            bpSaleManage.setCenter(init_gpSaleManage_AddOrUpdateSale(null));
+            GridPane gp = init_gpSaleManage_AddOrUpdateSale(null);
+            if (gp != null) {
+                bpSaleManage.setCenter(gp);
+            }
             // Sale sale = new Sale();
             // sale.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // sale.setCustomer(RandomUtil.choice(customerService.getObservableList()));
@@ -1047,7 +1077,10 @@ public class AdminView {
                 DialogUtil.showWarningDialog("警告", null, "请选择一个销售");
                 return;
             }
-            bpSaleManage.setCenter(init_gpSaleManage_AddOrUpdateSale(selectedSale));
+            GridPane gp = init_gpSaleManage_AddOrUpdateSale(selectedSale);
+            if (gp != null) {
+                bpSaleManage.setCenter(gp);
+            }
             // selectedSale = saleService.getUpdateCopy(selectedSale);
             // selectedSale.setGoods(RandomUtil.choice(goodsService.getObservableList()));
             // selectedSale.setCustomer(RandomUtil.choice(customerService.getObservableList()));
@@ -1125,6 +1158,47 @@ public class AdminView {
         bpSaleManage.setLeft(vbSaleManage);
         bpSaleManage.setCenter(tvSaleManage);
 
+    }
+
+    public void initUI() {
+        // UI控件初始化
+        primaryStage = new Stage();
+        bpRoot = new BorderPane();
+        scene = new Scene(bpRoot, MyValues.SCENE_WIDTH, MyValues.SCENE_HEIGHT);
+
+        // top
+        initUserManage();
+        initGoodsManage();
+        initSupplierManage();
+        initPurchaseManage();
+        initSaleManage();
+
+        // btnUserManage, btnGoodsManage, btnSupplierManage, btnPurchaseManage,
+        // btnSaleManage
+        hbManageMenu = new HBox();
+        if (btnUserManage != null) {
+            hbManageMenu.getChildren().add(btnUserManage);
+        }
+        if (btnGoodsManage != null) {
+            hbManageMenu.getChildren().add(btnGoodsManage);
+        }
+        if (btnSupplierManage != null) {
+            hbManageMenu.getChildren().add(btnSupplierManage);
+        }
+        if (btnPurchaseManage != null) {
+            hbManageMenu.getChildren().add(btnPurchaseManage);
+        }
+        if (btnSaleManage != null) {
+            hbManageMenu.getChildren().add(btnSaleManage);
+        }
+
+        // HBox.setHgrow(hbManageMenu, Priority.ALWAYS);
+        // hbManageMenu.spacingProperty().bind(scene.widthProperty().subtract(btnUserManage.widthProperty())
+        // .subtract(btnGoodsManage.widthProperty()).subtract(btnSupplierManage.widthProperty())
+        // .subtract(btnPurchaseManage.widthProperty()).subtract(btnSaleManage.widthProperty()).divide(4));
+        bpRoot.setTop(hbManageMenu);
+
+        // center
         bpRoot.setCenter(bpUserManage);
 
         // 状态栏
@@ -1140,7 +1214,7 @@ public class AdminView {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setTitle("欢迎使用");
+        primaryStage.setTitle("欢迎使用  " + getClass().getName());
         primaryStage.getIcons().add(FileUtil.getImage("user.png"));
 
     }

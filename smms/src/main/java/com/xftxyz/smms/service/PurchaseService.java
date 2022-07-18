@@ -95,6 +95,7 @@ public class PurchaseService {
             return false;
         }
         observableList.set(observableList.indexOf(this.old), newPurchase);
+        this.old = null;
         return true;
     }
 

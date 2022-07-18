@@ -106,6 +106,7 @@ public class SupplierService {
             return false;
         }
         observableList.set(observableList.indexOf(this.old), newSupplier);
+        this.old = null;
         return true;
     }
 

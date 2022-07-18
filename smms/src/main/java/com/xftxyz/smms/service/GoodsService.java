@@ -112,6 +112,7 @@ public class GoodsService {
             return false;
         }
         observableList.set(observableList.indexOf(this.old), newGoods);
+        this.old = null;
         return true;
     }
 

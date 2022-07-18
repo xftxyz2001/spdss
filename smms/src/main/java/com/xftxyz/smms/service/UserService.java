@@ -148,6 +148,7 @@ public class UserService {
         // observableList.remove(oldUser);
         // observableList.add(newUser);
         observableList.set(observableList.indexOf(this.old), newUser);
+        this.old = null;
         return true;
     }
 

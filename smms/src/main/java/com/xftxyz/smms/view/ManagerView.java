@@ -1,14 +1,25 @@
 package com.xftxyz.smms.view;
 
+import java.io.File;
+
 import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.type.Role;
 import com.xftxyz.smms.utils.DialogUtil;
+import com.xftxyz.smms.utils.FileUtil;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 public class ManagerView extends AdminView {
     @Override
@@ -86,4 +97,97 @@ public class ManagerView extends AdminView {
         }
         return this.gpUserManage_AddOrUpdateUser;
     }
+
+    @Override
+    public void initUserManage() {
+        btnUserManage = new Button("用户管理");
+        btnUserManage.setOnAction(e -> {
+            bpRoot.setCenter(bpUserManage);
+        });
+
+        // 用户管理面板
+        btnUserManageAddUser = new Button("添加用户");
+        btnUserManageAddUser.setOnAction(e -> {
+            GridPane gp = init_gpUserManage_AddOrUpdateUser(null);
+            if (gp != null) {
+                bpUserManage.setCenter(gp);
+            }
+        });
+        btnUserManageDeleteUser = new Button("删除用户");
+        btnUserManageDeleteUser.setOnAction(e -> {
+            User selectedUser = tvUserManage.getSelectionModel().getSelectedItem();
+            if (selectedUser == null) {
+                // System.out.println("请选择一个用户");
+                DialogUtil.showWarningDialog("警告", null, "请选择一个用户");
+                return;
+            }
+            if (selectedUser.getRole() == Role.ADMIN) {
+                // 警告没有权限
+                DialogUtil.showWarningDialog("警告", null, "没有权限");
+            }
+            userService.deleteUser(selectedUser);
+        });
+        btnUserManageUpdateUser = new Button("修改用户");
+        btnUserManageUpdateUser.setOnAction(e -> {
+            User selectedUser = tvUserManage.getSelectionModel().getSelectedItem();
+            if (selectedUser == null) {
+                // System.out.println("请选择一个用户");
+                DialogUtil.showWarningDialog("警告", null, "请选择一个用户");
+                return;
+            }
+            selectedUser = userService.getUpdateCopy(selectedUser);
+            GridPane gp = init_gpUserManage_AddOrUpdateUser(selectedUser);
+            if (gp != null) {
+                bpUserManage.setCenter(gp);
+            }
+        });
+        btnExportUser = new Button("导出用户");
+        btnExportUser.setOnAction(e -> {
+            File file = FileUtil.showSaveDialog();
+            if (file == null) {
+                DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
+                return;
+            }
+            userService.export(file);
+            DialogUtil.showInfoDialog("提示", null, "导出成功");
+        });
+        vbUserManage = new VBox(btnUserManageAddUser, btnUserManageDeleteUser, btnUserManageUpdateUser, btnExportUser);
+        tvUserManage = new TableView<User>(userService.getObservableList());
+        TableColumn<User, String> tvUserManage_tcUserName = new TableColumn<>("用户名");
+        tvUserManage_tcUserName.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+                        return new SimpleStringProperty(param.getValue().getName());
+                    }
+
+                });
+        TableColumn<User, String> tvUserManage_tcUserPwd = new TableColumn<>("密码");
+        tvUserManage_tcUserPwd.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+                        return new SimpleStringProperty(param.getValue().getPwd());
+                    }
+
+                });
+        TableColumn<User, String> tvUserManage_tcUserRole = new TableColumn<>("角色");
+        tvUserManage_tcUserRole.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(CellDataFeatures<User, String> param) {
+                        return new SimpleStringProperty(userService.getUserRoleName(param.getValue()));
+                    }
+                });
+        tvUserManage.getColumns().add(tvUserManage_tcUserName);
+        tvUserManage.getColumns().add(tvUserManage_tcUserPwd);
+        tvUserManage.getColumns().add(tvUserManage_tcUserRole);
+        bpUserManage = new BorderPane();
+        bpUserManage.setLeft(vbUserManage);
+        bpUserManage.setCenter(tvUserManage);
+
+    }
+
 }
