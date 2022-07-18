@@ -1,5 +1,6 @@
 package com.xftxyz.smms.view;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -40,11 +41,11 @@ import javafx.util.Callback;
 
 public class AdminView {
     // Service
-    private UserService userService;
-    private GoodsService goodsService;
-    private SupplierService supplierService;
-    private PurchaseService purchaseService;
-    private SaleService saleService;
+    protected UserService userService;
+    protected GoodsService goodsService;
+    protected SupplierService supplierService;
+    protected PurchaseService purchaseService;
+    protected SaleService saleService;
 
     // UI控件
     Stage primaryStage;
@@ -66,6 +67,7 @@ public class AdminView {
     Button btnUserManageAddUser;
     Button btnUserManageDeleteUser;
     Button btnUserManageUpdateUser;
+    Button btnExportUser;
     TableView<User> tvUserManage;
     GridPane gpUserManage_AddOrUpdateUser;
     Label lbgpUserManage_AddOrUpdateUser_UserName;
@@ -84,6 +86,7 @@ public class AdminView {
     Button btnGoodsManageAddGoods;
     Button btnGoodsManageDeleteGoods;
     Button btnGoodsManageUpdateGoods;
+    Button btnExportGoods;
     TableView<Goods> tvGoodsManage;
     GridPane gpGoodsManage_AddOrUpdateGoods;
     Label lbgpGoodsManage_AddOrUpdateGoods_GoodsName;
@@ -106,6 +109,7 @@ public class AdminView {
     Button btnSupplierManageAddSupplier;
     Button btnSupplierManageDeleteSupplier;
     Button btnSupplierManageUpdateSupplier;
+    Button btnExportSupplier;
     TableView<Supplier> tvSupplierManage;
     GridPane gpSupplierManage_AddOrUpdateSupplier;
     Label lbgpSupplierManage_AddOrUpdateSupplier_SupplierName;
@@ -123,6 +127,7 @@ public class AdminView {
     Button btnPurchaseManageAddPurchase;
     Button btnPurchaseManageDeletePurchase;
     Button btnPurchaseManageUpdatePurchase;
+    Button btnExportPurchase;
     VBox vbPurchaseManage;
     TableView<Purchase> tvPurchaseManage;
     GridPane gpPurchaseManage_AddOrUpdatePurchase;
@@ -148,6 +153,7 @@ public class AdminView {
     Button btnSaleManageAddSale;
     Button btnSaleManageDeleteSale;
     Button btnSaleManageUpdateSale;
+    Button btnExportSale;
     VBox vbSaleManage;
     TableView<Sale> tvSaleManage;
     GridPane gpSaleManage_AddOrUpdateSale;
@@ -650,7 +656,17 @@ public class AdminView {
             selectedUser = userService.getUpdateCopy(selectedUser);
             bpUserManage.setCenter(init_gpUserManage_AddOrUpdateUser(selectedUser));
         });
-        vbUserManage = new VBox(btnUserManageAddUser, btnUserManageDeleteUser, btnUserManageUpdateUser);
+        btnExportUser = new Button("导出用户");
+        btnExportUser.setOnAction(e -> {
+            File file = FileUtil.showSaveDialog();
+            if (file == null) {
+                DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
+                return;
+            }
+            userService.export(file);
+            DialogUtil.showInfoDialog("提示", null, "导出成功");
+        });
+        vbUserManage = new VBox(btnUserManageAddUser, btnUserManageDeleteUser, btnUserManageUpdateUser, btnExportUser);
         tvUserManage = new TableView<User>(userService.getObservableList());
         TableColumn<User, String> tvUserManage_tcUserName = new TableColumn<>("用户名");
         tvUserManage_tcUserName.setCellValueFactory(
@@ -722,7 +738,18 @@ public class AdminView {
             // selectedGoods.setSupplier(RandomUtil.choice(supplierService.getObservableList()));
             // goodsService.updateGoods(selectedGoods);
         });
-        vbGoodsManage = new VBox(btnGoodsManageAddGoods, btnGoodsManageDeleteGoods, btnGoodsManageUpdateGoods);
+        btnExportGoods = new Button("导出商品");
+        btnExportGoods.setOnAction(e -> {
+            File file = FileUtil.showSaveDialog();
+            if (file == null) {
+                DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
+                return;
+            }
+            goodsService.export(file);
+            DialogUtil.showInfoDialog("提示", null, "导出成功");
+        });
+        vbGoodsManage = new VBox(btnGoodsManageAddGoods, btnGoodsManageDeleteGoods, btnGoodsManageUpdateGoods,
+                btnExportGoods);
         tvGoodsManage = new TableView<Goods>(goodsService.getObservableList());
         TableColumn<Goods, String> tvGoodsManage_tcGoodsName = new TableColumn<>("商品名");
         tvGoodsManage_tcGoodsName.setCellValueFactory(
@@ -818,8 +845,18 @@ public class AdminView {
             // selectedSupplier.setPhone(RandomUtil.choice("123456789", 2));
             // supplierService.updateSupplier(selectedSupplier);
         });
+        btnExportSupplier = new Button("导出供应商");
+        btnExportSupplier.setOnAction(e -> {
+            File file = FileUtil.showSaveDialog();
+            if (file == null) {
+                DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
+                return;
+            }
+            supplierService.export(file);
+            DialogUtil.showWarningDialog("提示", null, "导出成功");
+        });
         vbSupplierManage = new VBox(btnSupplierManageAddSupplier, btnSupplierManageDeleteSupplier,
-                btnSupplierManageUpdateSupplier);
+                btnSupplierManageUpdateSupplier, btnExportSupplier);
         tvSupplierManage = new TableView<Supplier>(supplierService.getObservableList());
         TableColumn<Supplier, String> tvSupplierManage_tcSupplierName = new TableColumn<>("供应商名");
         tvSupplierManage_tcSupplierName.setCellValueFactory(
@@ -899,8 +936,18 @@ public class AdminView {
             // LocalDate.now().plusDays(1)));
             // purchaseService.updatePurchase(selectedPurchase);
         });
+        btnExportPurchase = new Button("导出采购");
+        btnExportPurchase.setOnAction(e -> {
+            File file = FileUtil.showSaveDialog();
+            if (file == null) {
+                DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
+                return;
+            }
+            purchaseService.export(file);
+            DialogUtil.showWarningDialog("提示", null, "导出成功");
+        });
         vbPurchaseManage = new VBox(btnPurchaseManageAddPurchase, btnPurchaseManageDeletePurchase,
-                btnPurchaseManageUpdatePurchase);
+                btnPurchaseManageUpdatePurchase, btnExportPurchase);
         tvPurchaseManage = new TableView<Purchase>(purchaseService.getObservableList());
         TableColumn<Purchase, String> tvPurchaseManage_tcPurchaseSupplierName = new TableColumn<>("供应商名");
         tvPurchaseManage_tcPurchaseSupplierName.setCellValueFactory(
@@ -1010,7 +1057,17 @@ public class AdminView {
             // LocalDate.now().plusDays(1)));
             // saleService.updateSale(selectedSale);
         });
-        vbSaleManage = new VBox(btnSaleManageAddSale, btnSaleManageDeleteSale, btnSaleManageUpdateSale);
+        btnExportSale = new Button("导出销售");
+        btnExportSale.setOnAction(e -> {
+            File file = FileUtil.showSaveDialog();
+            if (file == null) {
+                DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
+                return;
+            }
+            saleService.export(file);
+            DialogUtil.showWarningDialog("提示", null, "导出成功");
+        });
+        vbSaleManage = new VBox(btnSaleManageAddSale, btnSaleManageDeleteSale, btnSaleManageUpdateSale, btnExportSale);
         tvSaleManage = new TableView<Sale>(saleService.getObservableList());
         TableColumn<Sale, String> tvSaleManage_tcSaleGoodName = new TableColumn<>("商品名");
         tvSaleManage_tcSaleGoodName.setCellValueFactory(

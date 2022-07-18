@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.Properties;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.builder.ExcelWriterBuilder;
+import com.xftxyz.smms.converter.RoleConverter;
+import com.xftxyz.smms.converter.TimestampConverter;
 
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -23,10 +26,12 @@ public class FileUtil {
         // xlsx文件类型
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Excel文件", "*.xlsx"));
         fileChooser.setSelectedExtensionFilter(fileChooser.getExtensionFilters().get(0));
+        fileChooser.setTitle("保存文件");
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home")));
     }
 
     public static File showSaveDialog() {
-        fileChooser.setTitle("保存文件");
         File file = fileChooser.showSaveDialog(null);
         if (file == null) {
             return null;
@@ -36,7 +41,11 @@ public class FileUtil {
 
     // 写入excel
     public static <T> void writeExcel(File file, Class<T> head, Collection<T> data) {
-        EasyExcel.write(file, head).sheet("数据").doWrite(data);
+        ExcelWriterBuilder ewb = EasyExcel.write(file);
+        ewb.head(head);
+        ewb.registerConverter(new RoleConverter());
+        ewb.registerConverter(new TimestampConverter());
+        ewb.sheet("Sheet1").doWrite(data);
     }
 
     public static Properties getProperties(String fileName) throws IOException {

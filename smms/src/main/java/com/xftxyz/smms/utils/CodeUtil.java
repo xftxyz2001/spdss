@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 
+import com.xftxyz.smms.converter.ImageConverter;
+
 import javafx.scene.image.Image;
 
 public class CodeUtil {

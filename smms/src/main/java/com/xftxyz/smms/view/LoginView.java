@@ -65,59 +65,43 @@ public class LoginView extends Application {
         btnLogin.setLayoutY(200);
         tfCode.setPrefWidth(60);
 
+        Debug.log("LoginView.start()");
         btnLogin.setOnAction(e -> {
-            // String code = tfCode.getText();
-            // if (code == null || code.trim().equals("")) {
-            // tfCode.setStyle("-fx-border-color:red");
-            // // DialogUtil.showWarningDialog("警告", "请输入验证码", null);
-            // // Debug.log("验证码不能为空");
-            // setCode(ivCode);
-            // return;
-            // }
-            // if (!userService.checkCode(code)) {
-            // tfCode.setStyle("-fx-border-color:red");
-            // // Debug.log("验证码不正确");
-            // DialogUtil.showWarningDialog("警告", null, "验证码不正确");
-            // tfCode.setText("");
-            // tfCode.requestFocus();
-            // setCode(ivCode);
-            // return;
-
-            // }
-            String username = tfUserName.getText();
-            String password = pfPassWord.getText();
-
-            // 未连接到数据库，进入测试模式
-            if (!ServiceFactory.checkConnection()) {
-                if (username.equals("admin") && password.equals("admin")) {
-                    try {
-                        new AdminView().start();
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                } else if (username.equals("manager") && password.equals("manager")) {
-                    try {
-                        new ManagerView().start();
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                } else if (username.equals("saler") && password.equals("saler")) {
-                    try {
-                        new SalerView().start();
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                } else if (username.equals("purchaser") && password.equals("purchaser")) {
-                    try {
-                        new PurchaserView().start();
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
+            Debug.log("Login Button Clicked");
+            // 测试模式
+            if (Debug.pw != null) {
+                try {
+                    new AdminView().start();
+                    new ManagerView().start();
+                    new PurchaserView().start();
+                    new SalerView().start();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
-                Debug.log("进入测试模式: 管理员账号: admin 密码: admin" + "\n" + "经理账号: manager 密码: manager" + "\n"
-                        + "销售员账号: saler 密码: saler" + "\n" + "采购员账号: purchaser 密码: purchaser");
                 return;
             }
+
+            // 非测试模式
+            String code = tfCode.getText();
+            if (code == null || code.trim().equals("")) {
+                tfCode.setStyle("-fx-border-color:red");
+                // DialogUtil.showWarningDialog("警告", "请输入验证码", null);
+                // Debug.log("验证码不能为空");
+                setCode(ivCode);
+                return;
+            }
+            if (!userService.checkCode(code)) {
+                tfCode.setStyle("-fx-border-color:red");
+                // Debug.log("验证码不正确");
+                DialogUtil.showWarningDialog("警告", null, "验证码不正确");
+                tfCode.setText("");
+                tfCode.requestFocus();
+                setCode(ivCode);
+                return;
+
+            }
+            String username = tfUserName.getText();
+            String password = pfPassWord.getText();
 
             // 链接到数据库，进行登录操作
             boolean isSucc = userService.login(username, password);
@@ -198,9 +182,9 @@ public class LoginView extends Application {
     }
 
     // public static void main(String[] args) {
-    //     launch(args);
+    // launch(args);
 
-    //     ServiceFactory.close();
+    // ServiceFactory.close();
     // }
 
 }
