@@ -1,4 +1,4 @@
-package com.xftxyz.smms.entity;
+package com.example;
 
 import java.math.BigDecimal;
 

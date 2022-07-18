@@ -1,24 +1,17 @@
 package com.xftxyz.smms.entity;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
-import com.alibaba.excel.annotation.ExcelProperty;
-
-public class Goods {
-    @ExcelProperty("商品编号")
-    private int id;// 商品编号
-    @ExcelProperty("商品名称")
-    private String name;// 商品名称
-    @ExcelProperty("单价")
-    private BigDecimal price;// 单价
-    @ExcelProperty("库存")
-    private BigDecimal num;// 库存数量
-    @ExcelProperty("单位")
+public class Sale {
+    private int id; // 销售单编号
+    private String goodName; // 商品名
+    private BigDecimal price; // 销售价
+    private BigDecimal num; // 销售数量
     private String unit; // 单位
-    @ExcelProperty("描述")
-    private String describe;// 描述
+    private Timestamp time; // 销售时间
 
-    public Goods() {
+    public Sale() {
     }
 
     public int getId() {
@@ -29,20 +22,12 @@ public class Goods {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getGoodsName() {
+        return goodName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescribe() {
-        return describe;
-    }
-
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
     }
 
     public BigDecimal getPrice() {
@@ -69,15 +54,23 @@ public class Goods {
         this.unit = unit;
     }
 
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((describe == null) ? 0 : describe.hashCode());
+        result = prime * result + ((goodName == null) ? 0 : goodName.hashCode());
         result = prime * result + id;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((num == null) ? 0 : num.hashCode());
         result = prime * result + ((price == null) ? 0 : price.hashCode());
+        result = prime * result + ((time == null) ? 0 : time.hashCode());
         result = prime * result + ((unit == null) ? 0 : unit.hashCode());
         return result;
     }
@@ -90,18 +83,13 @@ public class Goods {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Goods other = (Goods) obj;
-        if (describe == null) {
-            if (other.describe != null)
+        Sale other = (Sale) obj;
+        if (goodName == null) {
+            if (other.goodName != null)
                 return false;
-        } else if (!describe.equals(other.describe))
+        } else if (!goodName.equals(other.goodName))
             return false;
         if (id != other.id)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
             return false;
         if (num == null) {
             if (other.num != null)
@@ -113,6 +101,11 @@ public class Goods {
                 return false;
         } else if (!price.equals(other.price))
             return false;
+        if (time == null) {
+            if (other.time != null)
+                return false;
+        } else if (!time.equals(other.time))
+            return false;
         if (unit == null) {
             if (other.unit != null)
                 return false;
@@ -123,19 +116,19 @@ public class Goods {
 
     @Override
     public String toString() {
-        return "Goods [describe=" + describe + ", id=" + id + ", name=" + name + ", num=" + num + ", price=" + price
+        return "Sale [goodName=" + goodName + ", id=" + id + ", num=" + num + ", price=" + price + ", time=" + time
                 + ", unit=" + unit + "]";
     }
 
-    public Goods copy() {
-        Goods c = new Goods();
-        c.setId(id);
-        c.setName(name);
-        c.setDescribe(describe);
-        c.setPrice(price);
-        c.setNum(num);
-        c.setUnit(unit);
-        return c;
+    public Sale copy() {
+        Sale sale = new Sale();
+        sale.setId(this.id);
+        sale.setGoodName(this.goodName);
+        sale.setPrice(this.price);
+        sale.setNum(this.num);
+        sale.setUnit(this.unit);
+        sale.setTime(this.time);
+        return sale;
     }
 
 }

@@ -442,7 +442,6 @@ public class ManagerView {
             File f = FileUtil.showSaveDialog();
             if (f == null) {
                 DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
-                return;
             }
             FileUtil.writeExcel(f, Goods.class, goodsService.getObservableList());
             DialogUtil.showInfoDialog("提示", null, "导出成功");
