@@ -2,6 +2,8 @@ package com.xftxyz.smms.service;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.xftxyz.smms.dao.SaleDao;
@@ -51,12 +53,16 @@ public class SaleService {
             return false;
         }
 
-        int index = dao.addSale(conn, sale);
-        if (index < 0) {
-            return false;
+        if (sale.getTime() == null) {
+            sale.setTime(Timestamp.valueOf(LocalDateTime.now()));
         }
-        sale.setId(index);
+
         if (ServiceFactory.getGoodsService().updateBy(sale)){
+            int index = dao.addSale(conn, sale);
+            if (index < 0) {
+                return false;
+            }
+            sale.setId(index);
             observableList.add(sale);
 
             return true;

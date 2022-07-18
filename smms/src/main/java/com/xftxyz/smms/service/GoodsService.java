@@ -142,7 +142,7 @@ public class GoodsService {
             goods.setPrice(purchase.getPrice());
             goods.setNum(purchase.getNum());
             goods.setUnit(purchase.getUnit());
-            goods.setDescribe("describe");
+            goods.setDescribe("暂无描述");
             return addGoods(goods);
         } else {
             // 更新

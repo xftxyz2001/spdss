@@ -91,6 +91,7 @@ Synthesis Practice of Data and Software Systems
 - [【微服务项目手动打成jar包&解决Maven 打包时丢失properties文件问题】](https://blog.csdn.net/zimojiang/article/details/125474742)
 - [免费、正版、最新的Idea（教育免费版）获取流程！！](https://blog.csdn.net/qq_46703281/article/details/125242002)
 - [JavaFXChina](http://www.javafxchina.net/main/)
+- [JavaFX TextField文本域值改变监听事件](https://blog.csdn.net/qq_20336817/article/details/53213430/)
 
 
 ![1657588204917](image/README/1657588204917.png)

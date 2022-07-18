@@ -2,6 +2,8 @@ package com.xftxyz.smms.service;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.xftxyz.smms.dao.PurchaseDao;
@@ -49,6 +51,9 @@ public class PurchaseService {
     public boolean addPurchase(Purchase purchase) {
         if (purchase == null) {
             return false;
+        }
+        if (purchase.getTime() == null) {
+            purchase.setTime(Timestamp.valueOf(LocalDateTime.now()));
         }
 
         int index = dao.addPurchase(conn, purchase);

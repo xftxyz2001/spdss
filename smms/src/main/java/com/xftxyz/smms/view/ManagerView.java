@@ -124,6 +124,7 @@ public class ManagerView extends AdminView {
             if (selectedUser.getRole() == Role.ADMIN) {
                 // 警告没有权限
                 DialogUtil.showWarningDialog("警告", null, "没有权限");
+                return;
             }
             userService.deleteUser(selectedUser);
         });

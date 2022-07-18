@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 public class Debug {
     public static final PrintStream pw = System.out;
+    // public static final PrintStream pw = null;
 
     public static void log(String message) {
         if (pw != null){

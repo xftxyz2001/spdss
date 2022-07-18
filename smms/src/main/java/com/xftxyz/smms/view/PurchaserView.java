@@ -1,137 +1,158 @@
 package com.xftxyz.smms.view;
 
+import java.math.BigDecimal;
+
 import com.xftxyz.smms.entity.Goods;
-import com.xftxyz.smms.entity.User;
+import com.xftxyz.smms.entity.Purchase;
+import com.xftxyz.smms.service.GoodsService;
+import com.xftxyz.smms.service.PurchaseService;
+import com.xftxyz.smms.service.ServiceFactory;
+import com.xftxyz.smms.service.SupplierService;
 import com.xftxyz.smms.type.MyValues;
+import com.xftxyz.smms.utils.DialogUtil;
 import com.xftxyz.smms.utils.FileUtil;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings("all")
 public class PurchaserView {
+    // Service
+    protected GoodsService goodsService;
+    protected SupplierService supplierService;
+    protected PurchaseService purchaseService;
 
-	public void start() throws Exception {
-		Stage primaryStage = new Stage();
-		Button supperliermanage = new Button("供货商");
-		supperliermanage.setLayoutX(0);
-		supperliermanage.setLayoutY(150);
-		supperliermanage.setPrefHeight(80);
-		supperliermanage.setPrefWidth(200);
-		AnchorPane ap = new AnchorPane();
-		AnchorPane apleft = new AnchorPane();
-		AnchorPane aprightsupperlier = new AnchorPane();
-		AnchorPane aprightgoods = new AnchorPane();
-		AnchorPane apsupperlier = new AnchorPane();
+    // UI控件
+    Stage primaryStage;
+    Scene scene;
+    BorderPane bpRoot;
 
-		AnchorPane apgoods = new AnchorPane();
-		supperliermanage.setOnAction(e -> {
-			apgoods.setVisible(false);
-			apsupperlier.setVisible(true);
-		});
+    GridPane gp;
+    Label lbSupplierName;
+    ChoiceBox<String> cbSupplierName;
+    Label lbGoodsName;
+    TextField tfGoodsName;
+    Label lbPrice;
+    TextField tfPrice;
+    Label lbUnit;
+    TextField tfUnit;
+    Label lbNum;
+    TextField tfNum;
+    // Label lbDescription;
+    // TextField tfDescription;
 
-		Button goodsmanage = new Button("商品");
-		goodsmanage.setLayoutX(0);
-		goodsmanage.setLayoutY(300);
-		goodsmanage.setPrefHeight(80);
-		goodsmanage.setPrefWidth(200);
-		goodsmanage.setOnAction(e -> {
-			apgoods.setVisible(true);
-			apsupperlier.setVisible(false);
-		});
-		ap.getChildren().addAll(apleft, apsupperlier, apgoods);
-		apleft.setPrefHeight(600);
-		apleft.setPrefWidth(200);
-		apleft.setStyle("-fx-background-color:#708090");
-		apsupperlier.getChildren().add(aprightsupperlier);
-		apgoods.getChildren().add(aprightgoods);
-		apsupperlier.setTopAnchor(aprightsupperlier, 0.0);
-		apsupperlier.setRightAnchor(aprightsupperlier, 0.0);
-		apsupperlier.setLeftAnchor(aprightsupperlier, 0.0);
-		apsupperlier.setBottomAnchor(aprightsupperlier, 500.0);
-		apgoods.setTopAnchor(aprightgoods, 0.0);
-		apgoods.setRightAnchor(aprightgoods, 0.0);
-		apgoods.setLeftAnchor(aprightgoods, 0.0);
-		apgoods.setBottomAnchor(aprightgoods, 500.0);
-		ap.setTopAnchor(apsupperlier, 0.0);
-		ap.setRightAnchor(apsupperlier, 0.0);
-		ap.setLeftAnchor(apsupperlier, 200.0);
-		ap.setBottomAnchor(apsupperlier, 0.0);
-		ap.setTopAnchor(apgoods, 0.0);
-		ap.setRightAnchor(apgoods, 0.0);
-		ap.setLeftAnchor(apgoods, 200.0);
-		ap.setBottomAnchor(apgoods, 0.0);
-		aprightsupperlier.setStyle(MyValues.BACKGROUND_STYLE);
-		aprightgoods.setStyle(MyValues.BACKGROUND_STYLE);
-		// aprightgoods.setBackground(value);
-		apleft.getChildren().addAll(goodsmanage, supperliermanage);
-		Scene scene = new Scene(ap);
+    Button btSubmit;
+    Button btReset;
 
-		primaryStage.setScene(scene);
-		primaryStage.setHeight(600);
-		primaryStage.setWidth(800);
-		primaryStage.setTitle("欢迎使用");
-		primaryStage.setResizable(false);
-		ObservableList<User> list = FXCollections.observableArrayList();
-		Label usermagelabel = new Label("供应商");
-		usermagelabel.setFont(Font.font("FangSong", FontWeight.BOLD, 20));
-		usermagelabel.setTextFill(Color.BLACK);
-		TableView<User> tableview = new TableView<User>(list);
-		TableColumn<User, String> supplier_name = new TableColumn<User, String>("供应商");
-		TableColumn<User, String> supplier_id = new TableColumn<User, String>("id");
-		TableColumn<User, String> supperlier_adress = new TableColumn<User, String>("地址");
-		TableColumn<User, String> supplier_iphone = new TableColumn<User, String>("电话");
-		tableview.getColumns().addAll(supplier_id, supplier_name, supperlier_adress, supplier_iphone);
+    Label statusBar;
 
-		usermagelabel.setLayoutX(230);
-		usermagelabel.setLayoutY(30);
-		tableview.setLayoutX(100);
-		tableview.setLayoutY(100);
+    private void initService() {
+        // Service初始化
+        goodsService = ServiceFactory.getGoodsService();
+        supplierService = ServiceFactory.getSupplierService();
+        purchaseService = ServiceFactory.getPurchaseService();
+    }
 
-		aprightsupperlier.getChildren().add(usermagelabel);
-		aprightsupperlier.getChildren().add(tableview);
-		ObservableList<Goods> list1 = FXCollections.observableArrayList();
-		Label goodsmageLabel = new Label("商品");
-		goodsmageLabel.setFont(Font.font("FangSong", FontWeight.BOLD, 20));
-		goodsmageLabel.setTextFill(Color.BLACK);
-		TableView<Goods> tableview1 = new TableView<Goods>(list1);
-		TableColumn<Goods, String> goods_name = new TableColumn<Goods, String>("商品名");
-		TableColumn<Goods, String> goods_id = new TableColumn<Goods, String>("id");
-		TableColumn<Goods, String> goods_price = new TableColumn<Goods, String>("价格");
-		TableColumn<Goods, String> goods_category = new TableColumn<Goods, String>("分类");
-		TableColumn<Goods, String> goods_number = new TableColumn<Goods, String>("数量");
-		TableColumn<Goods, String> goods_unit = new TableColumn<Goods, String>("单位");
-		TableColumn<Goods, String> goods_onsell = new TableColumn<Goods, String>("在售");
+    private void initUI() {
+        primaryStage = new Stage();
+        bpRoot = new BorderPane();
+        scene = new Scene(bpRoot, MyValues.SCENE_WIDTH, MyValues.SCENE_HEIGHT);
 
-		tableview1.getColumns().addAll(goods_category, goods_id, goods_name, goods_number, goods_onsell, goods_price,
-				goods_unit);
+        gp = new GridPane();
+        lbSupplierName = new Label("供应商名称");
+        cbSupplierName = new ChoiceBox<String>();
+        cbSupplierName.getItems().addAll(supplierService.getAllSupplierName());
+        lbGoodsName = new Label("商品名称");
+        tfGoodsName = new TextField();
+        tfGoodsName.textProperty().addListener((observable, oldValue, newValue) -> {
+            Goods goods = goodsService.getGoodsByName(newValue);
+            if (goods != null) {
+                tfUnit.setText(goods.getUnit());
+            }
+        });
+        lbPrice = new Label("单价");
+        tfPrice = new TextField();
+        lbUnit = new Label("/");
+        tfUnit = new TextField();
+        lbNum = new Label("数量");
+        tfNum = new TextField();
+        // lbDescription = new Label("描述");
+        // tfDescription = new TextField();
+        btSubmit = new Button("提交");
+        btSubmit.setOnAction(e -> {
+            Purchase newPurchase = new Purchase();
+            try {
 
-		goodsmageLabel.setLayoutX(230);
-		goodsmageLabel.setLayoutY(30);
-		tableview1.setLayoutX(10);
-		tableview1.setLayoutY(100);
+                newPurchase.setSupplierName(cbSupplierName.getValue());
+                newPurchase.setGoodsName(tfGoodsName.getText());
+                newPurchase.setPrice(new BigDecimal(tfPrice.getText()));
+                newPurchase.setUnit(tfUnit.getText());
+                newPurchase.setNum(new BigDecimal(tfNum.getText()));
+                // newPurchase.setTime(Timestamp.valueOf(LocalDateTime.now()));
+            } catch (Exception e1) {
+                DialogUtil.showWarningDialog("警告", null, "请输入正确的数据");
+                return;
+            }
 
-		aprightgoods.getChildren().add(goodsmageLabel);
-		aprightgoods.getChildren().add(tableview1);
-		Button importbt = new Button("进货");
-		Button remainbt = new Button("查看库存");
-		importbt.setLayoutX(100);
-		importbt.setLayoutY(520);
-		remainbt.setLayoutX(300);
-		remainbt.setLayoutY(520);
-		aprightgoods.getChildren().addAll(importbt, remainbt);
-		apgoods.setVisible(false);
-		primaryStage.show();
-		primaryStage.getIcons().add(FileUtil.getImage("user.png"));
-	}
+            boolean isSucc = purchaseService.addPurchase(newPurchase);
+            if (!isSucc) {
+                DialogUtil.showWarningDialog("警告", null, "添加失败");
+                return;
+            }
+            DialogUtil.showInfoDialog("提示", null, "添加成功");
+            cbSupplierName.setValue(null);
+            tfGoodsName.setText("");
+            tfPrice.setText("");
+            tfUnit.setText("");
+            tfNum.setText("");
+            // tfDescription.setText("");
+        });
+        btReset = new Button("重置");
+        btReset.setOnAction(e -> {
+            cbSupplierName.setValue(null);
+            tfGoodsName.setText("");
+            tfPrice.setText("");
+            tfUnit.setText("");
+            tfNum.setText("");
+            // tfDescription.setText("");
+        });
+        gp.add(lbSupplierName, 0, 0);
+        gp.add(cbSupplierName, 1, 0);
+        gp.add(lbGoodsName, 0, 1);
+        gp.add(tfGoodsName, 1, 1);
+        gp.add(lbPrice, 0, 2);
+        gp.add(tfPrice, 1, 2);
+        gp.add(lbUnit, 2, 2);
+        gp.add(tfUnit, 3, 2);
+        gp.add(lbNum, 0, 3);
+        gp.add(tfNum, 1, 3);
+        gp.add(btSubmit, 0, 4);
+        gp.add(btReset, 1, 4);
+
+        bpRoot.setCenter(gp);
+
+        // 状态栏
+        statusBar = new Label("欢迎使用XX超市管理系统，当前用户" + ServiceFactory.getUserService().getCurrentUserName() + "（"
+                + ServiceFactory.getUserService().getCurrentUserRoleName() + "）");
+        bpRoot.setBottom(statusBar);
+
+    }
+
+    public void start() throws Exception {
+        initService();
+
+        initUI();
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        primaryStage.setTitle("欢迎使用  " + getClass().getName());
+        primaryStage.getIcons().add(FileUtil.getImage("user.png"));
+
+    }
+
 }
