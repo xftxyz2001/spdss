@@ -90,7 +90,7 @@ public class AdminView {
     TableView<Goods> tvGoodsManage;
     GridPane gpGoodsManage_AddOrUpdateGoods;
     Label lbgpGoodsManage_AddOrUpdateGoods_GoodsName;
-    TextField tfgpGoodsManage_AddOrUpdateGoods_GoodsName;
+    ChoiceBox<String> tfgpGoodsManage_AddOrUpdateGoods_GoodsName;
     Label lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice;
     TextField tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice;
     Label lbgpGoodsManage_AddOrUpdateGoods_GoodsNum;
@@ -254,7 +254,8 @@ public class AdminView {
         if (this.gpGoodsManage_AddOrUpdateGoods == null) {
             this.gpGoodsManage_AddOrUpdateGoods = new GridPane();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName = new Label("商品名：");
-            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName = new TextField();
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName = new ChoiceBox<>();
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.getItems().addAll(goodsService.getAllGoodsName());
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice = new Label("单价：");
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice = new TextField();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsNum = new Label("库存数量：");
@@ -285,14 +286,14 @@ public class AdminView {
         if (goods != null) {
             this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods = goodsService.getUpdateCopy(goods);
 
-            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.setText(goods.getName());
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.setValue(goods.getName());
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.setText(goods.getPrice().toString());
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum.setText(goods.getNum().toString());
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit.setText(goods.getUnit());
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.setText(goods.getDescribe());
             this.btngpGoodsManage_AddOrUpdateGoods_OK.setOnAction(e -> {
                 this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
-                        .setName(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.getText());
+                        .setName(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.getValue());
                 this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
                         .setPrice(new BigDecimal(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.getText()));
                 this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods
@@ -309,14 +310,14 @@ public class AdminView {
                 this.bpGoodsManage.setCenter(this.tvGoodsManage);
             });
         } else {
-            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.setText("");
+            this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.setValue(null);
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.setText("");
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum.setText("");
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit.setText("");
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.setText("");
             this.btngpGoodsManage_AddOrUpdateGoods_OK.setOnAction(e -> {
                 Goods newGoods = new Goods();
-                newGoods.setName(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.getText());
+                newGoods.setName(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName.getValue());
                 newGoods.setPrice(new BigDecimal(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice.getText()));
                 newGoods.setNum(new BigDecimal(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum.getText()));
                 newGoods.setUnit(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit.getText());

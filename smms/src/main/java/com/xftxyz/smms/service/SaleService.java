@@ -56,10 +56,12 @@ public class SaleService {
             return false;
         }
         sale.setId(index);
-        observableList.add(sale);
+        if (ServiceFactory.getGoodsService().updateBy(sale)){
+            observableList.add(sale);
 
-        ServiceFactory.getGoodsService().updateBy(sale);
-        return true;
+            return true;
+        }
+        return false;
     }
 
     // 删除销售记录

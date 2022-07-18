@@ -1,6 +1,7 @@
 package com.xftxyz.smms.service;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
@@ -116,19 +117,56 @@ public class GoodsService {
         return true;
     }
 
-    // 更新库存
-    public void updateBy(Purchase purchase) {
-        // for (int i = 0; i < observableList.size(); i++) {
-        // Goods goods = observableList.get(i);
-        // if (goods.getName().equals(purchase.getGoodsName()) &&
-        // goods.getUnit().equals(purchase.getUnit())) {
-        // goods.setNum(goods.getNum().add(purchase.getNum()));
-        // observableList.set(i, goods);
-        // }
-        // }
+    public Goods getGoodsByName(String name) {
+        if (name == null) {
+            return null;
+        }
+        for (Goods goods : observableList) {
+            if (name.equals(goods.getName())) {
+                return goods;
+            }
+        }
+        return null;
     }
 
-    public void updateBy(Sale sale) {
+    // 更新库存
+    public boolean updateBy(Purchase purchase) {
+        if (purchase == null) {
+            return false;
+        }
+        Goods goods = getGoodsByName(purchase.getGoodsName());
+        if (goods == null) {
+            // 新增
+            goods = new Goods();
+            goods.setName(purchase.getGoodsName());
+            goods.setPrice(purchase.getPrice());
+            goods.setNum(purchase.getNum());
+            goods.setUnit(purchase.getUnit());
+            goods.setDescribe("describe");
+            return addGoods(goods);
+        } else {
+            // 更新
+            Goods copy = getUpdateCopy(goods);
+            copy.setNum(copy.getNum().add(purchase.getNum()));
+            return updateGoods(copy);
+        }
+    }
+
+    public boolean updateBy(Sale sale) {
+        if (sale == null) {
+            return false;
+        }
+        Goods goods = getGoodsByName(sale.getGoodsName());
+        if (goods == null) {
+            return false;
+        }
+        Goods copy = getUpdateCopy(goods);
+        BigDecimal res = copy.getNum().subtract(sale.getNum());
+        if (res.compareTo(BigDecimal.ZERO) < 0) {
+            return false;
+        }
+        copy.setNum(res);
+        return updateGoods(copy);
     }
 
     // 导出

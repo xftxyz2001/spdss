@@ -56,10 +56,13 @@ public class PurchaseService {
             return false;
         }
         purchase.setId(index);
-        observableList.add(purchase);
 
-        ServiceFactory.getGoodsService().updateBy(purchase);
-        return true;
+        if (ServiceFactory.getGoodsService().updateBy(purchase)) {
+
+            observableList.add(purchase);
+            return true;
+        }
+        return false;
     }
 
     // 删除采购记录
