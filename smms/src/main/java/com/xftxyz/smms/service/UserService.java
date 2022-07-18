@@ -1,5 +1,6 @@
 package com.xftxyz.smms.service;
 
+import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import com.xftxyz.smms.entity.User;
 import com.xftxyz.smms.type.Role;
 import com.xftxyz.smms.utils.CodeUtil;
 import com.xftxyz.smms.utils.Debug;
+import com.xftxyz.smms.utils.FileUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -193,6 +195,11 @@ public class UserService {
             return null;
         }
         return user.getRole();
+    }
+
+    // 导出
+    public void export(File file) {
+        FileUtil.writeExcel(file, User.class, observableList);
     }
 
 }

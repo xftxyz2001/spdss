@@ -36,18 +36,7 @@ public class FileUtil {
 
     // 写入excel
     public static <T> void writeExcel(File file, Class<T> head, Collection<T> data) {
-        // String fileName = file.getAbsolutePath();
-        // System.out.println(fileName);
-        // if(!fileName.endsWith("xlsx")){
-        //     fileName += ".xlsx";
-        //     file = new File(fileName);
-        // }
-        try{
-            EasyExcel.write(file, head).sheet("数据").doWrite(data);
-        }catch(Exception e){
-            // e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+        EasyExcel.write(file, head).sheet("数据").doWrite(data);
     }
 
     public static Properties getProperties(String fileName) throws IOException {

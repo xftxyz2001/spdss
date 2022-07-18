@@ -439,12 +439,12 @@ public class ManagerView {
         Button sellbt = new Button("销售表");
         Button derivebt = new Button("导出");
         derivebt.setOnAction(e -> {
-            File f = FileUtil.showSaveDialog();
-            if (f == null) {
+            File file = FileUtil.showSaveDialog();
+            if (file == null) {
                 DialogUtil.showWarningDialog("警告", null, "请选择一个文件");
                 return;
             }
-            FileUtil.writeExcel(f, Goods.class, goodsService.getObservableList());
+            goodsService.export(file);
             DialogUtil.showInfoDialog("提示", null, "导出成功");
         });
         importbt.setLayoutX(60);

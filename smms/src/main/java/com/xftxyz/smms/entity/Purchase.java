@@ -3,13 +3,22 @@ package com.xftxyz.smms.entity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 public class Purchase {
+    @ExcelProperty("采购单号")
     private int id; // 采购单编号
+    @ExcelProperty("供应商名")
     private String supplierName; // 供应商名称
+    @ExcelProperty("商品名")
     private String goodsName; // 商品名称
+    @ExcelProperty("采购价")
     private BigDecimal price; // 采购价
+    @ExcelProperty("采购数量")
     private BigDecimal num; // 采购数量
+    @ExcelProperty("单位")
     private String unit; // 单位
+    @ExcelProperty("采购时间")
     private Timestamp time; // 采购时间
 
     public Purchase() {

@@ -1,12 +1,18 @@
 package com.xftxyz.smms.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 /**
  * 供货商类
  */
 public class Supplier {
+    @ExcelProperty("供货商编号")
     private int id; // 供应商编号
+    @ExcelProperty("供货商名")
     private String name; // 供应商名称
+    @ExcelProperty("联系方式")
     private String tel; // 联系方式
+    @ExcelProperty("地址")
     private String address; // 地址
 
     public Supplier() {

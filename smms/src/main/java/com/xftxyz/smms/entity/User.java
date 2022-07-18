@@ -1,14 +1,19 @@
 package com.xftxyz.smms.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.xftxyz.smms.type.Role;
 
 /**
  * 用户类
  */
 public class User {
+    @ExcelProperty("用户编号")
     private int id; // 用户编号X
+    @ExcelProperty("用户名")
     private String name; // 用户名
+    @ExcelProperty("密码")
     private String pwd; // 密码
+    @ExcelProperty("角色")
     private Role role; // 身份
 
     public User() {

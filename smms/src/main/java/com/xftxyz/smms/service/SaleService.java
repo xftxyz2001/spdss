@@ -1,11 +1,13 @@
 package com.xftxyz.smms.service;
 
+import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 
 import com.xftxyz.smms.dao.SaleDao;
 import com.xftxyz.smms.dao.impl.SaleDaoImpl;
 import com.xftxyz.smms.entity.Sale;
+import com.xftxyz.smms.utils.FileUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,5 +100,10 @@ public class SaleService {
         }
         observableList.set(observableList.indexOf(this.old), newSale);
         return true;
+    }
+
+    // 导出
+    public void export(File file) {
+        FileUtil.writeExcel(file, Sale.class, observableList);
     }
 }

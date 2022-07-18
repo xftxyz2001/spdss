@@ -3,12 +3,20 @@ package com.xftxyz.smms.entity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 public class Sale {
+    @ExcelProperty("销售单号")
     private int id; // 销售单编号
+    @ExcelProperty("商品名")
     private String goodName; // 商品名
+    @ExcelProperty("销售价")
     private BigDecimal price; // 销售价
+    @ExcelProperty("销售数量")
     private BigDecimal num; // 销售数量
+    @ExcelProperty("单位")
     private String unit; // 单位
+    @ExcelProperty("销售时间")
     private Timestamp time; // 销售时间
 
     public Sale() {

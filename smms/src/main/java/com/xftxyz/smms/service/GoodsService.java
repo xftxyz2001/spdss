@@ -1,5 +1,6 @@
 package com.xftxyz.smms.service;
 
+import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import com.xftxyz.smms.dao.impl.GoodsDaoImpl;
 import com.xftxyz.smms.entity.Goods;
 import com.xftxyz.smms.entity.Purchase;
 import com.xftxyz.smms.entity.Sale;
+import com.xftxyz.smms.utils.FileUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -126,6 +128,11 @@ public class GoodsService {
     }
 
     public void updateBy(Sale sale) {
+    }
+
+    // 导出
+    public void export(File file) {
+        FileUtil.writeExcel(file, Goods.class, observableList);
     }
 
 }
