@@ -674,7 +674,7 @@ public class AdminView {
             this.tfgpSaleManage_AddOrUpdateSale_SaleTime.setText(sale.getTime().toString());
             this.btngpSaleManage_AddOrUpdateSale_OK.setOnAction(e -> {
                 this.sgpSaleManage_AddOrUpdateSale_selectedSale
-                        .setGoodName(this.cbgpSaleManage_AddOrUpdateSale_GoodsName.getValue());
+                        .setGoodsName(this.cbgpSaleManage_AddOrUpdateSale_GoodsName.getValue());
                 this.sgpSaleManage_AddOrUpdateSale_selectedSale
                         .setPrice(new BigDecimal(this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice.getText()));
                 this.sgpSaleManage_AddOrUpdateSale_selectedSale
@@ -699,7 +699,7 @@ public class AdminView {
 
             this.btngpSaleManage_AddOrUpdateSale_OK.setOnAction(e -> {
                 Sale newSale = new Sale();
-                newSale.setGoodName(this.cbgpSaleManage_AddOrUpdateSale_GoodsName.getValue());
+                newSale.setGoodsName(this.cbgpSaleManage_AddOrUpdateSale_GoodsName.getValue());
                 newSale.setPrice(new BigDecimal(this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice.getText()));
                 newSale.setNum(new BigDecimal(this.tfgpSaleManage_AddOrUpdateSale_GoodsNum.getText()));
                 newSale.setUnit(this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit.getText());
@@ -1388,6 +1388,7 @@ public class AdminView {
 
                     @Override
                     public ObservableValue<String> call(CellDataFeatures<Sale, String> param) {
+                        // System.out.println(param.getValue());
                         return new SimpleStringProperty(param.getValue().getGoodsName());
                     }
 

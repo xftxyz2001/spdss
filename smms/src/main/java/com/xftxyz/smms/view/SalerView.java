@@ -124,7 +124,7 @@ public class SalerView {
         btSubmit.setOnAction(e -> {
             Sale newSale = new Sale();
             try {
-                newSale.setGoodName(cbGoodsName.getValue());
+                newSale.setGoodsName(cbGoodsName.getValue());
                 newSale.setPrice(new BigDecimal(tfPrice.getText()));
                 newSale.setUnit(tfUnit.getText());
                 newSale.setNum(new BigDecimal(tfNum.getText()));
@@ -143,6 +143,7 @@ public class SalerView {
             tfPrice.setText("");
             tfUnit.setText("");
             tfNum.setText("");
+            lbRepertory.setText("");
         });
         resetImage = FileUtil.getImage("reset.png");
         resetImageView = new ImageView(resetImage);

@@ -82,32 +82,49 @@ public class LoginView extends Application {
             }
 
             // 非测试模式
+            String username = tfUserName.getText();
+            String password = pfPassWord.getText();
             String code = tfCode.getText();
+
+            if (username != null && username.trim().equals("")) {
+                tfUserName.setStyle("-fx-border-color:red");
+                DialogUtil.showWarningDialog("警告", null, "请输入用户名");
+                return;
+            }
+            if (password != null && password.trim().equals("")) {
+                pfPassWord.setStyle("-fx-border-color:red");
+                DialogUtil.showWarningDialog("警告", null, "请输入密码");
+                return;
+            }
+            
             if (code == null || code.trim().equals("")) {
                 tfCode.setStyle("-fx-border-color:red");
                 // DialogUtil.showWarningDialog("警告", "请输入验证码", null);
                 // Debug.log("验证码不能为空");
+                DialogUtil.showWarningDialog("警告", null, "请输入验证码");
                 setCode(ivCode);
+                // tfCode.requestFocus();
                 return;
             }
             if (!userService.checkCode(code)) {
                 tfCode.setStyle("-fx-border-color:red");
                 // Debug.log("验证码不正确");
                 DialogUtil.showWarningDialog("警告", null, "验证码不正确");
-                tfCode.setText("");
-                tfCode.requestFocus();
                 setCode(ivCode);
+                // tfCode.setText("");
+                // tfCode.requestFocus();
                 return;
 
             }
-            String username = tfUserName.getText();
-            String password = pfPassWord.getText();
 
             // 链接到数据库，进行登录操作
             boolean isSucc = userService.login(username, password);
             if (!isSucc) {
                 // System.out.println("登录失败（用户名或密码错误）");
+                tfUserName.setStyle("-fx-border-color:red");
+                pfPassWord.setStyle("-fx-border-color:red");
                 DialogUtil.showWarningDialog("警告", null, "用户名或密码错误");
+                setCode(ivCode);
                 return;
             }
 
@@ -169,6 +186,8 @@ public class LoginView extends Application {
     private void setCode(ImageView imageView) {
         // Image codeImage = userService.getCode();
         imageView.setImage(userService.getCode());
+        tfCode.setText("");
+        tfCode.requestFocus();
     }
 
     // 初始化：获取数据库链接及service实例

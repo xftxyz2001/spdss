@@ -9,7 +9,7 @@ public class Sale {
     @ExcelProperty("销售单号")
     private int id; // 销售单编号
     @ExcelProperty("商品名")
-    private String goodName; // 商品名
+    private String goodsName; // 商品名
     @ExcelProperty("销售价")
     private BigDecimal price; // 销售价
     @ExcelProperty("销售数量")
@@ -31,11 +31,11 @@ public class Sale {
     }
 
     public String getGoodsName() {
-        return goodName;
+        return goodsName;
     }
 
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
+    public void setGoodsName(String goodName) {
+        this.goodsName = goodName;
     }
 
     public BigDecimal getPrice() {
@@ -74,7 +74,7 @@ public class Sale {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((goodName == null) ? 0 : goodName.hashCode());
+        result = prime * result + ((goodsName == null) ? 0 : goodsName.hashCode());
         result = prime * result + id;
         result = prime * result + ((num == null) ? 0 : num.hashCode());
         result = prime * result + ((price == null) ? 0 : price.hashCode());
@@ -92,10 +92,10 @@ public class Sale {
         if (getClass() != obj.getClass())
             return false;
         Sale other = (Sale) obj;
-        if (goodName == null) {
-            if (other.goodName != null)
+        if (goodsName == null) {
+            if (other.goodsName != null)
                 return false;
-        } else if (!goodName.equals(other.goodName))
+        } else if (!goodsName.equals(other.goodsName))
             return false;
         if (id != other.id)
             return false;
@@ -124,14 +124,14 @@ public class Sale {
 
     @Override
     public String toString() {
-        return "Sale [goodName=" + goodName + ", id=" + id + ", num=" + num + ", price=" + price + ", time=" + time
+        return "Sale [goodsName=" + goodsName + ", id=" + id + ", num=" + num + ", price=" + price + ", time=" + time
                 + ", unit=" + unit + "]";
     }
 
     public Sale copy() {
         Sale sale = new Sale();
         sale.setId(this.id);
-        sale.setGoodName(this.goodName);
+        sale.setGoodsName(this.goodsName);
         sale.setPrice(this.price);
         sale.setNum(this.num);
         sale.setUnit(this.unit);
