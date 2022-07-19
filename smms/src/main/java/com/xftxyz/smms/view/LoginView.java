@@ -161,7 +161,7 @@ public class LoginView extends Application {
 
         primaryStage.setTitle("用户登录");
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(FileUtil.getImage("chaoshi.png"));
+        primaryStage.getIcons().add(FileUtil.getImage("user.png"));
         primaryStage.show();
     }
 

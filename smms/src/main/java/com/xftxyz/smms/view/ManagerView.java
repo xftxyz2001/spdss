@@ -9,16 +9,21 @@ import com.xftxyz.smms.utils.FileUtil;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 public class ManagerView extends AdminView {
@@ -27,17 +32,27 @@ public class ManagerView extends AdminView {
         if (this.gpUserManage_AddOrUpdateUser == null) {
             this.gpUserManage_AddOrUpdateUser = new GridPane();
             this.lbgpUserManage_AddOrUpdateUser_UserName = new Label("用户名：");
+            this.lbgpUserManage_AddOrUpdateUser_UserName.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpUserManage_AddOrUpdateUser_UserName.setFont(Font.font("华文黑体", 15));
             this.tfgpUserManage_AddOrUpdateUser_UserName = new TextField();
             this.lbgpUserManage_AddOrUpdateUser_UserPassword = new Label("密码：");
+            this.lbgpUserManage_AddOrUpdateUser_UserPassword.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpUserManage_AddOrUpdateUser_UserPassword.setFont(Font.font("华文黑体", 15));
             this.tfgpUserManage_AddOrUpdateUser_Password = new TextField();
             this.lbgpUserManage_AddOrUpdateUser_Role = new Label("角色：");
+            this.lbgpUserManage_AddOrUpdateUser_Role.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpUserManage_AddOrUpdateUser_Role.setFont(Font.font("华文黑体", 15));
             this.cbgpUserManage_AddOrUpdateUser_Role = new ChoiceBox<Role>();
             // this.cbgpUserManage_AddOrUpdateUser_Role.getItems().addAll(Role.values());
             Role[] roles = { Role.MANAGER, Role.PURCHASER, Role.SALER };
+            this.cbgpUserManage_AddOrUpdateUser_Role.setPrefWidth(150);
             this.cbgpUserManage_AddOrUpdateUser_Role.getItems().addAll(roles);
-            this.btngpUserManage_AddOrUpdateUser_OK = new Button("确定");
-
-            this.btngpUserManage_AddOrUpdateUser_Cancel = new Button("取消");
+            this.btngpUserManage_AddOrUpdateUser_OK = new Button("确定",submituserImageView);
+            this.btngpUserManage_AddOrUpdateUser_OK.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpUserManage_AddOrUpdateUser_OK.setPrefWidth(120);
+            this.btngpUserManage_AddOrUpdateUser_Cancel = new Button("取消",cancelgoodsImageView);
+            this.btngpUserManage_AddOrUpdateUser_Cancel.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpUserManage_AddOrUpdateUser_Cancel.setPrefWidth(120);
             this.btngpUserManage_AddOrUpdateUser_Cancel.setOnAction(e -> {
                 this.bpUserManage.setCenter(this.tvUserManage);
             });
@@ -49,6 +64,9 @@ public class ManagerView extends AdminView {
             this.gpUserManage_AddOrUpdateUser.add(this.cbgpUserManage_AddOrUpdateUser_Role, 1, 2);
             this.gpUserManage_AddOrUpdateUser.add(this.btngpUserManage_AddOrUpdateUser_OK, 0, 3);
             this.gpUserManage_AddOrUpdateUser.add(this.btngpUserManage_AddOrUpdateUser_Cancel, 1, 3);
+            this.gpUserManage_AddOrUpdateUser.setPadding(new Insets(30.0));
+            this.gpUserManage_AddOrUpdateUser.setVgap(20);
+            this.gpUserManage_AddOrUpdateUser.setHgap(20);
         }
         if (user != null) {
             if (user.getRole() == Role.ADMIN) {
@@ -100,7 +118,16 @@ public class ManagerView extends AdminView {
 
     @Override
     public void initUserManage() {
-        btnUserManage = new Button("用户管理");
+    	userImageView = new ImageView("usermanage.png");
+    	userImageView.setFitWidth(40);
+    	userImageView.setFitHeight(40);
+        btnUserManage = new Button("用户管理",userImageView);
+        btnUserManage.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManage.setContentDisplay(ContentDisplay.TOP);
+        btnUserManage.setStyle("-fx-background-color:#63B8FF;"+"-fx-background-radius:15");
+       
+        btnUserManage.setPrefHeight(60);
+        btnUserManage.setPrefWidth(80);
         btnUserManage.setOnAction(e -> {
             bpRoot.setCenter(bpUserManage);
         });
@@ -153,6 +180,25 @@ public class ManagerView extends AdminView {
             DialogUtil.showInfoDialog("提示", null, "导出成功");
         });
         vbUserManage = new VBox(btnUserManageAddUser, btnUserManageDeleteUser, btnUserManageUpdateUser, btnExportUser);
+        vbUserManage.setPrefWidth(120);
+        vbUserManage.setSpacing(20);
+        vbUserManage.setStyle("-fx-background-color:#87CEFA");
+        btnUserManageAddUser.setPrefWidth(120);
+        btnUserManageAddUser.setPrefHeight(30);
+        btnUserManageAddUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManageAddUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnUserManageDeleteUser.setPrefWidth(120);
+        btnUserManageDeleteUser.setPrefHeight(30);
+        btnUserManageDeleteUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManageDeleteUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnUserManageUpdateUser.setPrefWidth(120);
+        btnUserManageUpdateUser.setPrefHeight(30);
+        btnUserManageUpdateUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManageUpdateUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnExportUser.setPrefWidth(120);
+        btnExportUser.setPrefHeight(30);
+        btnExportUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnExportUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
         tvUserManage = new TableView<User>(userService.getObservableList());
         TableColumn<User, String> tvUserManage_tcUserName = new TableColumn<>("用户名");
         tvUserManage_tcUserName.setCellValueFactory(
@@ -188,7 +234,7 @@ public class ManagerView extends AdminView {
         bpUserManage = new BorderPane();
         bpUserManage.setLeft(vbUserManage);
         bpUserManage.setCenter(tvUserManage);
-
+        
     }
 
 }

@@ -24,18 +24,27 @@ import com.xftxyz.smms.utils.FileUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -57,11 +66,22 @@ public class AdminView {
     Button btnGoodsManage;
     Button btnSupplierManage;
     Button btnPurchaseManage;
-    Button btnSaleManage;
-
+    Button btnsalerButton;
+    Text textMune;
+    ImageView submituserImageView;
+    ImageView canceluserImageView;
+    ImageView submitgoodsImageView;
+    ImageView cancelgoodsImageView;
+    ImageView submitsupplierImageView;
+    ImageView cancelsupplierImageView;
+    ImageView submitsalerImageView;
+    ImageView cancelsalerImageView;
+    ImageView submitpurchaserImageView;
+    ImageView cancelpurchaserImageView;
     // 中间部分的5个面板
 
     // 用户管理面板
+    ImageView userImageView;
     BorderPane bpUserManage;
     VBox vbUserManage;
     Button btnUserManageAddUser;
@@ -81,6 +101,7 @@ public class AdminView {
     User ugpUserManage_AddOrUpdateUser_selectedUser;
 
     // 商品管理面板
+    ImageView goodsImageView;
     BorderPane bpGoodsManage;
     VBox vbGoodsManage;
     Button btnGoodsManageAddGoods;
@@ -104,6 +125,7 @@ public class AdminView {
     Goods ggpGoodsManage_AddOrUpdateGoods_selectedGoods;
 
     // 供应商管理面板
+    ImageView supplierImageView;
     BorderPane bpSupplierManage;
     VBox vbSupplierManage;
     Button btnSupplierManageAddSupplier;
@@ -123,6 +145,7 @@ public class AdminView {
     Supplier sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier;
 
     // 采购管理面板
+    ImageView purchaseImageView;
     BorderPane bpPurchaseManage;
     Button btnPurchaseManageAddPurchase;
     Button btnPurchaseManageDeletePurchase;
@@ -149,6 +172,7 @@ public class AdminView {
     Purchase pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase;
 
     // 销售管理面板
+    ImageView saleImageView;
     BorderPane bpSaleManage;
     Button btnSaleManageAddSale;
     Button btnSaleManageDeleteSale;
@@ -186,15 +210,24 @@ public class AdminView {
         if (this.gpUserManage_AddOrUpdateUser == null) {
             this.gpUserManage_AddOrUpdateUser = new GridPane();
             this.lbgpUserManage_AddOrUpdateUser_UserName = new Label("用户名：");
+            this.lbgpUserManage_AddOrUpdateUser_UserName.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpUserManage_AddOrUpdateUser_UserName.setFont(Font.font("华文黑体", 15));
             this.tfgpUserManage_AddOrUpdateUser_UserName = new TextField();
             this.lbgpUserManage_AddOrUpdateUser_UserPassword = new Label("密码：");
+            this.lbgpUserManage_AddOrUpdateUser_UserPassword.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpUserManage_AddOrUpdateUser_UserPassword.setFont(Font.font("华文黑体", 15));
             this.tfgpUserManage_AddOrUpdateUser_Password = new TextField();
             this.lbgpUserManage_AddOrUpdateUser_Role = new Label("角色：");
+            this.lbgpUserManage_AddOrUpdateUser_Role.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpUserManage_AddOrUpdateUser_Role.setFont(Font.font("华文黑体", 15));
             this.cbgpUserManage_AddOrUpdateUser_Role = new ChoiceBox<Role>();
             this.cbgpUserManage_AddOrUpdateUser_Role.getItems().addAll(Role.values());
-            this.btngpUserManage_AddOrUpdateUser_OK = new Button("确定");
-
-            this.btngpUserManage_AddOrUpdateUser_Cancel = new Button("取消");
+            this.btngpUserManage_AddOrUpdateUser_OK = new Button("确定",submituserImageView);
+            this.btngpUserManage_AddOrUpdateUser_OK.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpUserManage_AddOrUpdateUser_OK.setPrefWidth(120);
+            this.btngpUserManage_AddOrUpdateUser_Cancel = new Button("取消",canceluserImageView);
+            this.btngpUserManage_AddOrUpdateUser_Cancel.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpUserManage_AddOrUpdateUser_Cancel.setPrefWidth(120);
             this.btngpUserManage_AddOrUpdateUser_Cancel.setOnAction(e -> {
                 this.bpUserManage.setCenter(this.tvUserManage);
             });
@@ -206,7 +239,10 @@ public class AdminView {
             this.gpUserManage_AddOrUpdateUser.add(this.cbgpUserManage_AddOrUpdateUser_Role, 1, 2);
             this.gpUserManage_AddOrUpdateUser.add(this.btngpUserManage_AddOrUpdateUser_OK, 0, 3);
             this.gpUserManage_AddOrUpdateUser.add(this.btngpUserManage_AddOrUpdateUser_Cancel, 1, 3);
-        }
+            this.gpUserManage_AddOrUpdateUser.setPadding(new Insets(30.0));
+            this.gpUserManage_AddOrUpdateUser.setVgap(20);
+            this.gpUserManage_AddOrUpdateUser.setHgap(20);
+            }
         if (user != null) {
             this.ugpUserManage_AddOrUpdateUser_selectedUser = userService.getUpdateCopy(user);
 
@@ -252,19 +288,34 @@ public class AdminView {
 
     public GridPane init_gpGoodsManage_AddOrUpdateGoods(Goods goods) {
         if (this.gpGoodsManage_AddOrUpdateGoods == null) {
+        	System.out.println("666");
             this.gpGoodsManage_AddOrUpdateGoods = new GridPane();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName = new Label("商品名：");
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName.setFont(Font.font("华文黑体", 15));
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsName = new TextField();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice = new Label("单价：");
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsPrice.setFont(Font.font("华文黑体", 15));
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsPrice = new TextField();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsNum = new Label("库存数量：");
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsNum.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsNum.setFont(Font.font("华文黑体", 15));
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsNum = new TextField();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsUnit = new Label("单位：");
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsUnit.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsUnit.setFont(Font.font("华文黑体", 15));
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsUnit = new TextField();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsDescribe = new Label("描述：");
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpGoodsManage_AddOrUpdateGoods_GoodsDescribe.setFont(Font.font("华文黑体", 15));
             this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe = new TextField();
-            this.btngpGoodsManage_AddOrUpdateGoods_OK = new Button("确定");
-            this.btngpGoodsManage_AddOrUpdateGoods_Cancel = new Button("取消");
+            this.btngpGoodsManage_AddOrUpdateGoods_OK = new Button("确定",submitgoodsImageView);
+            this.btngpGoodsManage_AddOrUpdateGoods_OK.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpGoodsManage_AddOrUpdateGoods_OK.setPrefWidth(120);
+            this.btngpGoodsManage_AddOrUpdateGoods_Cancel = new Button("取消",cancelgoodsImageView);
+            this.btngpGoodsManage_AddOrUpdateGoods_Cancel.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpGoodsManage_AddOrUpdateGoods_Cancel.setPrefWidth(120);
             this.btngpGoodsManage_AddOrUpdateGoods_Cancel.setOnAction(e -> {
                 this.bpGoodsManage.setCenter(this.tvGoodsManage);
             });
@@ -280,7 +331,9 @@ public class AdminView {
             this.gpGoodsManage_AddOrUpdateGoods.add(this.tfgpGoodsManage_AddOrUpdateGoods_GoodsDescribe, 1, 4);
             this.gpGoodsManage_AddOrUpdateGoods.add(this.btngpGoodsManage_AddOrUpdateGoods_OK, 0, 5);
             this.gpGoodsManage_AddOrUpdateGoods.add(this.btngpGoodsManage_AddOrUpdateGoods_Cancel, 1, 5);
-
+            this.gpGoodsManage_AddOrUpdateGoods.setPadding(new Insets(30.0));
+            this.gpGoodsManage_AddOrUpdateGoods.setVgap(20);
+            this.gpGoodsManage_AddOrUpdateGoods.setHgap(20);
         }
         if (goods != null) {
             this.ggpGoodsManage_AddOrUpdateGoods_selectedGoods = goodsService.getUpdateCopy(goods);
@@ -330,6 +383,7 @@ public class AdminView {
             });
 
         }
+        
         return this.gpGoodsManage_AddOrUpdateGoods;
     }
 
@@ -337,13 +391,23 @@ public class AdminView {
         if (this.gpSupplierManage_AddOrUpdateSupplier == null) {
             this.gpSupplierManage_AddOrUpdateSupplier = new GridPane();
             this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierName = new Label("供应商名：");
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierName.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierName.setFont(Font.font("华文黑体", 15));
             this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierName = new TextField();
             this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierTel = new Label("联系方式：");
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierTel.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierTel.setFont(Font.font("华文黑体", 15));
             this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierTel = new TextField();
             this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierAddress = new Label("地址：");
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierAddress.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSupplierManage_AddOrUpdateSupplier_SupplierAddress.setFont(Font.font("华文黑体", 15));
             this.tfgpSupplierManage_AddOrUpdateSupplier_SupplierAddress = new TextField();
-            this.btngpSupplierManage_AddOrUpdateSupplier_OK = new Button("确定");
-            this.btngpSupplierManage_AddOrUpdateSupplier_Cancel = new Button("取消");
+            this.btngpSupplierManage_AddOrUpdateSupplier_OK = new Button("确定",submitsupplierImageView);
+            this.btngpSupplierManage_AddOrUpdateSupplier_OK.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpSupplierManage_AddOrUpdateSupplier_OK.setPrefWidth(120);
+            this.btngpSupplierManage_AddOrUpdateSupplier_Cancel = new Button("取消",cancelsupplierImageView);
+            this.btngpSupplierManage_AddOrUpdateSupplier_Cancel.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpSupplierManage_AddOrUpdateSupplier_Cancel.setPrefWidth(120);
             this.btngpSupplierManage_AddOrUpdateSupplier_Cancel.setOnAction(e -> {
                 this.bpSupplierManage.setCenter(this.tvSupplierManage);
             });
@@ -361,7 +425,9 @@ public class AdminView {
                     1, 2);
             this.gpSupplierManage_AddOrUpdateSupplier.add(this.btngpSupplierManage_AddOrUpdateSupplier_OK, 0, 3);
             this.gpSupplierManage_AddOrUpdateSupplier.add(this.btngpSupplierManage_AddOrUpdateSupplier_Cancel, 1, 3);
-
+            this.gpSupplierManage_AddOrUpdateSupplier.setPadding(new Insets(30.0));
+            this.gpSupplierManage_AddOrUpdateSupplier.setVgap(20);
+            this.gpSupplierManage_AddOrUpdateSupplier.setHgap(20);
         }
         if (supplier != null) {
             this.sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier = supplierService.getUpdateCopy(supplier);
@@ -409,21 +475,39 @@ public class AdminView {
         if (this.gpPurchaseManage_AddOrUpdatePurchase == null) {
             this.gpPurchaseManage_AddOrUpdatePurchase = new GridPane();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new Label("供应商名：");
+            
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setFont(Font.font("华文黑体", 15));
             // this.tfgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new TextField();
             this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName = new ChoiceBox<>();
+            this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.setPrefWidth(200);
             this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName = new Label("商品名：");
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsName.setFont(Font.font("华文黑体", 15));
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsName = new TextField();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice = new Label("单价：");
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice.setFont(Font.font("华文黑体", 15));
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsPrice = new TextField();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsNum = new Label("数量：");
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsNum.setFont(Font.font("华文黑体", 15));
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsNum = new TextField();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit = new Label("单位：");
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit.setFont(Font.font("华文黑体", 15));
             this.tfgpPurchaseManage_AddOrUpdatePurchase_GoodsUnit = new TextField();
             this.lbgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime = new Label("采购时间：");
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime.setFont(Font.font("华文黑体", 15));
             this.tfgpPurchaseManage_AddOrUpdatePurchase_PurchaseTime = new TextField(
                     Timestamp.valueOf(LocalDateTime.now()).toString());
-            this.btngpPurchaseManage_AddOrUpdatePurchase_OK = new Button("确定");
-            this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel = new Button("取消");
+            this.btngpPurchaseManage_AddOrUpdatePurchase_OK = new Button("确定",submitpurchaserImageView);
+            this.btngpPurchaseManage_AddOrUpdatePurchase_OK.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpPurchaseManage_AddOrUpdatePurchase_OK.setPrefWidth(120);
+            this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel = new Button("取消",cancelpurchaserImageView);
+            this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel.setPrefWidth(120);
             this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel.setOnAction(e -> {
                 this.bpPurchaseManage.setCenter(this.tvPurchaseManage);
             });
@@ -445,8 +529,12 @@ public class AdminView {
                     5);
             this.gpPurchaseManage_AddOrUpdatePurchase.add(this.btngpPurchaseManage_AddOrUpdatePurchase_OK, 0, 6);
             this.gpPurchaseManage_AddOrUpdatePurchase.add(this.btngpPurchaseManage_AddOrUpdatePurchase_Cancel, 1, 6);
+            this.gpPurchaseManage_AddOrUpdatePurchase.setPadding(new Insets(30.0));
+            this.gpPurchaseManage_AddOrUpdatePurchase.setVgap(20);
+            this.gpPurchaseManage_AddOrUpdatePurchase.setHgap(20);
         }
         ObservableList<String> items = this.cbgpPurchaseManage_AddOrUpdatePurchase_SupplierName.getItems();
+        
         items.clear();
         items.addAll(supplierService.getAllSupplierName());
         if (purchase != null) {
@@ -515,18 +603,33 @@ public class AdminView {
         if (this.gpSaleManage_AddOrUpdateSale == null) {
             this.gpSaleManage_AddOrUpdateSale = new GridPane();
             this.lbgpSaleManage_AddOrUpdateSale_GoodsName = new Label("商品名：");
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsName.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsName.setFont(Font.font("华文黑体", 15));
             this.cbgpSaleManage_AddOrUpdateSale_GoodsName = new ChoiceBox<>();
+            this.cbgpSaleManage_AddOrUpdateSale_GoodsName.setPrefWidth(200);
             this.cbgpSaleManage_AddOrUpdateSale_GoodsName.getItems().addAll(goodsService.getAllGoodsName());
             this.lbgpSaleManage_AddOrUpdateSale_GoodsPrice = new Label("单价：");
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsPrice.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsPrice.setFont(Font.font("华文黑体", 15));
             this.tfgpSaleManage_AddOrUpdateSale_GoodsPrice = new TextField();
             this.lbgpSaleManage_AddOrUpdateSale_GoodsNum = new Label("数量：");
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsNum.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsNum.setFont(Font.font("华文黑体", 15));
             this.tfgpSaleManage_AddOrUpdateSale_GoodsNum = new TextField();
             this.lbgpSaleManage_AddOrUpdateSale_GoodsUnit = new Label("单位：");
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsUnit.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSaleManage_AddOrUpdateSale_GoodsUnit.setFont(Font.font("华文黑体", 15));
             this.tfgpSaleManage_AddOrUpdateSale_GoodsUnit = new TextField();
             this.lbgpSaleManage_AddOrUpdateSale_SaleTime = new Label("销售时间：");
+            this.lbgpSaleManage_AddOrUpdateSale_SaleTime.setTextFill(Paint.valueOf("#0000FF"));
+            this.lbgpSaleManage_AddOrUpdateSale_SaleTime.setFont(Font.font("华文黑体", 15));
             this.tfgpSaleManage_AddOrUpdateSale_SaleTime = new TextField();
-            this.btngpSaleManage_AddOrUpdateSale_OK = new Button("确定");
-            this.btngpSaleManage_AddOrUpdateSale_Cancel = new Button("取消");
+            this.btngpSaleManage_AddOrUpdateSale_OK = new Button("确定",submitsalerImageView);
+            this.btngpSaleManage_AddOrUpdateSale_OK.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpSaleManage_AddOrUpdateSale_OK.setPrefWidth(120);
+            this.btngpSaleManage_AddOrUpdateSale_Cancel = new Button("取消",cancelsalerImageView);
+            this.btngpSaleManage_AddOrUpdateSale_Cancel.setContentDisplay(ContentDisplay.LEFT);
+            this.btngpSaleManage_AddOrUpdateSale_Cancel.setPrefWidth(120);
             this.btngpSaleManage_AddOrUpdateSale_Cancel.setOnAction(e -> {
                 this.bpSaleManage.setCenter(this.tvSaleManage);
             });
@@ -543,7 +646,9 @@ public class AdminView {
             this.gpSaleManage_AddOrUpdateSale.add(this.tfgpSaleManage_AddOrUpdateSale_SaleTime, 1, 4);
             this.gpSaleManage_AddOrUpdateSale.add(this.btngpSaleManage_AddOrUpdateSale_OK, 0, 5);
             this.gpSaleManage_AddOrUpdateSale.add(this.btngpSaleManage_AddOrUpdateSale_Cancel, 1, 5);
-
+            this.gpSaleManage_AddOrUpdateSale.setPadding(new Insets(30.0));
+            this.gpSaleManage_AddOrUpdateSale.setVgap(20);
+            this.gpSaleManage_AddOrUpdateSale.setHgap(20);
         }
         if (sale != null) {
             this.sgpSaleManage_AddOrUpdateSale_selectedSale = saleService.getUpdateCopy(sale);
@@ -598,9 +703,20 @@ public class AdminView {
 
     // 加载管理页面
     public void initUserManage() {
-        btnUserManage = new Button("用户管理");
+        
+        userImageView = new ImageView("usermanage.png");
+    	userImageView.setFitWidth(40);
+    	userImageView.setFitHeight(40);
+        btnUserManage = new Button("用户管理",userImageView);
+        btnUserManage.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManage.setContentDisplay(ContentDisplay.TOP);
+        btnUserManage.setStyle("-fx-background-color:#63B8FF;"+"-fx-background-radius:15");
+       
+        btnUserManage.setPrefHeight(60);
+        btnUserManage.setPrefWidth(80);
         btnUserManage.setOnAction(e -> {
             bpRoot.setCenter(bpUserManage);
+            bpUserManage.setCenter(tvUserManage);
         });
 
         // 用户管理面板
@@ -609,6 +725,7 @@ public class AdminView {
             GridPane gp = init_gpUserManage_AddOrUpdateUser(null);
             if (gp != null) {
                 bpUserManage.setCenter(gp);
+               
             }
         });
         btnUserManageDeleteUser = new Button("删除用户");
@@ -646,6 +763,25 @@ public class AdminView {
             DialogUtil.showInfoDialog("提示", null, "导出成功");
         });
         vbUserManage = new VBox(btnUserManageAddUser, btnUserManageDeleteUser, btnUserManageUpdateUser, btnExportUser);
+        vbUserManage.setPrefWidth(120);
+        vbUserManage.setSpacing(20);
+        vbUserManage.setStyle("-fx-background-color:#87CEFA");
+        btnUserManageAddUser.setPrefWidth(120);
+        btnUserManageAddUser.setPrefHeight(30);
+        btnUserManageAddUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManageAddUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnUserManageDeleteUser.setPrefWidth(120);
+        btnUserManageDeleteUser.setPrefHeight(30);
+        btnUserManageDeleteUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManageDeleteUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnUserManageUpdateUser.setPrefWidth(120);
+        btnUserManageUpdateUser.setPrefHeight(30);
+        btnUserManageUpdateUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnUserManageUpdateUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnExportUser.setPrefWidth(120);
+        btnExportUser.setPrefHeight(30);
+        btnExportUser.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnExportUser.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
         tvUserManage = new TableView<User>(userService.getObservableList());
         TableColumn<User, String> tvUserManage_tcUserName = new TableColumn<>("用户名");
         tvUserManage_tcUserName.setCellValueFactory(
@@ -685,18 +821,35 @@ public class AdminView {
     }
 
     public void initGoodsManage() {
+    	 bpGoodsManage = new BorderPane();
         btnGoodsManage = new Button("商品管理");
+        goodsImageView = new ImageView("goods.png");
+    	goodsImageView.setFitWidth(40);
+    	goodsImageView.setFitHeight(40);
+        btnGoodsManage = new Button("商品管理",goodsImageView);
+        btnGoodsManage.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnGoodsManage.setContentDisplay(ContentDisplay.TOP);
+        btnGoodsManage.setStyle("-fx-background-color:#63B8FF;"+"-fx-background-radius:15");
+        btnGoodsManage.setPrefHeight(60);
+        btnGoodsManage.setPrefWidth(80);
         btnGoodsManage.setOnAction(e -> {
             bpRoot.setCenter(bpGoodsManage);
+            bpGoodsManage.setCenter(tvGoodsManage);
         });
 
         // 商品管理面板
         btnGoodsManageAddGoods = new Button("添加商品");
+//        btnGoodsManageAddGoods.setStyle("-fx-background-color:#00BFFF;"+"-fx-background-radius:10");
+//       
+//        btnGoodsManageAddGoods.setTextFill(Paint.valueOf("#FFFFFF"));
+//        btnGoodsManageAddGoods.setPrefHeight(30);
+//        btnGoodsManageAddGoods.setPrefWidth(90);
+        
         btnGoodsManageAddGoods.setOnAction(e -> {
-            GridPane gp = init_gpGoodsManage_AddOrUpdateGoods(null);
-            if (gp != null) {
-                bpGoodsManage.setCenter(gp);
-            }
+         GridPane gp = init_gpGoodsManage_AddOrUpdateGoods(null);
+           if (gp != null) {
+                bpGoodsManage.setCenter(this.gpGoodsManage_AddOrUpdateGoods);
+           }
             // Goods goods = new Goods();
             // goods.setName(RandomUtil.choice("123456789", 2));
             // goods.setPrice(RandomUtil.randomInt(1, 100));
@@ -743,6 +896,25 @@ public class AdminView {
         });
         vbGoodsManage = new VBox(btnGoodsManageAddGoods, btnGoodsManageDeleteGoods, btnGoodsManageUpdateGoods,
                 btnExportGoods);
+        vbGoodsManage.setStyle("-fx-background-color:#87CEFA");
+        vbGoodsManage.setSpacing(20);
+        btnGoodsManageAddGoods.setPrefWidth(120);
+        btnGoodsManageAddGoods.setPrefHeight(30);
+        btnGoodsManageAddGoods.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnGoodsManageAddGoods.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnGoodsManageDeleteGoods.setPrefWidth(120);
+        btnGoodsManageDeleteGoods.setPrefHeight(30);
+        btnGoodsManageDeleteGoods.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnGoodsManageDeleteGoods.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnGoodsManageUpdateGoods.setPrefWidth(120);
+        btnGoodsManageUpdateGoods.setPrefHeight(30);
+        btnGoodsManageUpdateGoods.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnGoodsManageUpdateGoods.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnExportGoods.setPrefWidth(120);
+        btnExportGoods.setPrefHeight(30);
+        btnExportGoods.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnExportGoods.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        
         tvGoodsManage = new TableView<Goods>(goodsService.getObservableList());
         TableColumn<Goods, String> tvGoodsManage_tcGoodsName = new TableColumn<>("商品名");
         tvGoodsManage_tcGoodsName.setCellValueFactory(
@@ -799,16 +971,28 @@ public class AdminView {
         tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsNum);
         tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsUnit);
         tvGoodsManage.getColumns().add(tvGoodsManage_tcGoodsDescribe);
-        bpGoodsManage = new BorderPane();
+     
+       
         bpGoodsManage.setLeft(vbGoodsManage);
         bpGoodsManage.setCenter(tvGoodsManage);
 
     }
 
     public void initSupplierManage() {
-        btnSupplierManage = new Button("供应商管理");
+       
+        supplierImageView = new ImageView("supplier.png");
+    	supplierImageView.setFitWidth(40);
+    	supplierImageView.setFitHeight(40);
+        btnSupplierManage = new Button("供应商管理",supplierImageView);
+        btnSupplierManage.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnSupplierManage.setContentDisplay(ContentDisplay.TOP);
+        btnSupplierManage.setStyle("-fx-background-color:#63B8FF;"+"-fx-background-radius:15");
+        btnSupplierManage.setPrefHeight(60);
+        btnSupplierManage.setPrefWidth(80);
+        
         btnSupplierManage.setOnAction(e -> {
             bpRoot.setCenter(bpSupplierManage);
+            bpSupplierManage.setCenter(tvSupplierManage);
         });
 
         // 供应商管理面板
@@ -864,6 +1048,26 @@ public class AdminView {
         });
         vbSupplierManage = new VBox(btnSupplierManageAddSupplier, btnSupplierManageDeleteSupplier,
                 btnSupplierManageUpdateSupplier, btnExportSupplier);
+        vbSupplierManage.setStyle("-fx-background-color:#87CEFA");
+        vbSupplierManage.setSpacing(20);
+        vbSupplierManage.setPrefWidth(120);
+        btnSupplierManageAddSupplier.setPrefWidth(120);
+        btnSupplierManageAddSupplier.setPrefHeight(30);
+        btnSupplierManageAddSupplier.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnSupplierManageAddSupplier.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnSupplierManageDeleteSupplier.setPrefWidth(120);
+        btnSupplierManageDeleteSupplier.setPrefHeight(30);
+        btnSupplierManageDeleteSupplier.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnSupplierManageDeleteSupplier.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnSupplierManageUpdateSupplier.setPrefWidth(120);
+        btnSupplierManageUpdateSupplier.setPrefHeight(30);
+        btnSupplierManageUpdateSupplier.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnSupplierManageUpdateSupplier.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnExportSupplier.setPrefWidth(120);
+        btnExportSupplier.setPrefHeight(30);
+        btnExportSupplier.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnExportSupplier.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        
         tvSupplierManage = new TableView<Supplier>(supplierService.getObservableList());
         TableColumn<Supplier, String> tvSupplierManage_tcSupplierName = new TableColumn<>("供应商名");
         tvSupplierManage_tcSupplierName.setCellValueFactory(
@@ -905,9 +1109,18 @@ public class AdminView {
     }
 
     public void initPurchaseManage() {
-        btnPurchaseManage = new Button("采购管理");
+        purchaseImageView = new ImageView("purchaser.png");
+    	purchaseImageView.setFitWidth(40);
+    	purchaseImageView.setFitHeight(40);
+        btnPurchaseManage = new Button("采购管理",purchaseImageView);
+        btnPurchaseManage.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnPurchaseManage.setContentDisplay(ContentDisplay.TOP);
+        btnPurchaseManage.setStyle("-fx-background-color:#63B8FF;"+"-fx-background-radius:15");
+        btnPurchaseManage.setPrefHeight(60);
+        btnPurchaseManage.setPrefWidth(80);
         btnPurchaseManage.setOnAction(e -> {
             bpRoot.setCenter(bpPurchaseManage);
+            bpPurchaseManage.setCenter(tvPurchaseManage);
         });
         // 采购管理面板
         btnPurchaseManageAddPurchase = new Button("添加采购");
@@ -968,6 +1181,26 @@ public class AdminView {
         });
         vbPurchaseManage = new VBox(btnPurchaseManageAddPurchase, btnPurchaseManageDeletePurchase,
                 btnPurchaseManageUpdatePurchase, btnExportPurchase);
+        vbPurchaseManage.setPrefWidth(120);
+        vbPurchaseManage.setSpacing(20);
+        btnPurchaseManageAddPurchase.setPrefWidth(120);
+        btnPurchaseManageAddPurchase.setPrefHeight(30);
+        btnPurchaseManageAddPurchase.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnPurchaseManageAddPurchase.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnPurchaseManageDeletePurchase.setPrefWidth(120);
+        btnPurchaseManageDeletePurchase.setPrefHeight(30);
+        btnPurchaseManageDeletePurchase.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnPurchaseManageDeletePurchase.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnPurchaseManageUpdatePurchase.setPrefWidth(120);
+        btnPurchaseManageUpdatePurchase.setPrefHeight(30);
+        btnPurchaseManageUpdatePurchase.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnPurchaseManageUpdatePurchase.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnExportPurchase.setPrefWidth(120);
+        btnExportPurchase.setPrefHeight(30);
+        btnExportPurchase.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnExportPurchase.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+       vbPurchaseManage.setSpacing(20);
+        vbPurchaseManage.setStyle("-fx-background-color:#87CEFA");
         tvPurchaseManage = new TableView<Purchase>(purchaseService.getObservableList());
         TableColumn<Purchase, String> tvPurchaseManage_tcPurchaseSupplierName = new TableColumn<>("供应商名");
         tvPurchaseManage_tcPurchaseSupplierName.setCellValueFactory(
@@ -1039,9 +1272,18 @@ public class AdminView {
     }
 
     public void initSaleManage() {
-        btnSaleManage = new Button("销售管理");
-        btnSaleManage.setOnAction(e -> {
+    	saleImageView = new ImageView("saler.png");
+    	saleImageView.setFitWidth(40);
+    	saleImageView.setFitHeight(40);
+        btnsalerButton = new Button("销售管理",saleImageView);
+        btnsalerButton.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnsalerButton.setContentDisplay(ContentDisplay.TOP);
+        btnsalerButton.setStyle("-fx-background-color:#63B8FF;"+"-fx-background-radius:15");
+        btnsalerButton.setPrefHeight(60);
+        btnsalerButton.setPrefWidth(80);
+        btnsalerButton.setOnAction(e -> {
             bpRoot.setCenter(bpSaleManage);
+            bpSaleManage.setCenter(tvSaleManage);
         });
 
         // 销售管理面板
@@ -1102,6 +1344,25 @@ public class AdminView {
             DialogUtil.showWarningDialog("提示", null, "导出成功");
         });
         vbSaleManage = new VBox(btnSaleManageAddSale, btnSaleManageDeleteSale, btnSaleManageUpdateSale, btnExportSale);
+        vbSaleManage.setStyle("-fx-background-color:#87CEFA");
+        vbSaleManage.setSpacing(20);
+        vbSaleManage.setPrefWidth(120);
+        btnSaleManageAddSale.setPrefWidth(120);
+        btnSaleManageAddSale.setPrefHeight(30);
+        btnSaleManageAddSale.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnSaleManageAddSale.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnSaleManageDeleteSale.setPrefWidth(120);
+        btnSaleManageDeleteSale.setPrefHeight(30);
+        btnSaleManageDeleteSale.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnSaleManageDeleteSale.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnSaleManageUpdateSale.setPrefWidth(120);
+        btnSaleManageUpdateSale.setPrefHeight(30);
+        btnSaleManageUpdateSale.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnSaleManageUpdateSale.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
+        btnExportSale.setPrefWidth(120);
+        btnExportSale.setPrefHeight(30);
+        btnExportSale.setTextFill(Paint.valueOf("#FFFFFF"));
+        btnExportSale.setStyle("-fx-background-color:#00B2EE;"+"-fx-background-radius:10");
         tvSaleManage = new TableView<Sale>(saleService.getObservableList());
         TableColumn<Sale, String> tvSaleManage_tcSaleGoodName = new TableColumn<>("商品名");
         tvSaleManage_tcSaleGoodName.setCellValueFactory(
@@ -1165,8 +1426,40 @@ public class AdminView {
         // UI控件初始化
         primaryStage = new Stage();
         bpRoot = new BorderPane();
-        scene = new Scene(bpRoot, MyValues.SCENE_WIDTH, MyValues.SCENE_HEIGHT);
-
+        scene = new Scene(bpRoot,660,550);
+        textMune = new Text("200商店");
+        textMune.setFill(Paint.valueOf("#0000FF"));
+        textMune.setFont(Font.font("KaiTi", FontWeight.BOLD,20));
+        submituserImageView = new ImageView("submit.png");
+        canceluserImageView = new ImageView("cancel.png");
+        canceluserImageView.setFitHeight(20);
+        canceluserImageView.setFitWidth(20);
+        submituserImageView.setFitHeight(20);
+        submituserImageView.setFitWidth(20);
+        submitgoodsImageView = new ImageView("submit.png");
+        cancelgoodsImageView = new ImageView("cancel.png");
+        cancelgoodsImageView.setFitHeight(20);
+        cancelgoodsImageView.setFitWidth(20);
+        submitgoodsImageView.setFitHeight(20);
+        submitgoodsImageView.setFitWidth(20);
+        submitsalerImageView = new ImageView("submit.png");
+        cancelsalerImageView = new ImageView("cancel.png");
+        cancelsalerImageView.setFitHeight(20);
+        cancelsalerImageView.setFitWidth(20);
+        submitsalerImageView.setFitHeight(20);
+        submitsalerImageView.setFitWidth(20);
+        submitsupplierImageView = new ImageView("submit.png");
+        cancelsupplierImageView = new ImageView("cancel.png");
+        cancelsupplierImageView.setFitHeight(20);
+        cancelsupplierImageView.setFitWidth(20);
+        submitsupplierImageView.setFitHeight(20);
+        submitsupplierImageView.setFitWidth(20);
+        submitpurchaserImageView = new ImageView("submit.png");
+        cancelpurchaserImageView = new ImageView("cancel.png");
+        cancelpurchaserImageView.setFitHeight(20);
+        cancelpurchaserImageView.setFitWidth(20);
+        submitpurchaserImageView.setFitHeight(20);
+        submitpurchaserImageView.setFitWidth(20);
         // top
         initUserManage();
         initGoodsManage();
@@ -1177,6 +1470,10 @@ public class AdminView {
         // btnUserManage, btnGoodsManage, btnSupplierManage, btnPurchaseManage,
         // btnSaleManage
         hbManageMenu = new HBox();
+        hbManageMenu.setAlignment(Pos.CENTER_RIGHT);
+        hbManageMenu.setSpacing(25);
+        hbManageMenu.setStyle("-fx-background-color:#B9D3EE");
+        hbManageMenu.getChildren().add(textMune);
         if (btnUserManage != null) {
             hbManageMenu.getChildren().add(btnUserManage);
         }
@@ -1189,10 +1486,10 @@ public class AdminView {
         if (btnPurchaseManage != null) {
             hbManageMenu.getChildren().add(btnPurchaseManage);
         }
-        if (btnSaleManage != null) {
-            hbManageMenu.getChildren().add(btnSaleManage);
+        if (btnPurchaseManage != null) {
+            hbManageMenu.getChildren().add(btnsalerButton);
         }
-
+       
         // HBox.setHgrow(hbManageMenu, Priority.ALWAYS);
         // hbManageMenu.spacingProperty().bind(scene.widthProperty().subtract(btnUserManage.widthProperty())
         // .subtract(btnGoodsManage.widthProperty()).subtract(btnSupplierManage.widthProperty())
@@ -1206,6 +1503,7 @@ public class AdminView {
         statusBar = new Label("欢迎使用XX超市管理系统，当前用户" + userService.getCurrentUserName() + "（"
                 + userService.getCurrentUserRoleName() + "）");
         bpRoot.setBottom(statusBar);
+        
     }
 
     public void start() throws Exception {
