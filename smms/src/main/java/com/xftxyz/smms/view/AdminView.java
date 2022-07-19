@@ -16,7 +16,6 @@ import com.xftxyz.smms.service.SaleService;
 import com.xftxyz.smms.service.ServiceFactory;
 import com.xftxyz.smms.service.SupplierService;
 import com.xftxyz.smms.service.UserService;
-import com.xftxyz.smms.type.MyValues;
 import com.xftxyz.smms.type.Role;
 import com.xftxyz.smms.utils.DialogUtil;
 import com.xftxyz.smms.utils.FileUtil;
@@ -37,8 +36,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -305,7 +302,7 @@ public class AdminView {
 
     public GridPane init_gpGoodsManage_AddOrUpdateGoods(Goods goods) {
         if (this.gpGoodsManage_AddOrUpdateGoods == null) {
-        	System.out.println("666");
+        	// System.out.println("666");
             this.gpGoodsManage_AddOrUpdateGoods = new GridPane();
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName = new Label("商品名：");
             this.lbgpGoodsManage_AddOrUpdateGoods_GoodsName.setTextFill(Paint.valueOf("#0000FF"));

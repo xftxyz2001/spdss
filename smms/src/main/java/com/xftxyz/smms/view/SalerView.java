@@ -7,7 +7,6 @@ import com.xftxyz.smms.entity.Sale;
 import com.xftxyz.smms.service.GoodsService;
 import com.xftxyz.smms.service.SaleService;
 import com.xftxyz.smms.service.ServiceFactory;
-import com.xftxyz.smms.type.MyValues;
 import com.xftxyz.smms.utils.DialogUtil;
 import com.xftxyz.smms.utils.FileUtil;
 
