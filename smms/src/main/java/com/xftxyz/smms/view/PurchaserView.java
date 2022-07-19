@@ -19,6 +19,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -55,8 +56,10 @@ public class PurchaserView {
     // TextField tfDescription;
 
     Button btSubmit;
+    Image submitImage;
     ImageView submitImageView;
     Button btReset;
+    Image resetImage;
     ImageView resetImageView;
     Label statusBar;
 
@@ -115,7 +118,8 @@ public class PurchaserView {
         tfNum = new TextField();
         // lbDescription = new Label("描述");
         // tfDescription = new TextField();
-        submitImageView = new ImageView("submit.png");
+        submitImage = FileUtil.getImage("submit.png");
+        submitImageView = new ImageView(submitImage);
         submitImageView.setFitWidth(20);
         submitImageView.setFitHeight(20);
         btSubmit = new Button("提交",submitImageView);
@@ -151,7 +155,8 @@ public class PurchaserView {
             tfNum.setText("");
             // tfDescription.setText("");
         });
-        resetImageView = new ImageView("reset.png");
+        resetImage = FileUtil.getImage("reset.png");
+        resetImageView = new ImageView(resetImage);
         resetImageView.setFitWidth(20);
         resetImageView.setFitHeight(20);
         btReset = new Button("重置",resetImageView);

@@ -118,7 +118,8 @@ public class ManagerView extends AdminView {
 
     @Override
     public void initUserManage() {
-    	userImageView = new ImageView("usermanage.png");
+    	userImage = FileUtil.getImage("usermanage.png");
+    	userImageView = new ImageView(userImage);
     	userImageView.setFitWidth(40);
     	userImageView.setFitHeight(40);
         btnUserManage = new Button("用户管理",userImageView);

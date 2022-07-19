@@ -74,18 +74,27 @@ public class AdminView {
     ImageView submituserImageView;
     Image canceluserImage;
     ImageView canceluserImageView;
+    Image submitgoodsImage;
     ImageView submitgoodsImageView;
+    Image cancelgoodsImage;
     ImageView cancelgoodsImageView;
+    Image submitsupplierImage;
     ImageView submitsupplierImageView;
+    Image cancelsupplierImage;
     ImageView cancelsupplierImageView;
+    Image submitsalerImage;
     ImageView submitsalerImageView;
+    Image cancelsalerImage;
     ImageView cancelsalerImageView;
+    Image submitpurchaserImage;
     ImageView submitpurchaserImageView;
+    Image cancelpurchaserImage;
     ImageView cancelpurchaserImageView;
     // 中间部分的5个面板
 
     // 用户管理面板
     ImageView userImageView;
+    Image userImage;
     BorderPane bpUserManage;
     VBox vbUserManage;
     Button btnUserManageAddUser;
@@ -105,6 +114,7 @@ public class AdminView {
     User ugpUserManage_AddOrUpdateUser_selectedUser;
 
     // 商品管理面板
+    Image goodsImage;
     ImageView goodsImageView;
     BorderPane bpGoodsManage;
     VBox vbGoodsManage;
@@ -129,6 +139,7 @@ public class AdminView {
     Goods ggpGoodsManage_AddOrUpdateGoods_selectedGoods;
 
     // 供应商管理面板
+    Image supplierImage;
     ImageView supplierImageView;
     BorderPane bpSupplierManage;
     VBox vbSupplierManage;
@@ -149,6 +160,7 @@ public class AdminView {
     Supplier sgpSupplierManage_AddOrUpdateSupplier_selectedSupplier;
 
     // 采购管理面板
+    Image purcharseImage;
     ImageView purchaseImageView;
     BorderPane bpPurchaseManage;
     Button btnPurchaseManageAddPurchase;
@@ -176,6 +188,7 @@ public class AdminView {
     Purchase pgpPurchaseManage_AddOrUpdatePurchase_selectedPurchase;
 
     // 销售管理面板
+    Image saleImage;
     ImageView saleImageView;
     BorderPane bpSaleManage;
     Button btnSaleManageAddSale;
@@ -707,8 +720,8 @@ public class AdminView {
 
     // 加载管理页面
     public void initUserManage() {
-        
-        userImageView = new ImageView("usermanage.png");
+        userImage = FileUtil.getImage("usermanage.png");
+        userImageView = new ImageView(userImage);
     	userImageView.setFitWidth(40);
     	userImageView.setFitHeight(40);
         btnUserManage = new Button("用户管理",userImageView);
@@ -827,7 +840,8 @@ public class AdminView {
     public void initGoodsManage() {
     	 bpGoodsManage = new BorderPane();
         btnGoodsManage = new Button("商品管理");
-        goodsImageView = new ImageView("goods.png");
+        goodsImage = FileUtil.getImage("goods.png");
+        goodsImageView = new ImageView(goodsImage);
     	goodsImageView.setFitWidth(40);
     	goodsImageView.setFitHeight(40);
         btnGoodsManage = new Button("商品管理",goodsImageView);
@@ -984,8 +998,8 @@ public class AdminView {
     }
 
     public void initSupplierManage() {
-       
-        supplierImageView = new ImageView("supplier.png");
+       supplierImage = FileUtil.getImage("supplier.png");
+        supplierImageView = new ImageView(supplierImage);
     	supplierImageView.setFitWidth(40);
     	supplierImageView.setFitHeight(40);
         btnSupplierManage = new Button("供应商管理",supplierImageView);
@@ -1114,7 +1128,8 @@ public class AdminView {
     }
 
     public void initPurchaseManage() {
-        purchaseImageView = new ImageView("purchaser.png");
+    	purcharseImage = FileUtil.getImage("purchaser.png");
+        purchaseImageView = new ImageView(purcharseImage);
     	purchaseImageView.setFitWidth(40);
     	purchaseImageView.setFitHeight(40);
         btnPurchaseManage = new Button("采购管理",purchaseImageView);
@@ -1277,7 +1292,8 @@ public class AdminView {
     }
 
     public void initSaleManage() {
-    	saleImageView = new ImageView("saler.png");
+    	saleImage = FileUtil.getImage("saler.png");
+    	saleImageView = new ImageView(saleImage);
     	saleImageView.setFitWidth(40);
     	saleImageView.setFitHeight(40);
         btnsalerButton = new Button("销售管理",saleImageView);
@@ -1444,26 +1460,34 @@ public class AdminView {
         canceluserImageView.setFitWidth(20);
         submituserImageView.setFitHeight(20);
         submituserImageView.setFitWidth(20);
-        submitgoodsImageView = new ImageView("submit.png");
-        cancelgoodsImageView = new ImageView("cancel.png");
+        submitgoodsImage = FileUtil.getImage("submit.png");
+        cancelgoodsImage = FileUtil.getImage("cancel.png");
+        submitgoodsImageView = new ImageView(submitgoodsImage);
+        cancelgoodsImageView = new ImageView(cancelgoodsImage);
         cancelgoodsImageView.setFitHeight(20);
         cancelgoodsImageView.setFitWidth(20);
         submitgoodsImageView.setFitHeight(20);
         submitgoodsImageView.setFitWidth(20);
-        submitsalerImageView = new ImageView("submit.png");
-        cancelsalerImageView = new ImageView("cancel.png");
+        submitsalerImage = FileUtil.getImage("submit.png");
+        cancelsalerImage = FileUtil.getImage("cancel.png");
+        submitsalerImageView = new ImageView(submitsalerImage);
+        cancelsalerImageView = new ImageView(cancelsalerImage);
         cancelsalerImageView.setFitHeight(20);
         cancelsalerImageView.setFitWidth(20);
         submitsalerImageView.setFitHeight(20);
         submitsalerImageView.setFitWidth(20);
-        submitsupplierImageView = new ImageView("submit.png");
-        cancelsupplierImageView = new ImageView("cancel.png");
+        submitsupplierImage = FileUtil.getImage("submit.png");
+        cancelsupplierImage = FileUtil.getImage("cancel.png");
+        submitsupplierImageView = new ImageView(submitsupplierImage);
+        cancelsupplierImageView = new ImageView(cancelsupplierImage);
         cancelsupplierImageView.setFitHeight(20);
         cancelsupplierImageView.setFitWidth(20);
         submitsupplierImageView.setFitHeight(20);
         submitsupplierImageView.setFitWidth(20);
-        submitpurchaserImageView = new ImageView("submit.png");
-        cancelpurchaserImageView = new ImageView("cancel.png");
+        submitpurchaserImage = FileUtil.getImage("submit.png");
+        cancelpurchaserImage = FileUtil.getImage("cancel.png");
+        submitpurchaserImageView = new ImageView(submitpurchaserImage);
+        cancelpurchaserImageView = new ImageView(cancelpurchaserImage);
         cancelpurchaserImageView.setFitHeight(20);
         cancelpurchaserImageView.setFitWidth(20);
         submitpurchaserImageView.setFitHeight(20);

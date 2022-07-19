@@ -18,6 +18,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -53,7 +54,9 @@ public class SalerView {
 
     Button btSubmit;
     Button btReset;
+    Image submitImage;
     ImageView submitImageView;
+    Image resetImage;
     ImageView resetImageView;
     Label statusBar;
 
@@ -111,7 +114,8 @@ public class SalerView {
         tfNum = new TextField();
         lbNuml = new Label("/");
         lbRepertory = new Label("");
-        submitImageView = new ImageView("submit.png");
+        submitImage = FileUtil.getImage("submit.png");
+        submitImageView = new ImageView(submitImage);
         submitImageView.setFitWidth(20);
         submitImageView.setFitHeight(20);
         btSubmit = new Button("提交",submitImageView);
@@ -141,8 +145,8 @@ public class SalerView {
             tfUnit.setText("");
             tfNum.setText("");
         });
-
-        resetImageView = new ImageView("reset.png");
+        resetImage = FileUtil.getImage("reset.png");
+        resetImageView = new ImageView(resetImage);
         resetImageView.setFitWidth(20);
         resetImageView.setFitHeight(20);
         btReset = new Button("重置",resetImageView);
