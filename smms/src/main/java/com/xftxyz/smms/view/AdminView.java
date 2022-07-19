@@ -36,6 +36,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -835,6 +836,7 @@ public class AdminView {
         btnGoodsManage.setOnAction(e -> {
             bpRoot.setCenter(bpGoodsManage);
             bpGoodsManage.setCenter(tvGoodsManage);
+            
         });
 
         // 商品管理面板
@@ -1429,7 +1431,8 @@ public class AdminView {
         scene = new Scene(bpRoot,660,550);
         textMune = new Text("200商店");
         textMune.setFill(Paint.valueOf("#0000FF"));
-        textMune.setFont(Font.font("KaiTi", FontWeight.BOLD,20));
+        textMune.setFont(Font.font("华文琥珀", FontWeight.BOLD,25));
+        HBox.setMargin(textMune, new Insets(10));
         submituserImageView = new ImageView("submit.png");
         canceluserImageView = new ImageView("cancel.png");
         canceluserImageView.setFitHeight(20);

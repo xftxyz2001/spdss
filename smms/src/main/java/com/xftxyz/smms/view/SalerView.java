@@ -11,13 +11,19 @@ import com.xftxyz.smms.type.MyValues;
 import com.xftxyz.smms.utils.DialogUtil;
 import com.xftxyz.smms.utils.FileUtil;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class SalerView {
@@ -30,7 +36,9 @@ public class SalerView {
     Stage primaryStage;
     Scene scene;
     BorderPane bpRoot;
-
+    HBox topBox;
+    Label lbshopnameLabel;
+    Label lbsalerLabel;
     GridPane gp;
     Label lbGoodsName;
     ChoiceBox<String> cbGoodsName;
@@ -45,7 +53,8 @@ public class SalerView {
 
     Button btSubmit;
     Button btReset;
-
+    ImageView submitImageView;
+    ImageView resetImageView;
     Label statusBar;
 
     private void initService() {
@@ -56,33 +65,59 @@ public class SalerView {
     }
 
     public void initUI() {
+    	lbshopnameLabel = new Label("200超市");
+    	lbshopnameLabel.setTextFill(Paint.valueOf("#FFFFFF"));
+    	lbshopnameLabel.setFont(Font.font("华文琥珀",20));
+    	lbsalerLabel= new Label("销售平台：");
+    	lbsalerLabel.setTextFill(Paint.valueOf("#FFFFFF"));
+    	lbsalerLabel.setFont(Font.font("华文黑体",25));
+    	topBox = new HBox();
+    	topBox.setStyle("-fx-background-color:#1E90FF");
+    	topBox.setSpacing(10);
+    	topBox.setPadding(new Insets(10));
+    	HBox.setMargin(lbshopnameLabel, new Insets(10));
+    	HBox.setMargin(lbsalerLabel, new Insets(6));
+        topBox.getChildren().addAll(lbshopnameLabel,lbsalerLabel);
         primaryStage = new Stage();
         bpRoot = new BorderPane();
-        scene = new Scene(bpRoot, MyValues.SCENE_WIDTH, MyValues.SCENE_HEIGHT);
+        scene = new Scene(bpRoot,660,500);
 
         gp = new GridPane();
-        lbGoodsName = new Label("商品名称");
+        lbGoodsName = new Label("商品名称：");
+        lbGoodsName.setTextFill(Paint.valueOf("#0000FF"));
+        lbGoodsName.setFont(Font.font("华文黑体", 15));
         cbGoodsName = new ChoiceBox<>();
         cbGoodsName.getItems().addAll(goodsService.getAllGoodsName());
+        cbGoodsName.setPrefWidth(200);
         cbGoodsName.setOnAction(e -> {
             String goodsName = cbGoodsName.getValue();
             Goods goods = goodsService.getGoodsByName(goodsName);
             if (goods != null) {
                 tfPrice.setText(goods.getPrice().toString());
                 tfUnit.setText(goods.getUnit());
-                lbRepertory.setText(goods.getNum().toString());
+                lbRepertory.setText("库存："+goods.getNum().toString());
 
             }
         });
-        lbPrice = new Label("单价");
+        lbPrice = new Label("单价：");
+        lbPrice.setTextFill(Paint.valueOf("#0000FF"));
+        lbPrice.setFont(Font.font("华文黑体", 15));
         tfPrice = new TextField();
         lbUnit = new Label("/");
         tfUnit = new TextField();
-        lbNum = new Label("数量");
+        lbNum = new Label("数量：");
+        lbNum.setTextFill(Paint.valueOf("#0000FF"));
+        lbNum.setFont(Font.font("华文黑体", 15));
         tfNum = new TextField();
         lbNuml = new Label("/");
         lbRepertory = new Label("");
-        btSubmit = new Button("提交");
+        submitImageView = new ImageView("submit.png");
+        submitImageView.setFitWidth(20);
+        submitImageView.setFitHeight(20);
+        btSubmit = new Button("提交",submitImageView);
+        btSubmit.setContentDisplay(ContentDisplay.LEFT);
+        btSubmit.setPrefWidth(120);
+        
         btSubmit.setOnAction(e -> {
             Sale newSale = new Sale();
             try {
@@ -107,7 +142,12 @@ public class SalerView {
             tfNum.setText("");
         });
 
-        btReset = new Button("重置");
+        resetImageView = new ImageView("reset.png");
+        resetImageView.setFitWidth(20);
+        resetImageView.setFitHeight(20);
+        btReset = new Button("重置",resetImageView);
+        btReset.setContentDisplay(ContentDisplay.LEFT);
+        btReset.setPrefWidth(120);
         btReset.setOnAction(e -> {
             cbGoodsName.setValue(null);
             tfPrice.setText("");
@@ -127,9 +167,11 @@ public class SalerView {
         gp.add(lbRepertory, 3, 2);
         gp.add(btSubmit, 0, 3);
         gp.add(btReset, 1, 3);
-
+        bpRoot.setTop(topBox);
         bpRoot.setCenter(gp);
-
+        gp.setPadding(new Insets(30.0));
+        gp.setVgap(20);
+        gp.setHgap(20);
         // 状态栏
         statusBar = new Label("欢迎使用XX超市管理系统，当前用户" + ServiceFactory.getUserService().getCurrentUserName() + "（"
                 + ServiceFactory.getUserService().getCurrentUserRoleName() + "）");
