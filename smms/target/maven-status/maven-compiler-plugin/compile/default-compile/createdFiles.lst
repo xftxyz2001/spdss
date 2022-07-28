@@ -2,13 +2,10 @@ com\xftxyz\smms\view\AdminView$22.class
 com\xftxyz\smms\service\UserService.class
 com\xftxyz\smms\view\AdminView$12.class
 com\xftxyz\smms\service\GoodsService.class
-reset.png
 com\xftxyz\smms\view\AdminView$2.class
 com\xftxyz\smms\view\AdminView$19.class
-user.png
 com\xftxyz\smms\converter\ImageConverter.class
 com\xftxyz\smms\type\Role.class
-supplier.png
 com\xftxyz\smms\view\AdminView$16.class
 com\xftxyz\smms\view\ManagerView$1.class
 com\xftxyz\smms\dao\SupplierDao.class
@@ -21,11 +18,8 @@ com\xftxyz\smms\entity\Sale.class
 com\xftxyz\smms\dao\impl\GoodsDaoImpl.class
 com\xftxyz\smms\view\AdminView$9.class
 com\xftxyz\smms\dao\SaleDao.class
-goods.png
-saler.png
 com\xftxyz\smms\view\AdminView$8.class
 com\xftxyz\smms\entity\Purchase.class
-chaoshi.png
 com\xftxyz\smms\view\PurchaserView.class
 com\xftxyz\smms\utils\Debug.class
 com\xftxyz\smms\dao\impl\UserDaoImpl$1.class
@@ -34,14 +28,11 @@ com\xftxyz\smms\converter\RoleConverter.class
 com\xftxyz\smms\view\AdminView$18.class
 com\xftxyz\smms\view\AdminView$15.class
 com\xftxyz\smms\view\AdminView$20.class
-cancel.png
 com\xftxyz\smms\utils\DialogUtil.class
 com\xftxyz\smms\view\ManagerView$2.class
-jdbc.properties
 com\xftxyz\smms\view\AdminView$5.class
 com\xftxyz\smms\service\PurchaseService.class
 com\xftxyz\smms\view\LoginView.class
-purchaser.png
 com\xftxyz\smms\dao\impl\PurchaseDaoImpl.class
 com\xftxyz\smms\view\AdminView$14.class
 com\xftxyz\smms\view\AdminView$7.class
@@ -64,7 +55,6 @@ com\xftxyz\smms\entity\Goods.class
 com\xftxyz\smms\view\AdminView$13.class
 com\xftxyz\smms\dao\UserDao.class
 com\xftxyz\smms\view\AdminView$3.class
-usermanage.png
 com\xftxyz\smms\converter\TimestampConverter.class
 com\xftxyz\smms\dao\PurchaseDao.class
 com\xftxyz\smms\dao\GoodsDao.class
@@ -72,7 +62,6 @@ com\xftxyz\smms\view\AdminView$10.class
 com\xftxyz\smms\view\SalerView.class
 com\xftxyz\smms\utils\CodeUtil.class
 com\xftxyz\smms\view\AdminView$17.class
-submit.png
 com\xftxyz\smms\service\UserService$1.class
 com\xftxyz\smms\dao\impl\SaleDaoImpl.class
 com\xftxyz\smms\service\SupplierService.class
